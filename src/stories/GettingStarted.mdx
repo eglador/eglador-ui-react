@@ -4,11 +4,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Getting Started
 
-> **Status:** Pre-alpha — paket iskeleti hazır. 55 bileşen geliştirme sürecinde; her biri tamamlandığında bu sayfa örneklerle güncellenecek.
+> **Status:** Pre-alpha — 10/55 bileşen hazır. Tier 2 (form bileşenleri) sürüyor.
 
 ---
 
 ## Hazır olan
+
+**Altyapı:**
 
 - Build pipeline (`tsup` → CJS + ESM + DTS)
 - TypeScript strict mode (`tsc --noEmit`)
@@ -16,15 +18,31 @@ import { Meta } from "@storybook/addon-docs/blocks";
 - Storybook 10 (`@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-vitest`)
 - CI / npm publish workflows
 - LICENSE, README, package metadata
-- 55 bileşenlik roadmap ([Default sekmesinde](?path=/story/default--roadmap) görsel olarak)
 
-## Sıradaki
+**Tier 1 bileşenler (10/10):**
 
-- Bileşen API tasarımı (her bileşen için compound subcomponents + headless hook)
-- İlk bileşen seti: temel display & forms (Button, Input, Label, Badge, Avatar, Separator)
-- Storybook playground'ları her bileşen için
-- A11y testleri (`@storybook/addon-a11y` ile)
-- Görsel regresyon testleri (`@storybook/addon-vitest` + Playwright)
+- `<AspectRatio>` — preset + numeric ratio
+- `<Avatar>` + `<AvatarGroup>` — src/initials/icon fallback, +N overflow
+- `<Badge>` — solid/soft/outline + removable
+- `<Empty>` — empty state slot'lar
+- `<Kbd>` + `<KbdGroup>` — klavye kısayolu
+- `<Label>` — form label, required indicator
+- `<Separator>` — yatay/dikey divider, label slot
+- `<Skeleton>` — text/circular/rectangular/rounded + pulse/wave animasyonu
+- `<Spinner>` — yükleniyor göstergesi
+- `<Typography>` — h1-h4, p, lead, blockquote, list, code, kbd; RTL safe
+
+Tüm bileşenler:
+- `xs/sm/md/lg/xl` size standardı (size prop'u olanlar)
+- `React.forwardRef` + `React.HTMLAttributes` spread
+- Zinc-only paleti
+- `rounded-sm` paket konvansiyonu
+
+## Sıradaki — Tier 2
+
+Basit state'li form bileşenleri:
+
+Button · ButtonGroup · Link · Input · InputGroup · Textarea · Switch · Checkbox · CheckboxGroup · Radio · RadioGroup · Progress
 
 ---
 

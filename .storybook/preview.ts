@@ -20,6 +20,7 @@ const preview: Preview = {
           "Welcome",
           "Installation",
           "Getting Started",
+          "Components",
           "*",
         ],
       },
