@@ -12,7 +12,7 @@
 
 Eglador UI for React — headless, accessible component library. Compound subcomponents, **Tailwind CSS v4**, zero runtime dependencies.
 
-> **Status:** Pre-alpha — scaffold ready (build, Storybook, CI). 55 bileşen geliştirme sürecinde.
+> **Status:** Pre-alpha — 10/55 bileşen hazır (Tier 1). Tier 2 (form bileşenleri) sürüyor.
 
 ## Installation
 
@@ -36,23 +36,25 @@ npm install eglador-ui-react
 | Next.js (`src/`) | `src/app/globals.css` | `../../node_modules/eglador-ui-react` |
 | Vite | `src/index.css` | `../node_modules/eglador-ui-react` |
 
-## Roadmap (55 components)
+## Bileşenler (10/55)
 
-**Layout & Structure** — Accordion · AspectRatio · Collapsible · Resizable · ScrollArea · Separator · Sidebar
+**✓ = hazır · — = planlı**
 
-**Display** — Avatar · Badge · Empty · Kbd · Skeleton · Spinner · Typography
+**Layout & Structure (2/7)** — — Accordion · ✓ AspectRatio · — Collapsible · — Resizable · — ScrollArea · ✓ Separator · — Sidebar
 
-**Navigation** — Breadcrumb · Menubar · NavigationMenu · Pagination · Stepper · Tabs · TreeView
+**Display (7/7) — TAMAM** — ✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
 
-**Forms** — Button · ButtonGroup · Checkbox · CheckboxGroup · Input · InputGroup · InputOTP · Label · MultiSelect · NativeSelect · Radio · RadioGroup · Select · Switch · Textarea
+**Navigation (0/7)** — — Breadcrumb · — Menubar · — NavigationMenu · — Pagination · — Stepper · — Tabs · — TreeView
 
-**Date & Time** — Calendar · DatePicker · DateTimePicker
+**Forms (1/15)** — — Button · — ButtonGroup · — Checkbox · — CheckboxGroup · — Input · — InputGroup · — InputOTP · ✓ Label · — MultiSelect · — NativeSelect · — Radio · — RadioGroup · — Select · — Switch · — Textarea
 
-**Overlays** — Alert · AlertDialog · ContextMenu · Dialog · Drawer · Dropdown · HoverCard · Notification · Popover · Tooltip
+**Date & Time (0/3)** — — Calendar · — DatePicker · — DateTimePicker
 
-**Data** — Table
+**Overlays (0/10)** — — Alert · — AlertDialog · — ContextMenu · — Dialog · — Drawer · — Dropdown · — HoverCard · — Notification · — Popover · — Tooltip
 
-**Misc** — Command · ImageCropper · Link · SpeedDial · Progress
+**Data (0/1)** — — Table
+
+**Misc (0/5)** — — Command · — ImageCropper · — Link · — SpeedDial · — Progress
 
 ## Compatibility
 
