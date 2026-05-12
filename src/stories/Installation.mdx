@@ -1,0 +1,107 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Installation" />
+
+# Installation
+
+Paket kurulumu, peer dependency'ler ve Tailwind v4 entegrasyonu.
+
+---
+
+## 1. Paketi kur
+
+```bash
+npm install eglador-ui-react
+```
+
+```bash
+yarn add eglador-ui-react
+```
+
+```bash
+pnpm add eglador-ui-react
+```
+
+---
+
+## 2. Peer dependencies
+
+Projenizde aşağıdaki peer dep'ler bulunmalı:
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Package</th>
+      <th align="left">Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>react</code></td>
+      <td><code>{">= 18"}</code></td>
+    </tr>
+    <tr>
+      <td><code>react-dom</code></td>
+      <td><code>{">= 18"}</code></td>
+    </tr>
+    <tr>
+      <td><code>tailwindcss</code></td>
+      <td><code>^4.0.0</code></td>
+    </tr>
+  </tbody>
+</table>
+
+Modern React projelerinde (Next.js, Vite, Remix) bunlar zaten mevcuttur.
+
+> **Zero runtime dependencies.** `clsx` ve `tailwind-merge` pre-bundle edilmiştir.
+
+---
+
+## 3. Tailwind v4 için `@source` ekle
+
+```css
+@import "tailwindcss";
+
+@source "../node_modules/eglador-ui-react";
+```
+
+`@source` yolu CSS dosyanızın konumuna göre değişir:
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Framework</th>
+      <th align="left">CSS dosyası</th>
+      <th align="left"><code>@source</code> yolu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Next.js (App Router)</td>
+      <td><code>app/globals.css</code></td>
+      <td><code>../node_modules/eglador-ui-react</code></td>
+    </tr>
+    <tr>
+      <td>Next.js (<code>src/</code>)</td>
+      <td><code>src/app/globals.css</code></td>
+      <td><code>../../node_modules/eglador-ui-react</code></td>
+    </tr>
+    <tr>
+      <td>Vite + React</td>
+      <td><code>src/index.css</code></td>
+      <td><code>../node_modules/eglador-ui-react</code></td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## 4. Server components notu (Next.js)
+
+Bileşenler `"use client"` ile işaretlidir. Onları bir client component içine veya `"use client"` direktifi olan bir dosyaya yerleştirin.
+
+---
+
+## Sorun mu var?
+
+[GitHub'da issue açın](https://github.com/eglador/eglador-ui-react/issues).

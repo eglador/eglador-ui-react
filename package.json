@@ -1,0 +1,94 @@
+{
+  "name": "eglador-ui-react",
+  "version": "1.0.0-alpha.1",
+  "description": "Eglador UI for React — headless, accessible component library. Compound subcomponents, Tailwind v4, zero runtime dependencies.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eglador/eglador-ui-react.git"
+  },
+  "keywords": [
+    "eglador",
+    "components",
+    "react",
+    "ui",
+    "headless",
+    "accessible",
+    "tailwindcss",
+    "tailwindcss-v4",
+    "nextjs",
+    "vite",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "author": {
+    "name": "Kenan Gündoğan",
+    "email": "kenangundogann@gmail.com",
+    "url": "https://github.com/kenangundogan"
+  },
+  "contributors": [
+    {
+      "name": "Eglador",
+      "url": "https://github.com/eglador"
+    }
+  ],
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/eglador/eglador-ui-react/issues"
+  },
+  "homepage": "https://github.com/eglador/eglador-ui-react#readme",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.1.2",
+    "@storybook/addon-a11y": "^10.3.6",
+    "@storybook/addon-docs": "^10.3.6",
+    "@storybook/addon-vitest": "^10.3.6",
+    "@storybook/react-vite": "^10.3.6",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/browser-playwright": "^4.1.5",
+    "@vitest/coverage-v8": "^4.1.5",
+    "clsx": "^2.1.1",
+    "playwright": "^1.59.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "storybook": "^10.3.6",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.4",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.11",
+    "vitest": "^4.1.5"
+  }
+}

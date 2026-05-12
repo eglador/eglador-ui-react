@@ -1,0 +1,57 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Getting Started" />
+
+# Getting Started
+
+> **Status:** Pre-alpha — paket iskeleti hazır. 55 bileşen geliştirme sürecinde; her biri tamamlandığında bu sayfa örneklerle güncellenecek.
+
+---
+
+## Hazır olan
+
+- Build pipeline (`tsup` → CJS + ESM + DTS)
+- TypeScript strict mode (`tsc --noEmit`)
+- Tailwind v4 + `@source` entegrasyonu
+- Storybook 10 (`@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-vitest`)
+- CI / npm publish workflows
+- LICENSE, README, package metadata
+- 55 bileşenlik roadmap ([Default sekmesinde](?path=/story/default--roadmap) görsel olarak)
+
+## Sıradaki
+
+- Bileşen API tasarımı (her bileşen için compound subcomponents + headless hook)
+- İlk bileşen seti: temel display & forms (Button, Input, Label, Badge, Avatar, Separator)
+- Storybook playground'ları her bileşen için
+- A11y testleri (`@storybook/addon-a11y` ile)
+- Görsel regresyon testleri (`@storybook/addon-vitest` + Playwright)
+
+---
+
+## Tasarım prensipleri
+
+- **Headless öncelikli** — her bileşenin bir hook karşılığı; render kullanıcıya
+- **Compound API** — `<X.Root>`, `<X.Header>`, `<X.Body>` vb. tam markup kontrolü
+- **A11y** — keyboard navigation, ARIA roles, focus management
+- **TypeScript-first** — generic prop'lar, strict mode
+- **Tailwind v4** — `zinc` paleti, `rounded-sm`, modern utility-first
+- **Zero runtime deps** — `clsx` ve `tailwind-merge` pre-bundled
+
+---
+
+## Setup recap
+
+[Installation](?path=/docs/installation--docs) sayfasındaki adımları takip edin.
+
+```bash
+npm install eglador-ui-react
+```
+
+```css
+@import "tailwindcss";
+@source "../node_modules/eglador-ui-react";
+```
+
+---
+
+Hata bildirimleri veya öneriler için [GitHub'da issue açın](https://github.com/eglador/eglador-ui-react/issues).
