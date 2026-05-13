@@ -9,19 +9,19 @@ const meta: Meta<typeof Kbd> = {
     docs: {
       description: {
         component:
-          "Klavye kısayolu göstergesi. Tek tuş veya `keys` ile kombo. 3 boyut (xs/sm/md), 3 varyant (default/outline/ghost), 2 şekil (square/rounded). KbdGroup compound API ile compose edilebilir.",
+          "Klavye kısayolu göstergesi. Tek tuş veya `keys` ile kombo. 5 boyut (xs/sm/md/lg/xl), 3 varyant (soft/outline/ghost), 2 şekil (square/rounded). KbdGroup compound API ile compose edilebilir.",
       },
     },
   },
   args: {
     size: "sm",
-    variant: "default",
+    variant: "soft",
     shape: "rounded",
     children: "K",
   },
   argTypes: {
     size: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
-    variant: { control: "select", options: ["default", "outline", "ghost"] },
+    variant: { control: "select", options: ["soft", "outline", "ghost"] },
     shape: { control: "select", options: ["square", "rounded"] },
   },
 };
@@ -85,7 +85,7 @@ export const Sizes: Story = {
 export const Variants: Story = {
   render: (args: KbdProps) => (
     <div className="flex flex-col gap-3">
-      {(["default", "outline", "ghost"] as const).map((variant) => (
+      {(["soft", "outline", "ghost"] as const).map((variant) => (
         <div key={variant} className="flex items-center gap-3">
           <span className="text-xs text-zinc-400 w-14">{variant}</span>
           <Kbd {...args} variant={variant} keys={["⌘", "Shift", "K"]} />

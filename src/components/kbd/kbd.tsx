@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 
 export type KbdSize = "xs" | "sm" | "md" | "lg" | "xl";
-export type KbdVariant = "default" | "outline" | "ghost";
+export type KbdVariant = "soft" | "outline" | "ghost";
 export type KbdShape = "square" | "rounded";
 
 export interface KbdProps
@@ -37,7 +37,7 @@ const SHAPES: Record<KbdShape, string> = {
 };
 
 const VARIANTS: Record<KbdVariant, string> = {
-  default: "bg-zinc-100 border border-zinc-300",
+  soft: "bg-zinc-100 border border-zinc-300",
   outline: "bg-transparent border border-zinc-300",
   ghost: "bg-zinc-50 border border-transparent",
 };
@@ -76,7 +76,7 @@ function Key({
 export const Kbd = React.forwardRef<HTMLElement, KbdProps>(function Kbd(
   {
     size = "sm",
-    variant = "default",
+    variant = "soft",
     shape = "rounded",
     keys,
     separator,

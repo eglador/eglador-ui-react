@@ -12,7 +12,7 @@
 
 Eglador UI for React — headless, accessible component library. Compound subcomponents, **Tailwind CSS v4**, zero runtime dependencies.
 
-> **Status:** Pre-alpha — 10/55 bileşen hazır (Tier 1). Tier 2 (form bileşenleri) sürüyor.
+> **Status:** Pre-alpha — 21/55 components shipped. Tier 1 (Display complete) and most of Tier 2 are done.
 
 ## Installation
 
@@ -36,17 +36,27 @@ npm install eglador-ui-react
 | Next.js (`src/`) | `src/app/globals.css` | `../../node_modules/eglador-ui-react` |
 | Vite | `src/index.css` | `../node_modules/eglador-ui-react` |
 
-## Bileşenler (10/55)
+## Conventions
 
-**✓ = hazır · — = planlı**
+All components share the same vocabulary:
+
+- **Variants** (visual hierarchy): `solid` · `soft` · `outline` · `ghost` · `link`
+- **Sizes**: `xs` · `sm` · `md` · `lg` · `xl`
+- **Shapes**: `square` · `rounded` · `pill` · `circle`
+- **Palette**: zinc-only (no color schemes; theming handled separately)
+- **A11y**: native HTML inputs, `aria-*` attributes, focus-visible rings, RTL-safe Tailwind logical properties
+
+## Components (21/55)
+
+**✓ = shipped · — = planned**
 
 **Layout & Structure (2/7)** — — Accordion · ✓ AspectRatio · — Collapsible · — Resizable · — ScrollArea · ✓ Separator · — Sidebar
 
-**Display (7/7) — TAMAM** — ✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
+**Display (7/7) — COMPLETE** — ✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
 
 **Navigation (0/7)** — — Breadcrumb · — Menubar · — NavigationMenu · — Pagination · — Stepper · — Tabs · — TreeView
 
-**Forms (1/15)** — — Button · — ButtonGroup · — Checkbox · — CheckboxGroup · — Input · — InputGroup · — InputOTP · ✓ Label · — MultiSelect · — NativeSelect · — Radio · — RadioGroup · — Select · — Switch · — Textarea
+**Forms (11/15)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · — InputOTP · ✓ Label · — MultiSelect · — NativeSelect · ✓ Radio · ✓ RadioGroup · — Select · ✓ Switch · ✓ Textarea
 
 **Date & Time (0/3)** — — Calendar · — DatePicker · — DateTimePicker
 
@@ -54,7 +64,7 @@ npm install eglador-ui-react
 
 **Data (0/1)** — — Table
 
-**Misc (0/5)** — — Command · — ImageCropper · — Link · — SpeedDial · — Progress
+**Misc (1/5)** — — Command · — ImageCropper · ✓ Link · — SpeedDial · — Progress
 
 ## Compatibility
 
