@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Getting Started
 
-> **Status:** Pre-alpha — 21/55 components shipped. Tier 1 (Display complete) and most of Tier 2 are done.
+> **Status:** Alpha — 55/55 components shipped.
 
 ---
 
@@ -17,38 +17,24 @@ import { Meta } from "@storybook/addon-docs/blocks";
 - Tailwind v4 + `@source` integration
 - Storybook 10 (`@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-vitest`)
 - CI / npm publish workflows
+- Shared floating-element positioning hook (`useFloating`) with viewport collision detection
+- Portal-rendered overlays (Tooltip, Popover, HoverCard, Dropdown, ContextMenu, Dialog, AlertDialog, Drawer, Notification, Select, MultiSelect, Menubar, Calendar popovers)
 
-**Tier 1 (10/10):**
+**Layout & Structure (7/7):** Accordion · AspectRatio · Collapsible · Resizable · ScrollArea · Separator · Sidebar
 
-- `<AspectRatio>` — 7 ratio presets + numeric ratio
-- `<Avatar>` + `<AvatarGroup>` — src / initials / icon fallback, +N overflow
-- `<Badge>` — solid / soft / outline, removable, with icons
-- `<Empty>` — empty-state shell with icon / title / description / action slots
-- `<Kbd>` + `<KbdGroup>` — keyboard shortcut display
-- `<Label>` — form label with `required` indicator
-- `<Separator>` — horizontal / vertical divider, optional label
-- `<Skeleton>` — text / circular / rectangular / rounded, pulse / wave / none
-- `<Spinner>` — loading indicator with sr-only fallback
-- `<Typography>` — h1-h4, p, lead, large, small, muted, blockquote, list, code, kbd; RTL-safe
+**Display (7/7):** Avatar · Badge · Empty · Kbd · Skeleton · Spinner · Typography
 
-**Tier 2 (11/12):**
+**Navigation (7/7):** Breadcrumb · Menubar · NavigationMenu · Pagination · Stepper · Tabs · TreeView
 
-- `<Button>` + `buttonVariants()` helper — 5 variants (solid / soft / outline / ghost / link), 5 sizes, 3 shapes, icon / loading / active
-- `<ButtonGroup>` + `<ButtonGroupSeparator>` + `<ButtonGroupText>` — fused buttons via CSS sibling selectors, orientation, context-aware separator
-- `<Link>` — underline hover / always / none, 5 sizes, `external` auto handling, `buttonVariants()` for anchor-as-button
-- `<Input>` — outline / soft / ghost variants, 5 sizes, 3 shapes, `aria-invalid`, file: modifier
-- `<InputGroup>` + `<InputGroupInput>` + `<InputGroupTextarea>` + `<InputGroupAddon>` + `<InputGroupButton>` + `<InputGroupText>` — shadcn-style single-wrapper border, `align` prop (inline-start / inline-end / block-start / block-end)
-- `<Textarea>` + `autoGrow` + `maxRows` — scrollHeight-based line clamp
-- `<Switch>` — native `role="switch"`, controlled / uncontrolled, 5 sizes
-- `<Checkbox>` — `indeterminate` 3rd state via DOM property + `useEffect`
-- `<CheckboxGroup>` + `<CheckboxGroupItem>` — multi-select, `<fieldset>` + `<legend>`, context-driven
-- `<Radio>` — native `type="radio"`, mutually-exclusive grouping via shared `name`
-- `<RadioGroup>` + `<RadioGroupItem>` — single-select, `role="radiogroup"`, auto `name` (useId fallback)
+**Forms (15/15):** Button · ButtonGroup · Checkbox · CheckboxGroup · Input · InputGroup · InputOTP · Label · MultiSelect · NativeSelect · Radio · RadioGroup · Select · Switch · Textarea
 
-## Next up
+**Date & Time (3/3):** Calendar · DatePicker · DateTimePicker
 
-- **Progress** (closes Tier 2)
-- **Tier 3** — Alert, Notification, Tabs, Accordion, Collapsible, Breadcrumb, Pagination, Stepper, ScrollArea
+**Overlays (10/10):** Alert · AlertDialog · ContextMenu · Dialog · Drawer · Dropdown · HoverCard · Notification · Popover · Tooltip
+
+**Data (1/1):** Table
+
+**Misc (5/5):** Command · ImageCropper · Link · Progress · SpeedDial
 
 ---
 
@@ -56,9 +42,11 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 **Variants** (visual hierarchy): `solid` (filled high-contrast) · `soft` (filled muted) · `outline` (bordered) · `ghost` (transparent) · `link` (inline text)
 
-**Sizes**: `xs` · `sm` · `md` · `lg` · `xl`
+**Sizes:** `xs` · `sm` · `md` · `lg` · `xl`
 
 **Shapes** (where applicable): `square` · `rounded` · `pill` · `circle`
+
+**Shadows** (where applicable): `none` · `xs` · `sm` · `md` · `lg` · `xl`
 
 **Palette:** zinc-only — `text-zinc-{50→900}`, `bg-white`, `bg-zinc-{50→900}`, `border-zinc-{200→900}`. No color schemes (primary / danger / success etc.); theming is handled separately.
 
@@ -100,21 +88,108 @@ import { Search } from "lucide-react";
 </InputGroup>
 ```
 
-### Single-select (RadioGroup)
+### Confirmation dialog
 
 ```tsx
-import { RadioGroup, RadioGroupItem } from "eglador-ui-react";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+  Button,
+} from "eglador-ui-react";
 
-<RadioGroup
-  legend="Plan"
-  name="plan"
-  defaultValue="pro"
-  onValueChange={(v) => console.log(v)}
->
-  <RadioGroupItem value="free" label="Free" description="Solo projects" />
-  <RadioGroupItem value="pro" label="Pro" description="For professionals" />
-  <RadioGroupItem value="enterprise" label="Enterprise" description="Custom" />
-</RadioGroup>
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Delete account</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Continue</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+### Toast notifications
+
+```tsx
+import {
+  NotificationContainer,
+  useNotification,
+  renderNotification,
+  Button,
+} from "eglador-ui-react";
+import { CheckCircle2 } from "lucide-react";
+
+function MyPage() {
+  const { notifications, push, dismiss } = useNotification();
+  return (
+    <>
+      <Button
+        onClick={() =>
+          push({
+            icon: <CheckCircle2 />,
+            title: "Saved",
+            description: "Your changes are live.",
+            duration: 4000,
+          })
+        }
+      >
+        Show toast
+      </Button>
+      <NotificationContainer position="top-right">
+        {notifications.map((item) =>
+          renderNotification({ item, onDismiss: dismiss })
+        )}
+      </NotificationContainer>
+    </>
+  );
+}
+```
+
+### Data table with sticky header
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "eglador-ui-react";
+
+<Table maxHeight={320} stickyHeader bordered hoverable>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Invoice</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead className="text-end">Amount</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {rows.map((r) => (
+      <TableRow key={r.id}>
+        <TableCell>{r.id}</TableCell>
+        <TableCell>{r.status}</TableCell>
+        <TableCell className="text-end">{r.amount}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
 ```
 
 ### Anchor styled as a button
@@ -132,12 +207,13 @@ import { buttonVariants } from "eglador-ui-react";
 ## Design principles
 
 - **Headless-first** — native HTML semantics are the foundation; styling is opt-in via Tailwind classes
-- **Compound API** — Group / Item / Addon parts wired via context
-- **A11y** — `role`, `aria-*`, focus-visible ring, `<fieldset>` / `<legend>` / `<label htmlFor>`
-- **TypeScript-first** — generic props, strict mode
-- **Tailwind v4** — `zinc` palette, `rounded-sm` default, logical CSS (`ps-*`, `me-*`, RTL automatic)
-- **Zero runtime deps** — `clsx` and `tailwind-merge` are pre-bundled
-- **Controlled + Uncontrolled** — every stateful form component supports both patterns
+- **Compound API** — Group / Item / Addon / Trigger / Content parts wired via context
+- **A11y** — `role`, `aria-*`, focus-visible ring, `<fieldset>` / `<legend>` / `<label htmlFor>`, keyboard navigation
+- **TypeScript-first** — generic props, strict mode, discriminated unions where helpful (Accordion, Calendar)
+- **Tailwind v4** — `zinc` palette, logical CSS (`ps-*`, `me-*`, `border-s`, RTL automatic)
+- **Zero runtime deps** — `clsx` and `tailwind-merge` are pre-bundled; portal positioning, focus traps, keyboard nav all implemented in-house
+- **Controlled + Uncontrolled** — every stateful component supports both patterns
+- **`asChild` projection** — most triggers and close buttons project props onto a single child via `cloneElement` so you can wrap Router `<Link>`s, custom Buttons, etc.
 
 ---
 
