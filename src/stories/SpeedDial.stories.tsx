@@ -66,7 +66,7 @@ type Story = StoryObj<typeof SpeedDial>;
 
 function Demo(args: SpeedDialProps) {
   return (
-    <SpeedDial {...args}>
+    <SpeedDial key={String(args.defaultOpen)} {...args}>
       <SpeedDialTrigger />
       <SpeedDialActions>
         <SpeedDialAction label="Share">

@@ -94,6 +94,7 @@ function AppShell({
 }) {
   return (
     <SidebarProvider
+      key={`${args.defaultOpen}-${args.collapsible}-${args.side}-${args.variant}`}
       defaultOpen={args.defaultOpen}
       defaultActiveId={defaultActiveId}
       persistKey={persistKey}

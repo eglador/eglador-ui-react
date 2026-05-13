@@ -32,7 +32,7 @@ const meta: Meta<typeof ButtonGroup> = {
     docs: {
       description: {
         component:
-          "Birden fazla Button'ı (veya Input vb.) tek bir grup olarak birleştirir. Bitişik butonların border'ları kaynaşır (`-ms-px` overlap), iç köşeler düzleşir, dış köşeler korunur. Compound API: `ButtonGroupSeparator` (görsel divider) + `ButtonGroupText` (label/text slot). orientation horizontal/vertical. role=group + aria-label/aria-labelledby ile semantik.",
+          "Fuses several Buttons (or Inputs, etc.) into one group. Adjacent button borders merge (`-ms-px` overlap), inner corners flatten, outer corners stay. Compound API: `ButtonGroupSeparator` (visual divider) + `ButtonGroupText` (label / text slot). Orientation horizontal / vertical. Semantic via role=group + aria-label / aria-labelledby.",
       },
     },
   },
@@ -49,9 +49,9 @@ type Story = StoryObj<typeof ButtonGroup>;
 
 export const Default: Story = {
   render: (args: ButtonGroupProps) => (
-    <ButtonGroup {...args} aria-label="Eylemler">
-      <Button variant="outline">Önceki</Button>
-      <Button variant="outline">Sonraki</Button>
+    <ButtonGroup {...args} aria-label="Actions">
+      <Button variant="outline">Previous</Button>
+      <Button variant="outline">Next</Button>
     </ButtonGroup>
   ),
 };
@@ -62,19 +62,19 @@ export const Orientation: Story = {
       <div>
         <p className="text-xs text-zinc-400 mb-2">horizontal</p>
         <ButtonGroup>
-          <Button variant="outline" icon={<AlignLeft />} aria-label="Sola" />
-          <Button variant="outline" icon={<AlignCenter />} aria-label="Orta" />
-          <Button variant="outline" icon={<AlignRight />} aria-label="Sağa" />
-          <Button variant="outline" icon={<AlignJustify />} aria-label="Yasla" />
+          <Button variant="outline" icon={<AlignLeft />} aria-label="Align left" />
+          <Button variant="outline" icon={<AlignCenter />} aria-label="Align center" />
+          <Button variant="outline" icon={<AlignRight />} aria-label="Align right" />
+          <Button variant="outline" icon={<AlignJustify />} aria-label="Justify" />
         </ButtonGroup>
       </div>
       <div>
         <p className="text-xs text-zinc-400 mb-2">vertical</p>
         <ButtonGroup orientation="vertical">
-          <Button variant="outline" icon={<AlignLeft />} aria-label="Sola" />
-          <Button variant="outline" icon={<AlignCenter />} aria-label="Orta" />
-          <Button variant="outline" icon={<AlignRight />} aria-label="Sağa" />
-          <Button variant="outline" icon={<AlignJustify />} aria-label="Yasla" />
+          <Button variant="outline" icon={<AlignLeft />} aria-label="Align left" />
+          <Button variant="outline" icon={<AlignCenter />} aria-label="Align center" />
+          <Button variant="outline" icon={<AlignRight />} aria-label="Align right" />
+          <Button variant="outline" icon={<AlignJustify />} aria-label="Justify" />
         </ButtonGroup>
       </div>
     </div>
@@ -87,13 +87,13 @@ export const Sizes: Story = {
       {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
         <ButtonGroup key={size}>
           <Button variant="outline" size={size}>
-            Gün
+            Day
           </Button>
           <Button variant="outline" size={size}>
-            Hafta
+            Week
           </Button>
           <Button variant="outline" size={size}>
-            Ay
+            Month
           </Button>
         </ButtonGroup>
       ))}
@@ -103,10 +103,10 @@ export const Sizes: Story = {
 
 export const TextFormatting: Story = {
   render: () => (
-    <ButtonGroup aria-label="Metin biçimlendirme">
-      <Button variant="outline" icon={<Bold />} aria-label="Kalın" active />
-      <Button variant="outline" icon={<Italic />} aria-label="İtalik" />
-      <Button variant="outline" icon={<Underline />} aria-label="Altı çizili" />
+    <ButtonGroup aria-label="Text formatting">
+      <Button variant="outline" icon={<Bold />} aria-label="Bold" active />
+      <Button variant="outline" icon={<Italic />} aria-label="Italic" />
+      <Button variant="outline" icon={<Underline />} aria-label="Underline" />
     </ButtonGroup>
   ),
 };
@@ -116,18 +116,18 @@ export const WithSeparator: Story = {
     docs: {
       description: {
         story:
-          "`soft`/`solid` gibi border'sız varyantlarda butonlar kaynaşınca ayrım kaybolur — `ButtonGroupSeparator` görsel divider sağlar.",
+          "Borderless variants (`soft` / `solid`) lose their visual divider when fused — `ButtonGroupSeparator` reintroduces one.",
       },
     },
   },
   render: () => (
     <div className="flex flex-col gap-4 items-start">
       <ButtonGroup>
-        <Button variant="soft">Sol</Button>
+        <Button variant="soft">Left</Button>
         <ButtonGroupSeparator />
-        <Button variant="soft">Orta</Button>
+        <Button variant="soft">Center</Button>
         <ButtonGroupSeparator />
-        <Button variant="soft">Sağ</Button>
+        <Button variant="soft">Right</Button>
       </ButtonGroup>
 
       <ButtonGroup>
@@ -146,23 +146,23 @@ export const Split: Story = {
     docs: {
       description: {
         story:
-          "Split button — ana aksiyon + dropdown trigger. Genellikle aynı varyantla.",
+          "Split button — primary action + dropdown trigger. Typically same variant for both.",
       },
     },
   },
   render: () => (
     <div className="flex gap-4 items-start flex-wrap">
-      <ButtonGroup aria-label="Kaydet seçenekleri">
-        <Button icon={<Save />}>Kaydet</Button>
+      <ButtonGroup aria-label="Save options">
+        <Button icon={<Save />}>Save</Button>
         <ButtonGroupSeparator />
-        <Button icon={<ChevronDown />} aria-label="Daha fazla seçenek" />
+        <Button icon={<ChevronDown />} aria-label="More options" />
       </ButtonGroup>
 
-      <ButtonGroup aria-label="Kopyala seçenekleri">
+      <ButtonGroup aria-label="Copy options">
         <Button variant="outline" icon={<Copy />}>
-          Kopyala
+          Copy
         </Button>
-        <Button variant="outline" icon={<ChevronDown />} aria-label="Daha fazla" />
+        <Button variant="outline" icon={<ChevronDown />} aria-label="More" />
       </ButtonGroup>
     </div>
   ),
@@ -173,23 +173,23 @@ export const WithText: Story = {
     docs: {
       description: {
         story:
-          "`ButtonGroupText` ile grup içine inline metin/label eklenebilir. 5 size, button'larla aynı.",
+          "Drop inline text / labels inside a group with `ButtonGroupText`. 5 sizes, matched with the buttons.",
       },
     },
   },
   render: () => (
     <div className="flex flex-col gap-3 items-start">
       <ButtonGroup>
-        <ButtonGroupText>Sıralama</ButtonGroupText>
-        <Button variant="outline">Tarih</Button>
-        <Button variant="outline">Ad</Button>
-        <Button variant="outline">Boyut</Button>
+        <ButtonGroupText>Sort</ButtonGroupText>
+        <Button variant="outline">Date</Button>
+        <Button variant="outline">Name</Button>
+        <Button variant="outline">Size</Button>
       </ButtonGroup>
 
       <ButtonGroup>
-        <Button variant="outline" icon={<ArrowLeft />} aria-label="Geri" />
-        <ButtonGroupText>Sayfa 3 / 12</ButtonGroupText>
-        <Button variant="outline" icon={<ArrowRight />} aria-label="İleri" />
+        <Button variant="outline" icon={<ArrowLeft />} aria-label="Back" />
+        <ButtonGroupText>Page 3 / 12</ButtonGroupText>
+        <Button variant="outline" icon={<ArrowRight />} aria-label="Forward" />
       </ButtonGroup>
     </div>
   ),
@@ -200,24 +200,24 @@ export const Nested: Story = {
     docs: {
       description: {
         story:
-          "Birden fazla bağımsız ButtonGroup yan yana — dış konteynerle gap verin.",
+          "Multiple independent ButtonGroups side by side — separate them with an outer flex gap.",
       },
     },
   },
   render: () => (
     <div className="inline-flex gap-2">
       <ButtonGroup>
-        <Button variant="outline" icon={<AlignLeft />} aria-label="Sola" />
-        <Button variant="outline" icon={<AlignCenter />} aria-label="Orta" active />
-        <Button variant="outline" icon={<AlignRight />} aria-label="Sağa" />
+        <Button variant="outline" icon={<AlignLeft />} aria-label="Align left" />
+        <Button variant="outline" icon={<AlignCenter />} aria-label="Align center" active />
+        <Button variant="outline" icon={<AlignRight />} aria-label="Align right" />
       </ButtonGroup>
       <ButtonGroup>
-        <Button variant="outline" icon={<Bold />} aria-label="Kalın" />
-        <Button variant="outline" icon={<Italic />} aria-label="İtalik" />
+        <Button variant="outline" icon={<Bold />} aria-label="Bold" />
+        <Button variant="outline" icon={<Italic />} aria-label="Italic" />
       </ButtonGroup>
       <ButtonGroup>
-        <Button variant="outline" icon={<Settings />} aria-label="Ayarlar" />
-        <Button variant="outline" icon={<Trash2 />} aria-label="Sil" />
+        <Button variant="outline" icon={<Settings />} aria-label="Settings" />
+        <Button variant="outline" icon={<Trash2 />} aria-label="Delete" />
       </ButtonGroup>
     </div>
   ),
@@ -228,7 +228,7 @@ export const WithInput: Story = {
     docs: {
       description: {
         story:
-          "ButtonGroup, child olarak `<input>` da kabul eder — fuse mantığı aynı şekilde çalışır.",
+          "ButtonGroup also accepts an `<input>` as a child — the fuse logic still applies.",
       },
     },
   },
@@ -236,18 +236,18 @@ export const WithInput: Story = {
     <ButtonGroup>
       <input
         type="text"
-        placeholder="Etiket ekle…"
+        placeholder="Add a tag…"
         className="h-9 px-3 text-sm border border-zinc-300 bg-white text-zinc-900 placeholder:text-zinc-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1 w-48"
       />
-      <Button icon={<Plus />}>Ekle</Button>
+      <Button icon={<Plus />}>Add</Button>
     </ButtonGroup>
   ),
 };
 
 export const Pagination: Story = {
   render: () => (
-    <ButtonGroup aria-label="Sayfa gezinme">
-      <Button variant="outline" icon={<ArrowLeft />} aria-label="İlk" />
+    <ButtonGroup aria-label="Page navigation">
+      <Button variant="outline" icon={<ArrowLeft />} aria-label="First" />
       <Button variant="outline">1</Button>
       <Button variant="outline" active>
         2
@@ -255,7 +255,7 @@ export const Pagination: Story = {
       <Button variant="outline">3</Button>
       <Button variant="outline">4</Button>
       <Button variant="outline">5</Button>
-      <Button variant="outline" icon={<ArrowRight />} aria-label="Son" />
+      <Button variant="outline" icon={<ArrowRight />} aria-label="Last" />
     </ButtonGroup>
   ),
 };
@@ -265,16 +265,16 @@ export const FocusOverlap: Story = {
     docs: {
       description: {
         story:
-          "Tab tuşu ile gezindiğinizde focus halkası her zaman üstte kalır — `isolate` + `[&>*:focus-visible]:z-10` kombinasyonu.",
+          "When tabbing through the group, the focus ring always renders above the neighbours — achieved via `isolate` + `[&>*:focus-visible]:z-10`.",
       },
     },
   },
   render: () => (
     <ButtonGroup>
-      <Button variant="outline">Birinci</Button>
-      <Button variant="outline">İkinci</Button>
-      <Button variant="outline">Üçüncü</Button>
-      <Button variant="outline">Dördüncü</Button>
+      <Button variant="outline">First</Button>
+      <Button variant="outline">Second</Button>
+      <Button variant="outline">Third</Button>
+      <Button variant="outline">Fourth</Button>
     </ButtonGroup>
   ),
 };

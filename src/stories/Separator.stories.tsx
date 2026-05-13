@@ -9,7 +9,7 @@ const meta: Meta<typeof Separator> = {
     docs: {
       description: {
         component:
-          "Yatay veya dikey ayraç. solid / dashed / dotted varyantları, opsiyonel label, decorative mod (semantik olmayan kullanım için role=none).",
+          "Horizontal or vertical divider. solid / dashed / dotted variants, optional label, decorative mode (`role=\"none\"` for purely visual use).",
       },
     },
   },
@@ -22,21 +22,21 @@ const meta: Meta<typeof Separator> = {
     orientation: {
       control: "select",
       options: ["horizontal", "vertical"],
-      description: "Yön.",
+      description: "Orientation.",
     },
     variant: {
       control: "select",
       options: ["solid", "dashed", "dotted"],
-      description: "Çizgi stili.",
+      description: "Line style.",
     },
     label: {
       control: "text",
-      description: "Yatay ayraç ortasında gösterilen metin. Verilirse iki yana ayrılır.",
+      description: "Text shown in the middle of a horizontal divider. When set, the line splits into two segments.",
     },
     decorative: {
       control: "boolean",
       description:
-        "true ise role=none (a11y semantiği yok — yalnızca görsel). false (default) iken role=separator + aria-orientation.",
+        "When true, role=\"none\" (no a11y semantics — visual only). When false (default), role=\"separator\" with aria-orientation.",
     },
   },
 };
@@ -47,9 +47,9 @@ type Story = StoryObj<typeof Separator>;
 export const Default: Story = {
   render: (args) => (
     <div className="max-w-sm">
-      <p className="text-sm text-zinc-600 mb-3">Yukarıdaki içerik.</p>
+      <p className="text-sm text-zinc-600 mb-3">Content above.</p>
       <Separator {...args} />
-      <p className="text-sm text-zinc-600 mt-3">Aşağıdaki içerik.</p>
+      <p className="text-sm text-zinc-600 mt-3">Content below.</p>
     </div>
   ),
 };
@@ -76,9 +76,9 @@ export const Variants: Story = {
 export const WithLabel: Story = {
   render: () => (
     <div className="flex flex-col gap-4 max-w-sm">
-      <Separator label="VEYA" />
-      <Separator label="Bölüm" variant="dashed" />
-      <Separator label="Son" variant="dotted" />
+      <Separator label="OR" />
+      <Separator label="Section" variant="dashed" />
+      <Separator label="End" variant="dotted" />
     </div>
   ),
 };
@@ -86,11 +86,11 @@ export const WithLabel: Story = {
 export const Vertical: Story = {
   render: () => (
     <div className="flex items-center gap-3 h-10">
-      <span className="text-sm text-zinc-600">Sol</span>
+      <span className="text-sm text-zinc-600">Left</span>
       <Separator orientation="vertical" />
-      <span className="text-sm text-zinc-600">Orta</span>
+      <span className="text-sm text-zinc-600">Middle</span>
       <Separator orientation="vertical" variant="dashed" />
-      <span className="text-sm text-zinc-600">Sağ</span>
+      <span className="text-sm text-zinc-600">Right</span>
     </div>
   ),
 };
@@ -99,16 +99,16 @@ export const InMenu: Story = {
   render: () => (
     <div className="w-56 rounded-sm border border-zinc-200 bg-white py-1.5">
       <div className="px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50 cursor-pointer">
-        Profil
+        Profile
       </div>
       <div className="px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50 cursor-pointer">
-        Ayarlar
+        Settings
       </div>
       <div className="my-1">
         <Separator />
       </div>
       <div className="px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50 cursor-pointer">
-        Çıkış
+        Log out
       </div>
     </div>
   ),
@@ -118,7 +118,7 @@ export const Decorative: Story = {
   render: () => (
     <div className="max-w-sm">
       <p className="text-sm text-zinc-600 mb-3">
-        decorative=true → role=none, screen reader bunu atlar.
+        decorative=true → role=none, screen readers skip this element.
       </p>
       <Separator decorative />
     </div>

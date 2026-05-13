@@ -14,7 +14,7 @@ const meta: Meta<typeof RadioGroup> = {
     docs: {
       description: {
         component:
-          "Tek seçimli radio grubu. `<fieldset role=\"radiogroup\">` semantik. Tek state (`value: string`); controlled/uncontrolled. `RadioGroupItem` context'ten state'i okur — Radio + label/description compose eder. 5 size group-wide.",
+          "Single-select radio group. `<fieldset role=\"radiogroup\">` semantic. Single state (`value: string`); controlled / uncontrolled. `RadioGroupItem` reads state from context — composes Radio + label / description. 5 group-wide sizes.",
       },
     },
   },
@@ -39,10 +39,10 @@ type Story = StoryObj<typeof RadioGroup>;
 export const Default: Story = {
   render: (args: RadioGroupProps) => (
     <RadioGroup {...args} defaultValue="apple">
-      <RadioGroupItem value="apple" label="Elma" />
-      <RadioGroupItem value="banana" label="Muz" />
-      <RadioGroupItem value="cherry" label="Kiraz" />
-      <RadioGroupItem value="date" label="Hurma" />
+      <RadioGroupItem value="apple" label="Apple" />
+      <RadioGroupItem value="banana" label="Banana" />
+      <RadioGroupItem value="cherry" label="Cherry" />
+      <RadioGroupItem value="date" label="Date" />
     </RadioGroup>
   ),
 };
@@ -63,39 +63,39 @@ export const WithLegend: Story = {
   render: (args: RadioGroupProps) => (
     <RadioGroup
       {...args}
-      legend="Görünürlük"
-      description="Bu içeriği kimler görebilir?"
+      legend="Visibility"
+      description="Who can see this content?"
       defaultValue="private"
     >
-      <RadioGroupItem value="public" label="Herkese açık" />
-      <RadioGroupItem value="private" label="Özel" />
-      <RadioGroupItem value="invite" label="Yalnızca davetli" />
+      <RadioGroupItem value="public" label="Public" />
+      <RadioGroupItem value="private" label="Private" />
+      <RadioGroupItem value="invite" label="Invite-only" />
     </RadioGroup>
   ),
 };
 
 export const WithDescriptions: Story = {
   render: (args: RadioGroupProps) => (
-    <RadioGroup {...args} legend="Bildirim sıklığı" defaultValue="daily">
+    <RadioGroup {...args} legend="Notification frequency" defaultValue="daily">
       <RadioGroupItem
         value="realtime"
-        label="Gerçek zamanlı"
-        description="Bir şey olduğunda anında bildirim alın."
+        label="Real-time"
+        description="Get notified instantly when something happens."
       />
       <RadioGroupItem
         value="daily"
-        label="Günlük özet"
-        description="Her gün öğleyin bir özet e-postası."
+        label="Daily digest"
+        description="A summary email every day at noon."
       />
       <RadioGroupItem
         value="weekly"
-        label="Haftalık özet"
-        description="Her pazartesi haftalık aktivite raporu."
+        label="Weekly digest"
+        description="A weekly activity report every Monday."
       />
       <RadioGroupItem
         value="never"
-        label="Hiç"
-        description="Bildirim göndermeyin."
+        label="Never"
+        description="Don't send notifications."
       />
     </RadioGroup>
   ),
@@ -111,9 +111,9 @@ export const Sizes: Story = {
           legend={`size = ${size}`}
           defaultValue="a"
         >
-          <RadioGroupItem value="a" label="Seçenek A" />
-          <RadioGroupItem value="b" label="Seçenek B" />
-          <RadioGroupItem value="c" label="Seçenek C" />
+          <RadioGroupItem value="a" label="Option A" />
+          <RadioGroupItem value="b" label="Option B" />
+          <RadioGroupItem value="c" label="Option C" />
         </RadioGroup>
       ))}
     </div>
@@ -123,16 +123,16 @@ export const Sizes: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <RadioGroup legend="Tüm grup disabled" disabled defaultValue="a">
-        <RadioGroupItem value="a" label="Seçenek A" />
-        <RadioGroupItem value="b" label="Seçenek B" />
-        <RadioGroupItem value="c" label="Seçenek C" />
+      <RadioGroup legend="Whole group disabled" disabled defaultValue="a">
+        <RadioGroupItem value="a" label="Option A" />
+        <RadioGroupItem value="b" label="Option B" />
+        <RadioGroupItem value="c" label="Option C" />
       </RadioGroup>
 
-      <RadioGroup legend="Tek item disabled" defaultValue="a">
-        <RadioGroupItem value="a" label="Seçenek A" />
-        <RadioGroupItem value="b" label="Seçenek B (devre dışı)" disabled />
-        <RadioGroupItem value="c" label="Seçenek C" />
+      <RadioGroup legend="Single item disabled" defaultValue="a">
+        <RadioGroupItem value="a" label="Option A" />
+        <RadioGroupItem value="b" label="Option B (disabled)" disabled />
+        <RadioGroupItem value="c" label="Option C" />
       </RadioGroup>
     </div>
   ),
@@ -141,13 +141,13 @@ export const Disabled: Story = {
 export const Invalid: Story = {
   render: () => (
     <RadioGroup
-      legend="Bir seçenek seçmelisin"
-      description="Devam etmek için seçim yap."
+      legend="You must pick an option"
+      description="Make a selection to continue."
       invalid
     >
-      <RadioGroupItem value="a" label="Seçenek A" />
-      <RadioGroupItem value="b" label="Seçenek B" />
-      <RadioGroupItem value="c" label="Seçenek C" />
+      <RadioGroupItem value="a" label="Option A" />
+      <RadioGroupItem value="b" label="Option B" />
+      <RadioGroupItem value="c" label="Option C" />
     </RadioGroup>
   ),
 };
@@ -165,21 +165,21 @@ export const Controlled: Story = {
           <RadioGroupItem
             value="free"
             label="Free"
-            description="Bireysel projeler için ideal."
+            description="Ideal for solo projects."
           />
           <RadioGroupItem
             value="pro"
             label="Pro"
-            description="Profesyoneller için gelişmiş özellikler."
+            description="Advanced features for professionals."
           />
           <RadioGroupItem
             value="enterprise"
             label="Enterprise"
-            description="Ölçeklenebilir kurumsal çözüm."
+            description="Scalable solution for organizations."
           />
         </RadioGroup>
         <p className="text-sm text-zinc-600">
-          Seçili:{" "}
+          Selected:{" "}
           <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">{value}</code>
         </p>
       </div>
@@ -198,7 +198,7 @@ export const FormSubmit: Story = {
       }}
     >
       <RadioGroup
-        legend="Plan seç"
+        legend="Pick a plan"
         name="plan"
         defaultValue="pro"
       >

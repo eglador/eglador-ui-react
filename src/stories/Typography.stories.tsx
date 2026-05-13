@@ -10,7 +10,7 @@ const meta: Meta<typeof Typography> = {
     docs: {
       description: {
         component:
-          "Tutarlı metin rendering bileşeni. Heading'ler, paragraph, lead, blockquote, code, kbd; color (default/muted), align, weight, truncate, line clamping.",
+          "Consistent text rendering primitive. Headings, paragraph, lead, blockquote, code, kbd; color (default / muted), align, weight, truncate, line clamping.",
       },
     },
   },
@@ -66,10 +66,10 @@ export const Default: Story = {};
 export const Headings: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <Typography variant="h1">Heading 1 — Tilki tembel köpeğin üstünden atlar</Typography>
-      <Typography variant="h2">Heading 2 — Tilki tembel köpeğin üstünden atlar</Typography>
-      <Typography variant="h3">Heading 3 — Tilki tembel köpeğin üstünden atlar</Typography>
-      <Typography variant="h4">Heading 4 — Tilki tembel köpeğin üstünden atlar</Typography>
+      <Typography variant="h1">Heading 1 — The quick brown fox jumps over the lazy dog</Typography>
+      <Typography variant="h2">Heading 2 — The quick brown fox jumps over the lazy dog</Typography>
+      <Typography variant="h3">Heading 3 — The quick brown fox jumps over the lazy dog</Typography>
+      <Typography variant="h4">Heading 4 — The quick brown fox jumps over the lazy dog</Typography>
     </div>
   ),
 };
@@ -78,20 +78,20 @@ export const BodyText: Story = {
   render: () => (
     <div className="flex flex-col gap-3 max-w-lg">
       <Typography variant="lead">
-        Lead — Daha büyük bir giriş paragrafı, okuyucuyu içeri çeker.
+        Lead — A larger opening paragraph to pull the reader in.
       </Typography>
       <Typography variant="large">
-        Large — Normal paragraftan biraz daha büyük metin.
+        Large — Slightly larger than a regular paragraph.
       </Typography>
       <Typography variant="p">
         Paragraph — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </Typography>
       <Typography variant="small">
-        Small — Daha küçük, ikincil bilgi parçası.
+        Small — A smaller, secondary piece of information.
       </Typography>
       <Typography variant="muted">
-        Muted — Zaman damgaları veya yardımcı metin gibi soluk içerik.
+        Muted — Faded content like timestamps or helper text.
       </Typography>
     </div>
   ),
@@ -109,9 +109,9 @@ export const Colors: Story = {
 export const Alignment: Story = {
   render: () => (
     <div className="flex flex-col gap-2 max-w-lg">
-      <Typography align="left">Sola hizalı metin</Typography>
-      <Typography align="center">Ortalı metin</Typography>
-      <Typography align="right">Sağa hizalı metin</Typography>
+      <Typography align="left">Left-aligned text</Typography>
+      <Typography align="center">Centered text</Typography>
+      <Typography align="right">Right-aligned text</Typography>
     </div>
   ),
 };
@@ -133,7 +133,7 @@ export const Weights: Story = {
         ] as const
       ).map((weight) => (
         <Typography key={weight} weight={weight}>
-          {weight.charAt(0).toUpperCase() + weight.slice(1)} — metin örneği
+          {weight.charAt(0).toUpperCase() + weight.slice(1)} — sample text
         </Typography>
       ))}
     </div>
@@ -144,7 +144,7 @@ export const Blockquote: Story = {
   render: () => (
     <div className="max-w-lg">
       <Typography variant="blockquote">
-        "Geleceği tahmin etmenin en iyi yolu onu icat etmektir." — Alan Kay
+        "The best way to predict the future is to invent it." — Alan Kay
       </Typography>
     </div>
   ),
@@ -154,13 +154,13 @@ export const List: Story = {
   render: () => (
     <div className="max-w-lg">
       <Typography variant="list">
-        <li>İlk madde — kısa açıklama</li>
-        <li>İkinci madde — bir önceki gibi</li>
+        <li>First item — short description</li>
+        <li>Second item — same as the previous</li>
         <li>
-          Üçüncü madde — uzun bir paragraf da olabilir. Lorem ipsum dolor sit
+          Third item — a longer paragraph also works. Lorem ipsum dolor sit
           amet, consectetur adipiscing elit.
         </li>
-        <li>Dördüncü madde</li>
+        <li>Fourth item</li>
       </Typography>
     </div>
   ),
@@ -170,10 +170,10 @@ export const OrderedList: Story = {
   render: () => (
     <div className="max-w-lg">
       <Typography variant="list" as="ol" className="list-decimal">
-        <li>Önce paketi kur</li>
-        <li>Tailwind v4 için <code className="bg-zinc-100 px-1 rounded-sm text-xs font-mono">@source</code> ekle</li>
-        <li>Bileşeni import et</li>
-        <li>JSX'ine yerleştir</li>
+        <li>Install the package</li>
+        <li>Add the <code className="bg-zinc-100 px-1 rounded-sm text-xs font-mono">@source</code> directive for Tailwind v4</li>
+        <li>Import the component</li>
+        <li>Drop it into your JSX</li>
       </Typography>
     </div>
   ),
@@ -183,22 +183,22 @@ export const CodeAndKbd: Story = {
   render: () => (
     <div className="flex flex-col gap-3 max-w-lg">
       <Typography>
-        Paketi terminalde{" "}
+        Install the package via{" "}
         <Typography variant="code" as="span">
           npm install eglador-ui-react
-        </Typography>{" "}
-        ile kurun.
+        </Typography>
+        .
       </Typography>
       <Typography>
-        Kopyalamak için{" "}
+        To copy, press{" "}
         <Typography variant="kbd" as="span">
           Ctrl
         </Typography>{" "}
         +{" "}
         <Typography variant="kbd" as="span">
           C
-        </Typography>{" "}
-        tuşlayın.
+        </Typography>
+        .
       </Typography>
     </div>
   ),
@@ -208,8 +208,8 @@ export const Truncate: Story = {
   render: (args: TypographyProps) => (
     <div className="max-w-xs">
       <Typography {...args} truncate>
-        Bu, konteynır genişliğini aştığında ellipsis ile kısaltılması gereken
-        uzun bir metindir.
+        This is a long line of text that should be truncated with an ellipsis
+        when it exceeds the container width.
       </Typography>
     </div>
   ),
@@ -238,10 +238,10 @@ export const CustomElement: Story = {
   render: () => (
     <div className="flex flex-col gap-2">
       <Typography variant="h3" as="div">
-        H3 stiliyle div olarak render edildi
+        Rendered as a div with H3 styling
       </Typography>
       <Typography variant="p" as="span">
-        Paragraph stiliyle span olarak render edildi
+        Rendered as a span with paragraph styling
       </Typography>
     </div>
   ),
@@ -250,30 +250,29 @@ export const CustomElement: Story = {
 export const ArticleExample: Story = {
   render: () => (
     <article className="max-w-xl flex flex-col gap-4">
-      <Typography variant="h1">Modern UI'lar İnşa Etmek</Typography>
+      <Typography variant="h1">Building Modern UIs</Typography>
       <Typography variant="lead" color="muted">
-        React ve Tailwind CSS ile güzel, erişilebilir kullanıcı arayüzleri
-        oluşturmaya yönelik kapsamlı bir rehber.
+        A comprehensive guide to building beautiful, accessible user
+        interfaces with React and Tailwind CSS.
       </Typography>
       <Separator />
       <Typography>
-        Modern web geliştirme son on yılda önemli ölçüde gelişti. Bileşen-tabanlı
-        mimariler standart hâline geldi ve geliştiricilerin karmaşık arayüzleri
-        basit, yeniden kullanılabilir parçalardan inşa etmesine olanak tanıdı.
+        Modern web development has evolved significantly in the past decade.
+        Component-based architectures have become the norm, letting developers
+        compose complex UIs from small, reusable pieces.
       </Typography>
-      <Typography variant="h2">Başlangıç</Typography>
+      <Typography variant="h2">Getting started</Typography>
       <Typography>
-        Başlamak için{" "}
+        To begin, install the dependencies with{" "}
         <Typography variant="code" as="span">
           npm install
-        </Typography>{" "}
-        ile gerekli bağımlılıkları kurun. Bu, bileşen geliştirmeye başlamak için
-        ihtiyacınız olan her şeyi kurar.
+        </Typography>
+        . That sets up everything you need to start building components.
       </Typography>
       <Typography variant="blockquote">
-        "Sadelik nihai sofistikasyondur." — Leonardo da Vinci
+        "Simplicity is the ultimate sophistication." — Leonardo da Vinci
       </Typography>
-      <Typography variant="muted">12 Mayıs 2026 · 5 dk okuma</Typography>
+      <Typography variant="muted">May 12, 2026 · 5 min read</Typography>
     </article>
   ),
 };
@@ -283,7 +282,7 @@ export const RTL: Story = {
     docs: {
       description: {
         story:
-          "RTL (sağdan sola) yön. Blockquote'un `border-s-4` ve list'in `ms-6` gibi logical Tailwind sınıfları kullandığı için yön ebeveynin `dir` attribute'undan otomatik çıkarılır.",
+          "RTL (right-to-left) direction. Because blockquote uses `border-s-4` and lists use `ms-6` (logical Tailwind classes), the direction is automatically inferred from the parent's `dir` attribute.",
       },
     },
   },

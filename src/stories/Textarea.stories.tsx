@@ -19,12 +19,12 @@ const meta: Meta<typeof Textarea> = {
     docs: {
       description: {
         component:
-          "Multi-line text input. 3 variant (outline / soft / ghost), 5 size, 2 shape, 4 resize davranışı (none/vertical/horizontal/both), `autoGrow` + `maxRows` ile içerik kadar büyüme. InputGroup içinde `InputGroupTextarea` ile kullanılabilir (block-end addon ile toolbar/Send pattern).",
+          "Multi-line text input. 3 variants (outline / soft / ghost), 5 sizes, 2 shapes, 4 resize modes (none / vertical / horizontal / both), `autoGrow` + `maxRows` to grow with content. Inside an InputGroup, use `InputGroupTextarea` (block-end addon enables a toolbar / Send pattern).",
       },
     },
   },
   args: {
-    placeholder: "Bir şeyler yazın…",
+    placeholder: "Write something…",
     variant: "outline",
     size: "md",
     shape: "rounded",
@@ -120,22 +120,22 @@ export const AutoGrow: Story = {
     docs: {
       description: {
         story:
-          "`autoGrow` → içerik kadar yükseklik. `maxRows` ile tavan sınırı; üstüne çıkarsa scroll.",
+          "`autoGrow` → height matches content. `maxRows` caps it; beyond that the textarea scrolls.",
       },
     },
   },
   render: () => (
     <div className="flex flex-col gap-4 w-80">
       <div>
-        <Label className="mb-1.5 block">Sınırsız auto-grow</Label>
-        <Textarea autoGrow placeholder="Yazmaya başlayın, kutu kendini büyütür…" />
+        <Label className="mb-1.5 block">Unlimited auto-grow</Label>
+        <Textarea autoGrow placeholder="Start typing — the box grows itself…" />
       </div>
       <div>
-        <Label className="mb-1.5 block">maxRows=5 (üstü scroll)</Label>
+        <Label className="mb-1.5 block">maxRows=5 (then scroll)</Label>
         <Textarea
           autoGrow
           maxRows={5}
-          placeholder="5 satıra kadar büyür, sonra scroll…"
+          placeholder="Grows up to 5 rows, then scrolls…"
         />
       </div>
     </div>
@@ -146,14 +146,14 @@ export const WithLabel: Story = {
   render: () => (
     <div className="flex flex-col gap-1.5 w-80">
       <Label htmlFor="bio" required>
-        Biyografi
+        Bio
       </Label>
       <Textarea
         id="bio"
-        placeholder="Kendinizden kısaca bahsedin…"
+        placeholder="Tell us about yourself…"
         rows={4}
       />
-      <Typography variant="muted">En fazla 500 karakter.</Typography>
+      <Typography variant="muted">500 characters max.</Typography>
     </div>
   ),
 };
@@ -161,15 +161,15 @@ export const WithLabel: Story = {
 export const Invalid: Story = {
   render: () => (
     <div className="flex flex-col gap-1.5 w-80">
-      <Label htmlFor="msg">Mesaj</Label>
+      <Label htmlFor="msg">Message</Label>
       <Textarea
         id="msg"
         aria-invalid
-        defaultValue="Çok kısa"
+        defaultValue="Too short"
         rows={3}
       />
       <Typography variant="muted" className="text-zinc-700">
-        Mesaj en az 20 karakter olmalı.
+        Message must be at least 20 characters.
       </Typography>
     </div>
   ),
@@ -178,10 +178,10 @@ export const Invalid: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-80">
-      <Textarea disabled placeholder="Devre dışı (boş)" />
+      <Textarea disabled placeholder="Disabled (empty)" />
       <Textarea
         disabled
-        defaultValue={"Düzenlenemez\nÇok satırlı içerik\nÖrnek."}
+        defaultValue={"Not editable\nMulti-line content\nSample."}
         rows={4}
       />
     </div>
@@ -195,7 +195,7 @@ export const ReadOnly: Story = {
         readOnly
         rows={4}
         defaultValue={
-          "Salt okunur içerik.\nKopyalanabilir ama düzenlenemez.\nKullanıcı seçim yapabilir."
+          "Read-only content.\nCopyable but not editable.\nThe user can still make a selection."
         }
       />
     </div>
@@ -207,7 +207,7 @@ export const InInputGroup: Story = {
     docs: {
       description: {
         story:
-          "InputGroup içinde `InputGroupTextarea` ile birlikte. `block-start` toolbar, `block-end` Send butonu için ideal.",
+          "Inside an InputGroup with `InputGroupTextarea`. `block-start` is ideal for a toolbar; `block-end` for a Send-style action bar.",
       },
     },
   },
@@ -217,7 +217,7 @@ export const InInputGroup: Story = {
       <div className="w-96">
         <InputGroup>
           <InputGroupTextarea
-            placeholder="Mesajınızı yazın…"
+            placeholder="Write your message…"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             autoGrow
@@ -228,7 +228,7 @@ export const InInputGroup: Story = {
             <InputGroupButton size="icon-xs" aria-label="Emoji">
               <Smile />
             </InputGroupButton>
-            <InputGroupButton size="icon-xs" aria-label="Görsel ekle">
+            <InputGroupButton size="icon-xs" aria-label="Attach image">
               <ImageIcon />
             </InputGroupButton>
             <InputGroupButton
@@ -239,7 +239,7 @@ export const InInputGroup: Story = {
               onClick={() => setValue("")}
             >
               <Send />
-              Gönder
+              Send
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
@@ -253,7 +253,7 @@ export const RichEditor: Story = {
     docs: {
       description: {
         story:
-          "`block-start` formatting toolbar + textarea — basit rich editor şablonu.",
+          "`block-start` formatting toolbar + textarea — a simple rich-editor template.",
       },
     },
   },
@@ -261,15 +261,15 @@ export const RichEditor: Story = {
     <div className="w-96">
       <InputGroup>
         <InputGroupAddon align="block-start">
-          <InputGroupButton size="icon-xs" aria-label="Kalın">
+          <InputGroupButton size="icon-xs" aria-label="Bold">
             <Bold />
           </InputGroupButton>
-          <InputGroupButton size="icon-xs" aria-label="İtalik">
+          <InputGroupButton size="icon-xs" aria-label="Italic">
             <Italic />
           </InputGroupButton>
         </InputGroupAddon>
         <InputGroupTextarea
-          placeholder="Makale içeriği…"
+          placeholder="Article body…"
           rows={6}
           autoGrow
           maxRows={12}

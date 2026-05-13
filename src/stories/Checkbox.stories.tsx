@@ -12,7 +12,7 @@ const meta: Meta<typeof Checkbox> = {
     docs: {
       description: {
         component:
-          "Native `<input type=\"checkbox\">` üzerine kurulu checkbox. 5 size, controlled/uncontrolled, `indeterminate` 3rd-state desteği. Label dış `<Label>` ile compose.",
+          "Checkbox built on a native `<input type=\"checkbox\">`. 5 sizes, controlled / uncontrolled, third-state `indeterminate` support. Compose with external `<Label>` for the label.",
       },
     },
   },
@@ -34,7 +34,14 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args: CheckboxProps) => (
+    <Checkbox
+      key={`${args.defaultChecked}-${args.disabled}-${args.indeterminate}`}
+      {...args}
+    />
+  ),
+};
 
 export const Sizes: Story = {
   render: (args: CheckboxProps) => (
@@ -68,7 +75,7 @@ export const Controlled: Story = {
       <div className="flex flex-col gap-3 items-start">
         <div className="flex items-center gap-3">
           <Checkbox id="ctrl" checked={on} onCheckedChange={setOn} />
-          <Label htmlFor="ctrl">Şartları kabul ediyorum</Label>
+          <Label htmlFor="ctrl">I accept the terms</Label>
         </div>
         <p className="text-sm text-zinc-600">
           State:{" "}
@@ -86,7 +93,7 @@ export const Indeterminate: Story = {
     docs: {
       description: {
         story:
-          "`indeterminate` 3rd state — alt-checkbox'ların bir kısmı seçili olduğunda parent checkbox kullanılır. Native DOM property (HTML attribute değil), `useEffect` ile set edilir.",
+          "`indeterminate` is a third state — used on a parent checkbox when only some children are selected. Set as a native DOM property (not an HTML attribute) via `useEffect`.",
       },
     },
   },
@@ -115,7 +122,7 @@ export const Indeterminate: Story = {
             onCheckedChange={toggleAll}
           />
           <Label htmlFor="all" className="font-semibold">
-            Tümünü seç
+            Select all
           </Label>
         </div>
         <div className="ms-7 flex flex-col gap-1.5">
@@ -143,18 +150,18 @@ export const WithLabel: Story = {
       <div className="flex items-start gap-3">
         <Checkbox id="cb-terms" defaultChecked />
         <div className="flex flex-col gap-0.5">
-          <Label htmlFor="cb-terms">Şartları kabul ediyorum</Label>
+          <Label htmlFor="cb-terms">I accept the terms</Label>
           <Typography variant="muted">
-            Hizmet şartları ve gizlilik politikasını okudum.
+            I have read the terms of service and privacy policy.
           </Typography>
         </div>
       </div>
       <div className="flex items-start gap-3">
         <Checkbox id="cb-marketing" />
         <div className="flex flex-col gap-0.5">
-          <Label htmlFor="cb-marketing">Pazarlama e-postaları</Label>
+          <Label htmlFor="cb-marketing">Marketing emails</Label>
           <Typography variant="muted">
-            Yeni özellikler ve kampanyalar hakkında bilgilendiril.
+            Get updates about new features and campaigns.
           </Typography>
         </div>
       </div>
@@ -162,10 +169,10 @@ export const WithLabel: Story = {
         <Checkbox id="cb-disabled" disabled />
         <div className="flex flex-col gap-0.5">
           <Label htmlFor="cb-disabled" disabled>
-            İki adımlı doğrulama
+            Two-factor authentication
           </Label>
           <Typography variant="muted">
-            Bu hesap için kullanılamıyor.
+            Not available on this account.
           </Typography>
         </div>
       </div>
@@ -180,10 +187,10 @@ export const Invalid: Story = {
         <Checkbox id="cb-invalid" aria-invalid />
         <div className="flex flex-col gap-0.5">
           <Label htmlFor="cb-invalid" required>
-            Şartları kabul et
+            Accept the terms
           </Label>
           <Typography variant="muted" className="text-zinc-700">
-            Devam edebilmek için bu kutuyu işaretlemelisin.
+            You must check this box to continue.
           </Typography>
         </div>
       </div>
@@ -199,10 +206,10 @@ export const FormSubmit: Story = {
         e.preventDefault();
         const fd = new FormData(e.currentTarget);
         const keys = fd.getAll("interests");
-        alert(`Seçilen: ${keys.join(", ") || "yok"}`);
+        alert(`Selected: ${keys.join(", ") || "none"}`);
       }}
     >
-      <p className="text-sm font-medium text-zinc-700">İlgi alanları</p>
+      <p className="text-sm font-medium text-zinc-700">Interests</p>
       {[
         { id: "react", label: "React" },
         { id: "ts", label: "TypeScript" },

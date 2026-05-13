@@ -9,7 +9,7 @@ const meta: Meta<typeof AspectRatio> = {
     docs: {
       description: {
         component:
-          "Çocuklarına belirli bir en/boy oranı dayatan konteynır. Hazır preset'ler (1:1, 16:9, 4:3, 21:9, 3:2, 2:3, 9:16) veya sayısal değer.",
+          "Container that enforces an aspect ratio on its children. Ready-made presets (1:1, 16:9, 4:3, 21:9, 3:2, 2:3, 9:16) or a numeric value.",
       },
     },
   },

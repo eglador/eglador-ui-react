@@ -14,7 +14,7 @@ const meta: Meta<typeof CheckboxGroup> = {
     docs: {
       description: {
         component:
-          "Çoklu seçim checkbox grubu. `<fieldset>` semantik (gerekirse `<legend>`). Tek state (`value: string[]`); controlled/uncontrolled. `CheckboxGroupItem` context'ten state'i okur — Checkbox + label/description compose eder. 5 size group-wide.",
+          "Multi-select checkbox group. `<fieldset>` semantic (optional `<legend>`). Single state (`value: string[]`); controlled / uncontrolled. `CheckboxGroupItem` reads state from context — composes Checkbox + label / description. 5 group-wide sizes.",
       },
     },
   },
@@ -39,10 +39,10 @@ type Story = StoryObj<typeof CheckboxGroup>;
 export const Default: Story = {
   render: (args: CheckboxGroupProps) => (
     <CheckboxGroup {...args} defaultValue={["apple"]}>
-      <CheckboxGroupItem value="apple" label="Elma" />
-      <CheckboxGroupItem value="banana" label="Muz" />
-      <CheckboxGroupItem value="cherry" label="Kiraz" />
-      <CheckboxGroupItem value="date" label="Hurma" />
+      <CheckboxGroupItem value="apple" label="Apple" />
+      <CheckboxGroupItem value="banana" label="Banana" />
+      <CheckboxGroupItem value="cherry" label="Cherry" />
+      <CheckboxGroupItem value="date" label="Date" />
     </CheckboxGroup>
   ),
 };
@@ -62,8 +62,8 @@ export const WithLegend: Story = {
   render: (args: CheckboxGroupProps) => (
     <CheckboxGroup
       {...args}
-      legend="İlgi alanları"
-      description="Birden fazla seçebilirsiniz."
+      legend="Interests"
+      description="You can pick more than one."
       defaultValue={["react"]}
     >
       <CheckboxGroupItem value="react" label="React" />
@@ -78,28 +78,28 @@ export const WithDescriptions: Story = {
   render: (args: CheckboxGroupProps) => (
     <CheckboxGroup
       {...args}
-      legend="Bildirim ayarları"
+      legend="Notification preferences"
       defaultValue={["email", "weekly"]}
     >
       <CheckboxGroupItem
         value="email"
-        label="E-posta bildirimleri"
-        description="Önemli güncellemeler için e-posta al."
+        label="Email notifications"
+        description="Get important updates via email."
       />
       <CheckboxGroupItem
         value="push"
-        label="Push bildirimleri"
-        description="Mobil ve masaüstü push uyarıları."
+        label="Push notifications"
+        description="Mobile and desktop push alerts."
       />
       <CheckboxGroupItem
         value="sms"
-        label="SMS bildirimleri"
-        description="Telefonunuza kısa mesaj gönderir."
+        label="SMS notifications"
+        description="Short text messages to your phone."
       />
       <CheckboxGroupItem
         value="weekly"
-        label="Haftalık özet"
-        description="Her pazartesi haftalık aktivite e-postası."
+        label="Weekly digest"
+        description="A weekly activity email every Monday."
       />
     </CheckboxGroup>
   ),
@@ -115,9 +115,9 @@ export const Sizes: Story = {
           legend={`size = ${size}`}
           defaultValue={["a"]}
         >
-          <CheckboxGroupItem value="a" label="Seçenek A" />
-          <CheckboxGroupItem value="b" label="Seçenek B" />
-          <CheckboxGroupItem value="c" label="Seçenek C" />
+          <CheckboxGroupItem value="a" label="Option A" />
+          <CheckboxGroupItem value="b" label="Option B" />
+          <CheckboxGroupItem value="c" label="Option C" />
         </CheckboxGroup>
       ))}
     </div>
@@ -127,19 +127,19 @@ export const Sizes: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      <CheckboxGroup legend="Tüm grup disabled" disabled defaultValue={["a"]}>
-        <CheckboxGroupItem value="a" label="Seçenek A" />
-        <CheckboxGroupItem value="b" label="Seçenek B" />
-        <CheckboxGroupItem value="c" label="Seçenek C" />
+      <CheckboxGroup legend="Whole group disabled" disabled defaultValue={["a"]}>
+        <CheckboxGroupItem value="a" label="Option A" />
+        <CheckboxGroupItem value="b" label="Option B" />
+        <CheckboxGroupItem value="c" label="Option C" />
       </CheckboxGroup>
 
       <CheckboxGroup
-        legend="Tek item disabled"
+        legend="Single item disabled"
         defaultValue={["a"]}
       >
-        <CheckboxGroupItem value="a" label="Seçenek A" />
-        <CheckboxGroupItem value="b" label="Seçenek B (devre dışı)" disabled />
-        <CheckboxGroupItem value="c" label="Seçenek C" />
+        <CheckboxGroupItem value="a" label="Option A" />
+        <CheckboxGroupItem value="b" label="Option B (disabled)" disabled />
+        <CheckboxGroupItem value="c" label="Option C" />
       </CheckboxGroup>
     </div>
   ),
@@ -148,13 +148,13 @@ export const Disabled: Story = {
 export const Invalid: Story = {
   render: () => (
     <CheckboxGroup
-      legend="En az bir seçenek seçmelisiniz"
-      description="Lütfen bir veya daha fazla öğe işaretleyin."
+      legend="Pick at least one option"
+      description="Please check one or more items."
       invalid
     >
-      <CheckboxGroupItem value="a" label="Seçenek A" />
-      <CheckboxGroupItem value="b" label="Seçenek B" />
-      <CheckboxGroupItem value="c" label="Seçenek C" />
+      <CheckboxGroupItem value="a" label="Option A" />
+      <CheckboxGroupItem value="b" label="Option B" />
+      <CheckboxGroupItem value="c" label="Option C" />
     </CheckboxGroup>
   ),
 };
@@ -165,7 +165,7 @@ export const Controlled: Story = {
     return (
       <div className="flex flex-col gap-3">
         <CheckboxGroup
-          legend="Teknolojiler"
+          legend="Technologies"
           value={value}
           onValueChange={setValue}
         >
@@ -174,7 +174,7 @@ export const Controlled: Story = {
           <CheckboxGroupItem value="svelte" label="Svelte" />
         </CheckboxGroup>
         <p className="text-sm text-zinc-600">
-          Seçili:{" "}
+          Selected:{" "}
           <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
             {JSON.stringify(value)}
           </code>
@@ -184,7 +184,7 @@ export const Controlled: Story = {
           onClick={() => setValue([])}
           className="self-start text-xs text-zinc-700 underline underline-offset-4 cursor-pointer"
         >
-          Hepsini temizle
+          Clear all
         </button>
       </div>
     );
@@ -203,7 +203,7 @@ export const FormSubmit: Story = {
       }}
     >
       <CheckboxGroup
-        legend="İlgi alanları"
+        legend="Interests"
         name="interests"
         defaultValue={["react", "ts"]}
       >

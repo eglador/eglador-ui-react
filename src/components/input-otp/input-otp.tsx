@@ -4,12 +4,13 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import { MinusIcon } from "../../lib/icons";
 
-export type InputOTPSize = "sm" | "md" | "lg" | "xl";
+export type InputOTPSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const SIZES: Record<
   InputOTPSize,
   { slot: string; font: string; sep: string }
 > = {
+  xs: { slot: "h-7 w-7 text-xs", font: "text-xs", sep: "size-2.5" },
   sm: { slot: "h-8 w-8 text-sm", font: "text-sm", sep: "size-3" },
   md: { slot: "h-10 w-10 text-base", font: "text-base", sep: "size-4" },
   lg: { slot: "h-12 w-12 text-lg", font: "text-lg", sep: "size-5" },

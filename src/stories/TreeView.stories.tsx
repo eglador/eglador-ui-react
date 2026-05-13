@@ -17,7 +17,7 @@ const meta: Meta<typeof TreeView> = {
     },
   },
   argTypes: {
-    size: { control: "select", options: ["xs", "sm", "md", "lg"] },
+    size: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
     indentGuides: { control: "boolean" },
     selectable: { control: "boolean" },
     multiSelect: { control: "boolean" },

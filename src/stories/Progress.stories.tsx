@@ -167,7 +167,7 @@ export const FileUpload: Story = {
         </span>
       </div>
       <Progress value={1200} max={4800} size="sm" />
-      <span className="text-xs text-zinc-500">Yükleniyor… 25%</span>
+      <span className="text-xs text-zinc-500">Loading… 25%</span>
     </div>
   ),
 };

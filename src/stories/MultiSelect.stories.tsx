@@ -16,7 +16,7 @@ const meta: Meta<typeof MultiSelect> = {
   },
   argTypes: {
     size: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
-    variant: { control: "select", options: ["outline", "soft"] },
+    variant: { control: "select", options: ["outline", "soft", "ghost"] },
     shape: { control: "select", options: ["square", "rounded", "pill"] },
     searchable: { control: "boolean" },
     disabled: { control: "boolean" },

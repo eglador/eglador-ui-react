@@ -11,12 +11,12 @@ const meta: Meta<typeof Link> = {
     docs: {
       description: {
         component:
-          "Inline link bileşeni. underline (hover/always/none), 5 size (xs/sm/md/lg/xl), sol/sağ icon, external (otomatik `_blank` + `rel=noopener noreferrer` + ExternalLinkIcon), disabled. Button gibi stillenmiş link için `buttonVariants()` helper'ı kullanılır.",
+          "Inline link component. Underline modes (hover / always / none), 5 sizes (xs / sm / md / lg / xl), left/right icons, `external` (auto `_blank` + `rel=noopener noreferrer` + ExternalLinkIcon), `disabled`. For a button-styled link, use `buttonVariants()` on an `<a>` element instead of `Link`.",
       },
     },
   },
   args: {
-    children: "Buraya tıkla",
+    children: "Click here",
     href: "#",
     underline: "hover",
     size: "sm",
@@ -78,13 +78,13 @@ export const WithLeftIcon: Story = {
   render: (args: LinkProps) => (
     <div className="flex gap-6 flex-wrap">
       <Link {...args} icon={<Mail />}>
-        Bize ulaşın
+        Contact us
       </Link>
       <Link {...args} icon={<Download />}>
-        İndir
+        Download
       </Link>
       <Link {...args} icon={<FileText />}>
-        Dokümanlar
+        Documentation
       </Link>
     </div>
   ),
@@ -94,10 +94,10 @@ export const WithRightIcon: Story = {
   render: (args: LinkProps) => (
     <div className="flex gap-6 flex-wrap">
       <Link {...args} iconRight={<ArrowRight />}>
-        Daha fazla
+        Learn more
       </Link>
       <Link {...args} iconRight={<ArrowRight />} underline="always">
-        Tüm makaleler
+        All articles
       </Link>
     </div>
   ),
@@ -108,7 +108,7 @@ export const External: Story = {
     docs: {
       description: {
         story:
-          "`external` prop → otomatik `target=\"_blank\"` + `rel=\"noopener noreferrer\"` + sağda `ExternalLinkIcon`. `iconRight` verilirse external icon yerine onu gösterir.",
+          "`external` → auto `target=\"_blank\"` + `rel=\"noopener noreferrer\"` + a trailing `ExternalLinkIcon`. If you pass `iconRight`, it overrides the external icon.",
       },
     },
   },
@@ -131,10 +131,10 @@ export const Disabled: Story = {
   render: (args: LinkProps) => (
     <div className="flex gap-6 flex-wrap">
       <Link {...args} disabled>
-        Devre dışı
+        Disabled
       </Link>
       <Link {...args} disabled icon={<Download />}>
-        İndir
+        Download
       </Link>
     </div>
   ),
@@ -144,22 +144,22 @@ export const InText: Story = {
   render: (args: LinkProps) => (
     <div className="flex flex-col gap-2 max-w-md text-sm text-zinc-600">
       <p>
-        Daha fazla bilgi için{" "}
+        For more details, check the{" "}
         <Link {...args} href="#" underline="hover">
-          dokümantasyona göz atın
+          documentation
         </Link>{" "}
-        ya da{" "}
+        or browse the{" "}
         <Link {...args} href="#" external>
-          GitHub repo'sunu
-        </Link>{" "}
-        inceleyin.
+          GitHub repo
+        </Link>
+        .
       </p>
       <p>
-        Hesabınızı yönetmek için{" "}
+        To manage your account, head over to{" "}
         <Link {...args} href="#" underline="always">
-          ayarlar
-        </Link>{" "}
-        sayfasına gidin.
+          settings
+        </Link>
+        .
       </p>
     </div>
   ),
@@ -170,7 +170,7 @@ export const AsButton: Story = {
     docs: {
       description: {
         story:
-          "Button stilinde link gerekiyorsa `Link` yerine `<a>` + `buttonVariants()` kullanın. Semantik `role=link` korunur (Button bileşeni `role=button` zorlar).",
+          "If you need a link styled like a button, use `<a>` + `buttonVariants()` instead of `Link`. This preserves the semantic `role=link` (the Button component forces `role=button`).",
       },
     },
   },
