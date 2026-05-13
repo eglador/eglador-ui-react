@@ -11,4 +11,7 @@ export type {
   SpeedDialActionProps,
   SpeedDialDirection,
   SpeedDialSize,
+  SpeedDialShape,
+  SpeedDialShadow,
+  SpeedDialPosition,
 } from "./speed-dial";
