@@ -12,7 +12,7 @@
 
 Eglador UI for React — headless, accessible component library. Compound subcomponents, **Tailwind CSS v4**, zero runtime dependencies.
 
-> **Status:** Pre-alpha — 21/55 components shipped. Tier 1 (Display complete) and most of Tier 2 are done.
+> **Status:** Alpha — 55/55 components shipped.
 
 ## Installation
 
@@ -46,25 +46,23 @@ All components share the same vocabulary:
 - **Palette**: zinc-only (no color schemes; theming handled separately)
 - **A11y**: native HTML inputs, `aria-*` attributes, focus-visible rings, RTL-safe Tailwind logical properties
 
-## Components (21/55)
+## Components (55/55)
 
-**✓ = shipped · — = planned**
+**Layout & Structure (7/7)** — ✓ Accordion · ✓ AspectRatio · ✓ Collapsible · ✓ Resizable · ✓ ScrollArea · ✓ Separator · ✓ Sidebar
 
-**Layout & Structure (2/7)** — — Accordion · ✓ AspectRatio · — Collapsible · — Resizable · — ScrollArea · ✓ Separator · — Sidebar
+**Display (7/7)** — ✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
 
-**Display (7/7) — COMPLETE** — ✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
+**Navigation (7/7)** — ✓ Breadcrumb · ✓ Menubar · ✓ NavigationMenu · ✓ Pagination · ✓ Stepper · ✓ Tabs · ✓ TreeView
 
-**Navigation (0/7)** — — Breadcrumb · — Menubar · — NavigationMenu · — Pagination · — Stepper · — Tabs · — TreeView
+**Forms (15/15)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Switch · ✓ Textarea
 
-**Forms (11/15)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · — InputOTP · ✓ Label · — MultiSelect · — NativeSelect · ✓ Radio · ✓ RadioGroup · — Select · ✓ Switch · ✓ Textarea
+**Date & Time (3/3)** — ✓ Calendar · ✓ DatePicker · ✓ DateTimePicker
 
-**Date & Time (0/3)** — — Calendar · — DatePicker · — DateTimePicker
+**Overlays (10/10)** — ✓ Alert · ✓ AlertDialog · ✓ ContextMenu · ✓ Dialog · ✓ Drawer · ✓ Dropdown · ✓ HoverCard · ✓ Notification · ✓ Popover · ✓ Tooltip
 
-**Overlays (0/10)** — — Alert · — AlertDialog · — ContextMenu · — Dialog · — Drawer · — Dropdown · — HoverCard · — Notification · — Popover · — Tooltip
+**Data (1/1)** — ✓ Table
 
-**Data (0/1)** — — Table
-
-**Misc (1/5)** — — Command · — ImageCropper · ✓ Link · — SpeedDial · — Progress
+**Misc (5/5)** — ✓ Command · ✓ ImageCropper · ✓ Link · ✓ Progress · ✓ SpeedDial
 
 ## Compatibility
 

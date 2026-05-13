@@ -1,0 +1,28 @@
+export {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationFirst,
+  PaginationLast,
+  PaginationEllipsis,
+  usePaginationRange,
+} from "./pagination";
+export type {
+  PaginationProps,
+  PaginationContentProps,
+  PaginationItemProps,
+  PaginationLinkProps,
+  PaginationPreviousProps,
+  PaginationNextProps,
+  PaginationFirstProps,
+  PaginationLastProps,
+  PaginationEllipsisProps,
+  PaginationVariant,
+  PaginationSize,
+  PaginationShape,
+  UsePaginationRangeOptions,
+  PaginationRangeItem,
+} from "./pagination";
