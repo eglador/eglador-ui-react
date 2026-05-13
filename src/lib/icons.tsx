@@ -58,3 +58,6 @@ export const SuccessIcon = icon("SuccessIcon", 2, <><circle cx="12" cy="12" r="1
 
 export const CalendarIcon = icon("CalendarIcon", 2, <><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></>);
 export const UserIcon = icon("UserIcon", 2, <><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></>);
+
+export const PanelLeftIcon = icon("PanelLeftIcon", 2, <><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /></>);
+export const PanelRightIcon = icon("PanelRightIcon", 2, <><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M15 3v18" /></>);
