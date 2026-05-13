@@ -21,7 +21,7 @@ const meta: Meta<typeof InputOTP> = {
     },
   },
   argTypes: {
-    size: { control: "select", options: ["sm", "md", "lg", "xl"] },
+    size: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
     length: { control: "number" },
     disabled: { control: "boolean" },
   },

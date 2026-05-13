@@ -10,7 +10,7 @@ const meta: Meta<typeof Avatar> = {
     docs: {
       description: {
         component:
-          "Profil görseli. Image / initials / icon fallback hiyerarşisi. 5 boyut (xs/sm/md/lg/xl), 3 şekil (circle/rounded/square). AvatarGroup ile stack edilebilir; max ile +N overflow.",
+          "Profile image. Image / initials / icon fallback hierarchy. 5 sizes (xs / sm / md / lg / xl), 3 shapes (circle / rounded / square). Stack multiple avatars with AvatarGroup; cap with `max` and show a `+N` overflow.",
       },
     },
   },

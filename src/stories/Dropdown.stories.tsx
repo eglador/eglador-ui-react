@@ -50,7 +50,7 @@ type Story = StoryObj<typeof Dropdown>;
 export const Default: Story = {
   render: (args: DropdownProps) => (
     <div className="flex items-center justify-center p-16">
-      <Dropdown {...args}>
+      <Dropdown key={String(args.defaultOpen)} {...args}>
         <DropdownTrigger asChild>
           <Button variant="outline" size="sm">
             Open menu

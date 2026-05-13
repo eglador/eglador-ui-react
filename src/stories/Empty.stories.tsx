@@ -19,7 +19,7 @@ const meta: Meta<typeof Empty> = {
     docs: {
       description: {
         component:
-          "Veri yokken gösterilen empty state. Dairesel arka planda icon, opsiyonel title / description / action. 3 boyut (sm / md / lg).",
+          "Empty state shown when there is no data. Icon on a circular background, optional title / description / action. 5 sizes (xs / sm / md / lg / xl).",
       },
     },
   },
@@ -43,8 +43,8 @@ const btnOutline =
 
 export const Default: Story = {
   args: {
-    title: "Veri yok",
-    description: "Şu anda gösterilecek veri bulunmuyor.",
+    title: "No data",
+    description: "There is nothing to show right now.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -55,8 +55,8 @@ export const Default: Story = {
 
 export const CloudStorage: Story = {
   args: {
-    title: "Bulut depolama boş",
-    description: "Dosyalarınıza her yerden erişmek için bulut depolamaya yükleyin.",
+    title: "Cloud storage is empty",
+    description: "Upload to cloud storage to access your files anywhere.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -65,7 +65,7 @@ export const CloudStorage: Story = {
         icon={<Cloud strokeWidth={1} />}
         action={
           <button type="button" className={btnPrimary}>
-            Dosya yükle
+            Upload file
           </button>
         }
       />
@@ -75,19 +75,19 @@ export const CloudStorage: Story = {
 
 export const NoProjects: Story = {
   args: {
-    title: "Henüz proje yok",
-    description: "Henüz bir proje oluşturmadınız. İlk projenizi oluşturarak başlayın.",
+    title: "No projects yet",
+    description: "You haven't created any projects yet. Create your first one to get started.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
       <Empty {...args} icon={<FolderPlus strokeWidth={1} />}>
         <div className="flex gap-2 mt-1">
           <button type="button" className={btnPrimary}>
-            Proje oluştur
+            Create project
           </button>
           <button type="button" className={btnOutline}>
             <Import className="size-3.5" />
-            İçe aktar
+            Import
           </button>
         </div>
       </Empty>
@@ -97,8 +97,8 @@ export const NoProjects: Story = {
 
 export const NoNotifications: Story = {
   args: {
-    title: "Bildirim yok",
-    description: "Her şey güncel. Yeni bildirimler burada görünecek.",
+    title: "No notifications",
+    description: "All caught up. New notifications will appear here.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -107,7 +107,7 @@ export const NoNotifications: Story = {
         icon={<Bell strokeWidth={1} />}
         action={
           <button type="button" className={btnOutline}>
-            Yenile
+            Refresh
           </button>
         }
       />
@@ -118,8 +118,8 @@ export const NoNotifications: Story = {
 export const NotFound: Story = {
   args: {
     size: "lg",
-    title: "404 — Sayfa bulunamadı",
-    description: "Aradığınız sayfa mevcut değil. Aşağıdan arama yapabilirsiniz.",
+    title: "404 — Page not found",
+    description: "The page you're looking for doesn't exist. Try a search below.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-lg">
@@ -129,14 +129,14 @@ export const NotFound: Story = {
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-zinc-400" />
             <input
               type="search"
-              placeholder="Sayfa ara…"
+              placeholder="Search pages…"
               className="w-full h-8 pl-8 pr-2.5 text-xs rounded-sm border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1"
             />
           </div>
           <span className="text-xs text-zinc-400">
-            Yardım için{" "}
+            Need help?{" "}
             <a href="#" className="text-zinc-700 underline underline-offset-2">
-              destek
+              Contact support
             </a>
             .
           </span>
@@ -148,9 +148,9 @@ export const NotFound: Story = {
 
 export const NoSearchResults: Story = {
   args: {
-    title: "Sonuç bulunamadı",
+    title: "No results found",
     description:
-      "Aramanızla eşleşen sonuç yok. Filtrelerinizi veya arama terimlerinizi değiştirmeyi deneyin.",
+      "Nothing matches your search. Try changing your filters or query.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -159,7 +159,7 @@ export const NoSearchResults: Story = {
         icon={<Search strokeWidth={1} />}
         action={
           <button type="button" className={btnOutline}>
-            Filtreleri temizle
+            Clear filters
           </button>
         }
       />
@@ -169,8 +169,8 @@ export const NoSearchResults: Story = {
 
 export const ErrorState: Story = {
   args: {
-    title: "Yüklenemedi",
-    description: "Veriler yüklenirken bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    title: "Couldn't load",
+    description: "Something went wrong while loading the data. Please try again.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -179,7 +179,7 @@ export const ErrorState: Story = {
         icon={<FileX strokeWidth={1} />}
         action={
           <button type="button" className={btnOutline}>
-            Tekrar dene
+            Try again
           </button>
         }
       />
@@ -189,9 +189,9 @@ export const ErrorState: Story = {
 
 export const PermissionDenied: Story = {
   args: {
-    title: "Erişim reddedildi",
+    title: "Access denied",
     description:
-      "Bu içeriği görüntüleme yetkiniz yok. Yöneticinizle iletişime geçin.",
+      "You don't have permission to view this content. Contact your admin.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -202,8 +202,8 @@ export const PermissionDenied: Story = {
 
 export const Offline: Story = {
   args: {
-    title: "Çevrimdışısınız",
-    description: "İnternet bağlantınızı kontrol edin ve tekrar deneyin.",
+    title: "You're offline",
+    description: "Check your internet connection and try again.",
   },
   render: (args: EmptyProps) => (
     <div className="border border-zinc-200 rounded-sm max-w-md">
@@ -212,7 +212,7 @@ export const Offline: Story = {
         icon={<WifiOff strokeWidth={1} />}
         action={
           <button type="button" className={btnOutline}>
-            Tekrar dene
+            Try again
           </button>
         }
       />
@@ -231,8 +231,8 @@ export const Sizes: Story = {
           <Empty
             size={size}
             icon={<Bell strokeWidth={1} />}
-            title={`Boyut: ${size}`}
-            description="Empty state placeholder örneği."
+            title={`Size: ${size}`}
+            description="Empty state placeholder example."
           />
         </div>
       ))}

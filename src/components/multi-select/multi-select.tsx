@@ -7,7 +7,7 @@ import { ChevronDownIcon, XIcon, CheckIcon } from "../../lib/icons";
 import { useFloating } from "../../lib/use-floating";
 
 export type MultiSelectSize = "xs" | "sm" | "md" | "lg" | "xl";
-export type MultiSelectVariant = "outline" | "soft";
+export type MultiSelectVariant = "outline" | "soft" | "ghost";
 export type MultiSelectShape = "square" | "rounded" | "pill";
 
 export interface MultiSelectOption {
@@ -67,6 +67,7 @@ const SHAPES: Record<MultiSelectShape, string> = {
 const VARIANTS: Record<MultiSelectVariant, string> = {
   outline: "border border-zinc-300 bg-white hover:border-zinc-400",
   soft: "border border-transparent bg-zinc-100 hover:bg-zinc-200",
+  ghost: "border border-transparent bg-transparent hover:bg-zinc-100",
 };
 
 export interface MultiSelectProps {

@@ -12,7 +12,7 @@ const meta: Meta<typeof Switch> = {
     docs: {
       description: {
         component:
-          "Toggle switch. Native `<input type=\"checkbox\" role=\"switch\">` (a11y). 5 size (xs/sm/md/lg/xl), controlled (`checked` + `onCheckedChange`) ve uncontrolled (`defaultChecked`) destek. Label dış `<Label>` ile, açıklama `Typography variant=\"muted\"` ile compose edilir.",
+          "Toggle switch. Native `<input type=\"checkbox\" role=\"switch\">` (a11y). 5 sizes (xs / sm / md / lg / xl), controlled (`checked` + `onCheckedChange`) and uncontrolled (`defaultChecked`). Compose with external `<Label>` and `Typography variant=\"muted\"` for description.",
       },
     },
   },
@@ -32,7 +32,14 @@ const meta: Meta<typeof Switch> = {
 export default meta;
 type Story = StoryObj<typeof Switch>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args: SwitchProps) => (
+    <Switch
+      key={`${args.defaultChecked}-${args.disabled}-${args.size}`}
+      {...args}
+    />
+  ),
+};
 
 export const Sizes: Story = {
   render: (args: SwitchProps) => (
@@ -72,7 +79,7 @@ export const Controlled: Story = {
           onClick={() => setOn((v) => !v)}
           className="text-xs text-zinc-700 underline underline-offset-4 cursor-pointer"
         >
-          Dışarıdan toggle et
+          Toggle externally
         </button>
       </div>
     );
@@ -84,7 +91,7 @@ export const Uncontrolled: Story = {
     docs: {
       description: {
         story:
-          "`defaultChecked` ile state internal yönetilir. Form içinde kullanışlı: `name` + `value` ile FormData'ya gider.",
+          "`defaultChecked` manages state internally. Useful inside forms: `name` + `value` go to FormData.",
       },
     },
   },
@@ -104,17 +111,17 @@ export const Uncontrolled: Story = {
           value="on"
           defaultChecked
         />
-        <Label htmlFor="notifications">Bildirimler açık (varsayılan)</Label>
+        <Label htmlFor="notifications">Notifications on (default)</Label>
       </div>
       <div className="flex items-center gap-3">
         <Switch id="marketing" name="marketing" value="on" />
-        <Label htmlFor="marketing">Pazarlama e-postaları (varsayılan kapalı)</Label>
+        <Label htmlFor="marketing">Marketing emails (off by default)</Label>
       </div>
       <button
         type="submit"
         className="mt-2 inline-flex items-center h-8 px-3 text-sm rounded-sm bg-zinc-900 text-white cursor-pointer"
       >
-        Submit (alert ile FormData)
+        Submit (alert with FormData)
       </button>
     </form>
   ),
@@ -126,18 +133,18 @@ export const WithLabel: Story = {
       <div className="flex items-start gap-3">
         <Switch id="airplane" defaultChecked />
         <div className="flex flex-col gap-0.5">
-          <Label htmlFor="airplane">Uçak modu</Label>
+          <Label htmlFor="airplane">Airplane mode</Label>
           <Typography variant="muted">
-            Tüm kablosuz iletişimi devre dışı bırakır.
+            Disables all wireless communication.
           </Typography>
         </div>
       </div>
       <div className="flex items-start gap-3">
         <Switch id="darkmode" />
         <div className="flex flex-col gap-0.5">
-          <Label htmlFor="darkmode">Karanlık mod</Label>
+          <Label htmlFor="darkmode">Dark mode</Label>
           <Typography variant="muted">
-            Düşük ışık koşullarında göze daha yumuşak.
+            Easier on the eyes in low-light environments.
           </Typography>
         </div>
       </div>
@@ -145,10 +152,10 @@ export const WithLabel: Story = {
         <Switch id="sync" disabled defaultChecked />
         <div className="flex flex-col gap-0.5">
           <Label htmlFor="sync" disabled>
-            Otomatik senkronizasyon
+            Auto sync
           </Label>
           <Typography variant="muted">
-            Bu hesap için kullanılamıyor.
+            Not available on this account.
           </Typography>
         </div>
       </div>
@@ -160,10 +167,10 @@ export const SettingsList: Story = {
   render: () => (
     <div className="w-80 border border-zinc-200 rounded-sm divide-y divide-zinc-100">
       {[
-        { id: "email", label: "E-posta bildirimleri", on: true },
-        { id: "push", label: "Push bildirimleri", on: false },
-        { id: "sms", label: "SMS bildirimleri", on: false },
-        { id: "digest", label: "Haftalık özet", on: true },
+        { id: "email", label: "Email notifications", on: true },
+        { id: "push", label: "Push notifications", on: false },
+        { id: "sms", label: "SMS notifications", on: false },
+        { id: "digest", label: "Weekly digest", on: true },
       ].map((item) => (
         <div
           key={item.id}

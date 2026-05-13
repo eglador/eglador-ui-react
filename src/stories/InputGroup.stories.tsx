@@ -33,7 +33,7 @@ const meta: Meta<typeof InputGroup> = {
     docs: {
       description: {
         component:
-          "Input/textarea içine icon, text, button gibi addon'lar yerleştirmek için container. shadcn pattern: tek wrapper'da border + transparent input, `align` prop ile addon konumlanır (inline-start/end, block-start/end). `data-slot=\"input-group-control\"` ile özel input'lar da focus state'e dahil olabilir. Tab order için addon DOM'da input'tan SONRA yer almalı.",
+          "Container for placing icons, text, or buttons alongside an input / textarea. shadcn pattern: single wrapper with border + transparent input; `align` positions addons (inline-start / end, block-start / end). Custom inputs join the focus state via `data-slot=\"input-group-control\"`. For correct tab order, addons appear AFTER the input in the DOM.",
       },
     },
   },
@@ -46,7 +46,7 @@ export const Default: Story = {
   render: () => (
     <div className="w-80">
       <InputGroup>
-        <InputGroupInput placeholder="Ara…" />
+        <InputGroupInput placeholder="Search…" />
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
@@ -60,20 +60,20 @@ export const InlineStart: Story = {
     docs: {
       description: {
         story:
-          "`align=\"inline-start\"` (default) — addon görsel olarak input'un başında. Tab order için DOM'da input'tan sonra yer alır, CSS `order-first` ile öne çekilir.",
+          "`align=\"inline-start\"` (default) — addon visually at the start of the input. Addon stays AFTER the input in the DOM (for tab order) and CSS `order-first` brings it to the front.",
       },
     },
   },
   render: () => (
     <div className="flex flex-col gap-3 w-80">
       <InputGroup>
-        <InputGroupInput placeholder="Site içinde ara…" />
+        <InputGroupInput placeholder="Search the site…" />
         <InputGroupAddon align="inline-start">
           <Search />
         </InputGroupAddon>
       </InputGroup>
       <InputGroup>
-        <InputGroupInput type="email" placeholder="ornek@domain.com" />
+        <InputGroupInput type="email" placeholder="you@example.com" />
         <InputGroupAddon align="inline-start">
           <Mail />
         </InputGroupAddon>
@@ -92,7 +92,7 @@ export const InlineEnd: Story = {
         </InputGroupAddon>
       </InputGroup>
       <InputGroup>
-        <InputGroupInput placeholder="kullaniciadi" />
+        <InputGroupInput placeholder="username" />
         <InputGroupAddon align="inline-end">
           <Globe />
         </InputGroupAddon>
@@ -105,7 +105,7 @@ export const BothSides: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-80">
       <InputGroup>
-        <InputGroupInput placeholder="kullaniciadi" />
+        <InputGroupInput placeholder="username" />
         <InputGroupAddon align="inline-start">
           <AtSign />
         </InputGroupAddon>
@@ -130,10 +130,10 @@ export const WithButton: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-96">
       <InputGroup>
-        <InputGroupInput placeholder="E-posta adresinizi girin…" type="email" />
+        <InputGroupInput placeholder="Enter your email…" type="email" />
         <InputGroupAddon align="inline-end">
           <InputGroupButton variant="solid" size="sm">
-            Abone Ol
+            Subscribe
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
@@ -144,7 +144,7 @@ export const WithButton: Story = {
           defaultValue="https://eglador.com/abc123"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton size="icon-sm" aria-label="Kopyala">
+          <InputGroupButton size="icon-sm" aria-label="Copy">
             <Copy />
           </InputGroupButton>
         </InputGroupAddon>
@@ -161,7 +161,7 @@ export const PasswordToggle: Story = {
         <InputGroup>
           <InputGroupInput
             type={show ? "text" : "password"}
-            placeholder="Şifre"
+            placeholder="Password"
           />
           <InputGroupAddon align="inline-start">
             <Lock />
@@ -170,7 +170,7 @@ export const PasswordToggle: Story = {
             <InputGroupButton
               size="icon-sm"
               onClick={() => setShow((v) => !v)}
-              aria-label={show ? "Şifreyi gizle" : "Şifreyi göster"}
+              aria-label={show ? "Hide password" : "Show password"}
             >
               {show ? <EyeOff /> : <Eye />}
             </InputGroupButton>
@@ -186,7 +186,7 @@ export const BlockStart: Story = {
     docs: {
       description: {
         story:
-          "`align=\"block-start\"` — addon input'un ÜSTÜNE. Genellikle textarea ile rich-editor toolbar'ı için kullanılır.",
+          "`align=\"block-start\"` — addon ABOVE the input. Common for rich-editor toolbars paired with a textarea.",
       },
     },
   },
@@ -194,17 +194,17 @@ export const BlockStart: Story = {
     <div className="w-96">
       <InputGroup>
         <InputGroupAddon align="block-start">
-          <InputGroupButton size="icon-xs" aria-label="Kalın">
+          <InputGroupButton size="icon-xs" aria-label="Bold">
             <Bold />
           </InputGroupButton>
-          <InputGroupButton size="icon-xs" aria-label="İtalik">
+          <InputGroupButton size="icon-xs" aria-label="Italic">
             <Italic />
           </InputGroupButton>
-          <InputGroupButton size="icon-xs" aria-label="Altı çizili">
+          <InputGroupButton size="icon-xs" aria-label="Underline">
             <Underline />
           </InputGroupButton>
         </InputGroupAddon>
-        <InputGroupInput placeholder="Yorumunuzu yazın…" />
+        <InputGroupInput placeholder="Write your comment…" />
       </InputGroup>
     </div>
   ),
@@ -215,19 +215,19 @@ export const BlockEnd: Story = {
     docs: {
       description: {
         story:
-          "`align=\"block-end\"` — addon input'un ALTINA. Chat/mesaj UI'ları için Send butonu vb.",
+          "`align=\"block-end\"` — addon BELOW the input. Useful in chat / message UIs for a Send action row.",
       },
     },
   },
   render: () => (
     <div className="w-96">
       <InputGroup>
-        <InputGroupInput placeholder="Mesajınızı yazın…" />
+        <InputGroupInput placeholder="Write your message…" />
         <InputGroupAddon align="block-end">
           <InputGroupButton size="icon-xs" aria-label="Emoji">
             <Smile />
           </InputGroupButton>
-          <InputGroupButton size="icon-xs" aria-label="Görsel ekle">
+          <InputGroupButton size="icon-xs" aria-label="Attach image">
             <ImageIcon />
           </InputGroupButton>
           <InputGroupButton
@@ -236,7 +236,7 @@ export const BlockEnd: Story = {
             className="ms-auto"
           >
             <Send />
-            Gönder
+            Send
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
@@ -249,19 +249,19 @@ export const FocusRingOnGroup: Story = {
     docs: {
       description: {
         story:
-          "Focus halkası tek bir input yerine TÜM group'u sarar — wrapper'daki `has-[...:focus-visible]:ring-*` selektörü ile.",
+          "The focus ring wraps the WHOLE group rather than just the input — via the wrapper's `has-[...:focus-visible]:ring-*` selector.",
       },
     },
   },
   render: () => (
     <div className="w-80">
       <InputGroup>
-        <InputGroupInput placeholder="Buraya tıkla → ring tüm group'a uygulanır" />
+        <InputGroupInput placeholder="Click here — the ring wraps the whole group" />
         <InputGroupAddon align="inline-start">
           <Search />
         </InputGroupAddon>
         <InputGroupAddon align="inline-end">
-          <InputGroupButton size="icon-sm" aria-label="Kopyala">
+          <InputGroupButton size="icon-sm" aria-label="Copy">
             <Copy />
           </InputGroupButton>
         </InputGroupAddon>
@@ -275,18 +275,18 @@ export const Invalid: Story = {
     docs: {
       description: {
         story:
-          "Input'un `aria-invalid` attribute'u group'un border + ring rengini koyulaştırır (`has-[[aria-invalid=true]]`).",
+          "The input's `aria-invalid` deepens the group's border + ring colour (`has-[[aria-invalid=true]]`).",
       },
     },
   },
   render: () => (
     <div className="flex flex-col gap-1.5 w-80">
-      <Label htmlFor="email-invalid">E-posta</Label>
+      <Label htmlFor="email-invalid">Email</Label>
       <InputGroup>
         <InputGroupInput
           id="email-invalid"
           type="email"
-          defaultValue="geçersiz-email"
+          defaultValue="invalid-email"
           aria-invalid
         />
         <InputGroupAddon align="inline-start">
@@ -294,7 +294,7 @@ export const Invalid: Story = {
         </InputGroupAddon>
       </InputGroup>
       <span className="text-xs text-zinc-700">
-        Geçerli bir e-posta adresi girin.
+        Enter a valid email address.
       </span>
     </div>
   ),
@@ -312,10 +312,10 @@ export const InputGroupButtonVariants: Story = {
       <div className="flex gap-2 items-center">
         <InputGroupButton size="xs">xs</InputGroupButton>
         <InputGroupButton size="sm">sm</InputGroupButton>
-        <InputGroupButton size="icon-xs" aria-label="Kopyala">
+        <InputGroupButton size="icon-xs" aria-label="Copy">
           <Copy />
         </InputGroupButton>
-        <InputGroupButton size="icon-sm" aria-label="Kopyala">
+        <InputGroupButton size="icon-sm" aria-label="Copy">
           <Copy />
         </InputGroupButton>
       </div>

@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import { ChevronRightIcon } from "../../lib/icons";
 
-export type TreeViewSize = "xs" | "sm" | "md" | "lg";
+export type TreeViewSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 interface TreeViewContextValue {
   expanded: Set<string>;
@@ -35,6 +35,7 @@ const SIZES: Record<
   sm: { font: "text-sm", row: "h-7 px-2 gap-1.5", icon: "size-3.5" },
   md: { font: "text-sm", row: "h-8 px-2.5 gap-2", icon: "size-4" },
   lg: { font: "text-base", row: "h-9 px-3 gap-2", icon: "size-5" },
+  xl: { font: "text-lg", row: "h-11 px-3.5 gap-2.5", icon: "size-6" },
 };
 
 export interface TreeViewProps extends React.HTMLAttributes<HTMLUListElement> {

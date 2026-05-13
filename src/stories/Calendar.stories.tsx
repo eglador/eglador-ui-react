@@ -14,12 +14,6 @@ const meta: Meta<typeof Calendar> = {
       },
     },
   },
-  argTypes: {
-    mode: { control: "select", options: ["single", "range"] },
-  },
-  args: {
-    mode: "single",
-  },
 };
 
 export default meta;

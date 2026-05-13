@@ -42,7 +42,7 @@ export const Default: Story = {
     const [bookmarks, setBookmarks] = React.useState(true);
     const [pos, setPos] = React.useState("bottom");
     return (
-      <ContextMenu {...args}>
+      <ContextMenu key={String(args.defaultOpen)} {...args}>
         <ContextMenuTrigger>
           <div className="flex h-40 w-full max-w-md items-center justify-center rounded-md border border-dashed border-zinc-300 bg-zinc-50 text-sm text-zinc-500 select-none">
             Right-click anywhere in this area

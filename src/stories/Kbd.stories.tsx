@@ -9,7 +9,7 @@ const meta: Meta<typeof Kbd> = {
     docs: {
       description: {
         component:
-          "Klavye kısayolu göstergesi. Tek tuş veya `keys` ile kombo. 5 boyut (xs/sm/md/lg/xl), 3 varyant (soft/outline/ghost), 2 şekil (square/rounded). KbdGroup compound API ile compose edilebilir.",
+          "Keyboard shortcut indicator. Single key or `keys` combo. 5 sizes (xs / sm / md / lg / xl), 3 variants (soft / outline / ghost), 2 shapes (square / rounded). Compose with the KbdGroup compound API.",
       },
     },
   },
@@ -51,19 +51,19 @@ export const ComboKeys: Story = {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
         <Kbd {...args} keys={["⌘", "C"]} />
-        <span className="text-sm text-zinc-500">Kopyala</span>
+        <span className="text-sm text-zinc-500">Copy</span>
       </div>
       <div className="flex items-center gap-3">
         <Kbd {...args} keys={["⌘", "V"]} />
-        <span className="text-sm text-zinc-500">Yapıştır</span>
+        <span className="text-sm text-zinc-500">Paste</span>
       </div>
       <div className="flex items-center gap-3">
         <Kbd {...args} keys={["⌘", "Shift", "P"]} />
-        <span className="text-sm text-zinc-500">Komut paleti</span>
+        <span className="text-sm text-zinc-500">Command palette</span>
       </div>
       <div className="flex items-center gap-3">
         <Kbd {...args} keys={["Ctrl", "Alt", "Del"]} />
-        <span className="text-sm text-zinc-500">Görev yöneticisi</span>
+        <span className="text-sm text-zinc-500">Task manager</span>
       </div>
     </div>
   ),
@@ -112,14 +112,14 @@ export const InlineUsage: Story = {
   render: (args: KbdProps) => (
     <div className="flex flex-col gap-3 max-w-sm">
       <p className="text-sm text-zinc-600">
-        Komut paletini açmak için <Kbd {...args} keys={["⌘", "K"]} /> tuşlayın.
+        Press <Kbd {...args} keys={["⌘", "K"]} /> to open the command palette.
       </p>
       <p className="text-sm text-zinc-600">
-        Gezinmek için <Kbd {...args}>↑</Kbd> ve <Kbd {...args}>↓</Kbd>, seçmek için{" "}
-        <Kbd {...args}>Enter</Kbd>.
+        Use <Kbd {...args}>↑</Kbd> and <Kbd {...args}>↓</Kbd> to navigate, and{" "}
+        <Kbd {...args}>Enter</Kbd> to select.
       </p>
       <p className="text-sm text-zinc-600">
-        Kapatmak için <Kbd {...args}>Esc</Kbd>.
+        Press <Kbd {...args}>Esc</Kbd> to close.
       </p>
     </div>
   ),
@@ -133,7 +133,7 @@ export const Group: Story = {
           <Kbd {...args}>⌘</Kbd>
           <Kbd {...args}>K</Kbd>
         </KbdGroup>
-        <span className="text-sm text-zinc-500">Komut paleti</span>
+        <span className="text-sm text-zinc-500">Command palette</span>
       </div>
       <div className="flex items-center gap-3">
         <KbdGroup size={args.size}>
@@ -141,17 +141,17 @@ export const Group: Story = {
           <Kbd {...args}>Shift</Kbd>
           <Kbd {...args}>P</Kbd>
         </KbdGroup>
-        <span className="text-sm text-zinc-500">Hızlı işlemler</span>
+        <span className="text-sm text-zinc-500">Quick actions</span>
       </div>
       <div className="flex items-center gap-3">
         <KbdGroup
           size={args.size}
-          separator={<span className="text-zinc-400 text-xs">sonra</span>}
+          separator={<span className="text-zinc-400 text-xs">then</span>}
         >
           <Kbd {...args}>G</Kbd>
           <Kbd {...args}>H</Kbd>
         </KbdGroup>
-        <span className="text-sm text-zinc-500">Ana sayfaya git (sekans)</span>
+        <span className="text-sm text-zinc-500">Go home (sequence)</span>
       </div>
     </div>
   ),
@@ -160,12 +160,12 @@ export const Group: Story = {
 export const ShortcutList: Story = {
   render: (args: KbdProps) => {
     const shortcuts = [
-      { keys: ["⌘", "N"], label: "Yeni dosya" },
-      { keys: ["⌘", "O"], label: "Dosya aç" },
-      { keys: ["⌘", "S"], label: "Kaydet" },
-      { keys: ["⌘", "Shift", "S"], label: "Farklı kaydet" },
-      { keys: ["⌘", "W"], label: "Sekmeyi kapat" },
-      { keys: ["⌘", "Q"], label: "Çıkış" },
+      { keys: ["⌘", "N"], label: "New file" },
+      { keys: ["⌘", "O"], label: "Open file" },
+      { keys: ["⌘", "S"], label: "Save" },
+      { keys: ["⌘", "Shift", "S"], label: "Save as" },
+      { keys: ["⌘", "W"], label: "Close tab" },
+      { keys: ["⌘", "Q"], label: "Quit" },
     ];
     return (
       <div className="border border-zinc-200 rounded-sm divide-y divide-zinc-100 max-w-xs">

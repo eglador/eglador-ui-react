@@ -17,12 +17,12 @@ const meta: Meta<typeof Button> = {
     docs: {
       description: {
         component:
-          "Buton. 5 varyant (solid / soft / outline / ghost / link), 5 boyut (xs/sm/md/lg/xl), 3 şekil (square/rounded/circle), sol/sağ icon, loading + active + disabled state. Ayrıca `buttonVariants()` helper'ı ile `<a>` etiketini buton gibi stillemek mümkün.",
+          "Button. 5 variants (solid / soft / outline / ghost / link), 5 sizes (xs / sm / md / lg / xl), 3 shapes (square / rounded / circle), left/right icons, loading + active + disabled states. The `buttonVariants()` helper applies the same styling to `<a>` so anchors can look like buttons while keeping native link semantics.",
       },
     },
   },
   args: {
-    children: "Buton",
+    children: "Button",
     variant: "solid",
     size: "md",
     shape: "rounded",
@@ -76,13 +76,13 @@ export const Link: Story = {
   render: (args: ButtonProps) => (
     <div className="flex flex-col gap-3 max-w-sm">
       <p className="text-sm text-zinc-600">
-        Şifrenizi mi unuttunuz?{" "}
-        <Button {...args}>Yardım al</Button>
+        Forgot your password?{" "}
+        <Button {...args}>Get help</Button>
       </p>
       <p className="text-sm text-zinc-600">
-        Hesap oluştur veya{" "}
+        Create an account or{" "}
         <Button {...args} active>
-          giriş yap
+          sign in
         </Button>
         .
       </p>
@@ -95,7 +95,7 @@ export const AsLink: Story = {
     docs: {
       description: {
         story:
-          "`buttonVariants()` helper'ı `<a>` veya `<Link>` elementine buton stilini uygular. Base UI / Radix Slot dep'i gerekmeden semantik `<a>` korunur (role=link, href çalışır).",
+          "The `buttonVariants()` helper applies button styling to an `<a>` or router `<Link>`. The native anchor (role=link, working `href`) is preserved without needing Radix Slot or a similar dep.",
       },
     },
   },
@@ -107,19 +107,19 @@ export const AsLink: Story = {
         rel="noreferrer noopener"
         className={buttonVariants({ variant: "solid" })}
       >
-        GitHub'a git
+        Open GitHub
       </a>
       <a
         href="#docs"
         className={buttonVariants({ variant: "outline", size: "sm" })}
       >
-        Dokümanlar
+        Documentation
       </a>
       <a
         href="#"
         className={buttonVariants({ variant: "ghost", size: "xs" })}
       >
-        Yardım
+        Help
       </a>
     </div>
   ),
@@ -167,16 +167,16 @@ export const WithLeftIcon: Story = {
   render: (args: ButtonProps) => (
     <div className="flex gap-2 items-center flex-wrap">
       <Button {...args} icon={<Plus />}>
-        Yeni öğe
+        New item
       </Button>
       <Button {...args} variant="soft" icon={<Download />}>
-        İndir
+        Download
       </Button>
       <Button {...args} variant="outline" icon={<Settings />}>
-        Ayarlar
+        Settings
       </Button>
       <Button {...args} variant="ghost" icon={<Trash2 />}>
-        Sil
+        Delete
       </Button>
     </div>
   ),
@@ -186,13 +186,13 @@ export const WithRightIcon: Story = {
   render: (args: ButtonProps) => (
     <div className="flex gap-2 items-center flex-wrap">
       <Button {...args} iconRight={<ArrowRight />}>
-        Devam et
+        Continue
       </Button>
       <Button {...args} variant="soft" iconRight={<Download />}>
-        Dosya indir
+        Download file
       </Button>
       <Button {...args} variant="outline" iconRight={<Plus />}>
-        Ekle
+        Add
       </Button>
     </div>
   ),
@@ -202,11 +202,11 @@ export const IconOnly: Story = {
   args: { children: undefined },
   render: (args: ButtonProps) => (
     <div className="flex gap-2 items-center">
-      <Button {...args} icon={<Settings />} aria-label="Ayarlar" />
-      <Button {...args} icon={<Plus />} aria-label="Ekle" variant="soft" />
-      <Button {...args} icon={<Trash2 />} aria-label="Sil" variant="outline" />
-      <Button {...args} icon={<Heart />} aria-label="Beğen" shape="circle" />
-      <Button {...args} icon={<Download />} aria-label="İndir" variant="ghost" />
+      <Button {...args} icon={<Settings />} aria-label="Settings" />
+      <Button {...args} icon={<Plus />} aria-label="Add" variant="soft" />
+      <Button {...args} icon={<Trash2 />} aria-label="Delete" variant="outline" />
+      <Button {...args} icon={<Heart />} aria-label="Like" shape="circle" />
+      <Button {...args} icon={<Download />} aria-label="Download" variant="ghost" />
     </div>
   ),
 };
@@ -215,14 +215,14 @@ export const Loading: Story = {
   render: (args: ButtonProps) => (
     <div className="flex gap-2 items-center flex-wrap">
       <Button {...args} loading>
-        Kaydediliyor…
+        Saving…
       </Button>
       <Button {...args} variant="soft" loading>
-        Yükleniyor
+        Loading
       </Button>
       <Button {...args} variant="outline" loading icon={<Trash2 />} />
       <Button {...args} variant="ghost" loading>
-        Bekleyin
+        Please wait
       </Button>
     </div>
   ),
@@ -273,14 +273,14 @@ export const FormSubmit: Story = {
     <form className="flex flex-col gap-3 max-w-xs" onSubmit={(e) => e.preventDefault()}>
       <input
         type="email"
-        placeholder="ornek@domain.com"
+        placeholder="you@example.com"
         className="h-9 px-3 text-sm rounded-sm border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1"
       />
       <div className="flex gap-2 justify-end">
         <Button variant="ghost" type="reset">
-          İptal
+          Cancel
         </Button>
-        <Button type="submit">Gönder</Button>
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   ),

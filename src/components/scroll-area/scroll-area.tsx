@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 
 export type ScrollAreaOrientation = "vertical" | "horizontal" | "both";
 export type ScrollAreaScrollbarVisibility = "auto" | "always" | "hover";
-export type ScrollAreaSize = "xs" | "sm" | "md" | "lg";
+export type ScrollAreaSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const OVERFLOW: Record<ScrollAreaOrientation, string> = {
   vertical: "overflow-y-auto overflow-x-hidden",
@@ -18,6 +18,7 @@ const SCROLLBAR_SIZE: Record<ScrollAreaSize, string> = {
   sm: "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5",
   md: "[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2",
   lg: "[&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar]:h-2.5",
+  xl: "[&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar]:h-3",
 };
 
 const SCROLLBAR_BASE = [

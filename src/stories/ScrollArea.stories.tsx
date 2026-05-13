@@ -30,7 +30,7 @@ const meta: Meta<typeof ScrollArea> = {
       control: "select",
       options: ["auto", "always", "hover"],
     },
-    scrollbarSize: { control: "select", options: ["xs", "sm", "md", "lg"] },
+    scrollbarSize: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
   },
 };
 
@@ -92,7 +92,7 @@ export const HoverScrollbar: Story = {
 export const ScrollbarSizes: Story = {
   render: () => (
     <div className="flex gap-4">
-      {(["xs", "sm", "md", "lg"] as const).map((size) => (
+      {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
         <ScrollArea
           key={size}
           scrollbarSize={size}

@@ -23,8 +23,6 @@ const meta: Meta<typeof Accordion> = {
     },
   },
   args: {
-    type: "single",
-    collapsible: true,
     variant: "underline",
     size: "md",
     shape: "rounded",
@@ -33,8 +31,6 @@ const meta: Meta<typeof Accordion> = {
     disabled: false,
   },
   argTypes: {
-    type: { control: "select", options: ["single", "multiple"] },
-    collapsible: { control: "boolean" },
     variant: {
       control: "select",
       options: ["underline", "outline", "soft"],

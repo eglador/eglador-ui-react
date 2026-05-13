@@ -12,7 +12,7 @@ const meta: Meta<typeof Radio> = {
     docs: {
       description: {
         component:
-          "Tek bir radio butonu. Native `<input type=\"radio\">`. Genellikle `RadioGroup` içinde kullanılır (mutually-exclusive seçim). Standalone kullanım için `defaultChecked` veya `checked` + `onCheckedChange`.",
+          "A single radio button. Native `<input type=\"radio\">`. Typically used inside a `RadioGroup` (mutually-exclusive selection). For standalone usage, `defaultChecked` or `checked` + `onCheckedChange`.",
       },
     },
   },
@@ -32,7 +32,14 @@ const meta: Meta<typeof Radio> = {
 export default meta;
 type Story = StoryObj<typeof Radio>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args: RadioProps) => (
+    <Radio
+      key={`${args.defaultChecked}-${args.disabled}`}
+      {...args}
+    />
+  ),
+};
 
 export const Sizes: Story = {
   render: (args: RadioProps) => (
@@ -65,7 +72,7 @@ export const Controlled: Story = {
       <div className="flex flex-col gap-3 items-start">
         <div className="flex items-center gap-3">
           <Radio id="ctrl" checked={on} onCheckedChange={setOn} />
-          <Label htmlFor="ctrl">Tek başına radio</Label>
+          <Label htmlFor="ctrl">Standalone radio</Label>
         </div>
         <p className="text-sm text-zinc-600">
           State:{" "}
@@ -84,18 +91,18 @@ export const WithLabel: Story = {
       <div className="flex items-start gap-3">
         <Radio id="r-public" name="visibility" value="public" defaultChecked />
         <div className="flex flex-col gap-0.5">
-          <Label htmlFor="r-public">Herkese açık</Label>
+          <Label htmlFor="r-public">Public</Label>
           <Typography variant="muted">
-            Herkes görebilir ve arayabilir.
+            Anyone can see and search for this.
           </Typography>
         </div>
       </div>
       <div className="flex items-start gap-3">
         <Radio id="r-private" name="visibility" value="private" />
         <div className="flex flex-col gap-0.5">
-          <Label htmlFor="r-private">Özel</Label>
+          <Label htmlFor="r-private">Private</Label>
           <Typography variant="muted">
-            Yalnızca sen ve davet ettiğin kişiler erişebilir.
+            Only you and people you invite can access.
           </Typography>
         </div>
       </div>
@@ -103,10 +110,10 @@ export const WithLabel: Story = {
         <Radio id="r-disabled" name="visibility" value="invite" disabled />
         <div className="flex flex-col gap-0.5">
           <Label htmlFor="r-disabled" disabled>
-            Yalnızca davetli
+            Invite-only
           </Label>
           <Typography variant="muted">
-            Bu plan için kullanılamıyor.
+            Not available on this plan.
           </Typography>
         </div>
       </div>
@@ -119,14 +126,14 @@ export const NativeGroup: Story = {
     docs: {
       description: {
         story:
-          "Tek bir Radio'yu native HTML radio davranışında kullanmak için aynı `name`'le birden çok Radio render edin. Browser otomatik mutually-exclusive yapar. Üst-seviye yönetim için `RadioGroup` bileşeni (sıradaki) daha uygun.",
+          "To use a single Radio in native HTML radio behaviour, render multiple Radios with the same `name`. The browser handles mutual exclusion. For higher-level management, use the `RadioGroup` component (next).",
       },
     },
   },
   render: () => (
     <fieldset className="flex flex-col gap-2 max-w-sm">
       <legend className="text-sm font-medium text-zinc-700 mb-1">
-        Plan seç (native HTML)
+        Choose a plan (native HTML)
       </legend>
       {[
         { value: "free", label: "Free" },
@@ -157,10 +164,10 @@ export const Invalid: Story = {
       <Radio id="r-invalid" aria-invalid />
       <div className="flex flex-col gap-0.5">
         <Label htmlFor="r-invalid" required>
-          Bir seçenek seç
+          Pick an option
         </Label>
         <Typography variant="muted" className="text-zinc-700">
-          Devam etmek için seçim yapmalısın.
+          You must make a selection to continue.
         </Typography>
       </div>
     </div>

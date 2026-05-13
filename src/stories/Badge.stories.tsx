@@ -11,7 +11,7 @@ const meta: Meta<typeof Badge> = {
     docs: {
       description: {
         component:
-          "Etiket / durum rozeti. 3 varyant (solid / soft / outline), 3 boyut (xs / sm / md), 3 şekil (square / rounded / pill), opsiyonel ikonlar (sol / sağ), removable mod.",
+          "Tag / status badge. 3 variants (solid / soft / outline), 5 sizes (xs / sm / md / lg / xl), 3 shapes (square / rounded / pill), optional left / right icons, removable mode.",
       },
     },
   },
@@ -96,16 +96,16 @@ export const WithIcons: Story = {
         Featured
       </Badge>
       <Badge {...args} icon={<Zap />}>
-        Yeni
+        New
       </Badge>
       <Badge {...args} icon={<AlertTriangle />}>
-        Kritik
+        Critical
       </Badge>
       <Badge {...args} icon={<Check />}>
-        Doğrulandı
+        Verified
       </Badge>
       <Badge {...args} iconRight={<Clock />}>
-        Beklemede
+        Pending
       </Badge>
     </div>
   ),
@@ -134,7 +134,7 @@ export const Removable: Story = {
           </Badge>
         ))}
         {tags.length === 0 && (
-          <span className="text-sm text-zinc-400">Tüm etiketler kaldırıldı</span>
+          <span className="text-sm text-zinc-400">All tags removed</span>
         )}
       </div>
     );
@@ -145,16 +145,16 @@ export const StatusBadges: Story = {
   render: (args: BadgeProps) => (
     <div className="flex gap-2 flex-wrap">
       <Badge {...args} variant="solid" shape="pill" icon={<Check />}>
-        Aktif
+        Active
       </Badge>
       <Badge {...args} variant="soft" shape="pill" icon={<Clock />}>
-        Beklemede
+        Pending
       </Badge>
       <Badge {...args} variant="outline" shape="pill" icon={<AlertTriangle />}>
-        Hata
+        Error
       </Badge>
       <Badge {...args} variant="soft" shape="pill">
-        Taslak
+        Draft
       </Badge>
     </div>
   ),
@@ -164,10 +164,10 @@ export const InText: Story = {
   render: (args: BadgeProps) => (
     <div className="flex flex-col gap-2 max-w-md text-sm text-zinc-600">
       <p>
-        Yeni özellik <Badge {...args} size="xs">YENİ</Badge> az önce eklendi.
+        New feature <Badge {...args} size="xs">NEW</Badge> just landed.
       </p>
       <p>
-        Hesabınız <Badge {...args} size="xs" variant="outline">PRO</Badge> planında.
+        Your account is on the <Badge {...args} size="xs" variant="outline">PRO</Badge> plan.
       </p>
     </div>
   ),

@@ -9,7 +9,7 @@ const meta: Meta<typeof Label> = {
     docs: {
       description: {
         component:
-          "Form etiketi. 3 boyut (xs / sm / md), required indicator (*), disabled state. `<label>` semantik; `htmlFor` ile bir input'a bağlanabilir.",
+          "Form label. 5 sizes (xs / sm / md / lg / xl), required indicator (*), disabled state. Renders a semantic `<label>`; associate with an input via `htmlFor`.",
       },
     },
   },
@@ -58,11 +58,11 @@ export const Sizes: Story = {
 };
 
 export const Required: Story = {
-  args: { required: true, children: "E-posta Adresi" },
+  args: { required: true, children: "Email address" },
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, children: "Devre Dışı Etiket" },
+  args: { disabled: true, children: "Disabled label" },
 };
 
 export const WithInput: Story = {
@@ -70,32 +70,32 @@ export const WithInput: Story = {
     <div className="flex flex-col gap-3 max-w-xs">
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="email" required>
-          E-posta
+          Email
         </Label>
         <input
           id="email"
           type="email"
-          placeholder="ornek@domain.com"
+          placeholder="you@example.com"
           className={inputCls}
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="name">Ad Soyad</Label>
+        <Label htmlFor="name">Full name</Label>
         <input
           id="name"
           type="text"
-          placeholder="Ahmet Yılmaz"
+          placeholder="Jane Doe"
           className={inputCls}
         />
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="disabled-field" disabled>
-          Devre Dışı Alan
+          Disabled field
         </Label>
         <input
           id="disabled-field"
           type="text"
-          placeholder="Düzenlenemez"
+          placeholder="Not editable"
           disabled
           className={inputCls}
         />
@@ -113,7 +113,7 @@ export const WithCheckbox: Story = {
           type="checkbox"
           className="size-4 rounded-sm border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1 cursor-pointer"
         />
-        <Label htmlFor="terms">Şartları kabul ediyorum</Label>
+        <Label htmlFor="terms">I accept the terms</Label>
       </div>
       <div className="flex items-center gap-2">
         <input
@@ -121,7 +121,7 @@ export const WithCheckbox: Story = {
           type="checkbox"
           className="size-4 rounded-sm border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-zinc-900 focus:ring-offset-1 cursor-pointer"
         />
-        <Label htmlFor="newsletter">Bültene abone ol</Label>
+        <Label htmlFor="newsletter">Subscribe to the newsletter</Label>
       </div>
     </div>
   ),

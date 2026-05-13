@@ -11,12 +11,12 @@ const meta: Meta<typeof Input> = {
     docs: {
       description: {
         component:
-          "Text input. 3 variant (outline / soft / ghost), 5 size (xs/sm/md/lg/xl), 3 shape (square/rounded/pill). Tüm standart HTML input type'ları (text/email/password/number/search/url/tel/date/file/...). Icon/button/addon kompozisyonu için **InputGroup** (sıradaki bileşen) kullanın. Hata göstergesi için `aria-invalid` attribute. Form composition: dış `Label` + `Typography variant=muted` helper text.",
+          "Text input. 3 variants (outline / soft / ghost), 5 sizes (xs / sm / md / lg / xl), 3 shapes (square / rounded / pill). All standard HTML input types (text / email / password / number / search / url / tel / date / file / …). For icon / button / addon composition, use **InputGroup**. For errors use the `aria-invalid` attribute. Compose with external `Label` and `Typography variant=\"muted\"` helper text.",
       },
     },
   },
   args: {
-    placeholder: "Bir şeyler yazın…",
+    placeholder: "Write something…",
     variant: "outline",
     size: "md",
     shape: "rounded",
@@ -92,12 +92,12 @@ export const Types: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
       <Input type="text" placeholder="Text" />
-      <Input type="email" placeholder="ornek@domain.com" />
+      <Input type="email" placeholder="you@example.com" />
       <Input type="password" placeholder="••••••••" />
       <Input type="number" placeholder="123" />
-      <Input type="search" placeholder="Ara…" />
+      <Input type="search" placeholder="Search…" />
       <Input type="url" placeholder="https://example.com" />
-      <Input type="tel" placeholder="+90 555 000 00 00" />
+      <Input type="tel" placeholder="+1 555 000 0000" />
       <Input type="date" />
       <Input type="time" />
       <Input type="file" />
@@ -110,21 +110,21 @@ export const WithLabel: Story = {
     <div className="flex flex-col gap-3 w-72">
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="email" required>
-          E-posta
+          Email
         </Label>
         <Input
           id="email"
           type="email"
-          placeholder="ornek@domain.com"
+          placeholder="you@example.com"
           autoComplete="email"
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="username">Kullanıcı Adı</Label>
+        <Label htmlFor="username">Username</Label>
         <Input
           id="username"
           type="text"
-          placeholder="kullaniciadi"
+          placeholder="username"
           autoComplete="username"
         />
       </div>
@@ -135,7 +135,7 @@ export const WithLabel: Story = {
 export const WithHelperText: Story = {
   render: () => (
     <div className="flex flex-col gap-1.5 w-72">
-      <Label htmlFor="password">Şifre</Label>
+      <Label htmlFor="password">Password</Label>
       <Input
         id="password"
         type="password"
@@ -143,7 +143,7 @@ export const WithHelperText: Story = {
         aria-describedby="password-help"
       />
       <Typography variant="muted" id="password-help">
-        En az 8 karakter, bir büyük harf ve bir rakam içermeli.
+        At least 8 characters with one uppercase letter and one number.
       </Typography>
     </div>
   ),
@@ -154,22 +154,22 @@ export const Invalid: Story = {
     docs: {
       description: {
         story:
-          "`aria-invalid={true}` → border ve ring koyulaşır. Hata mesajı için altına `Typography variant=\"muted\"` veya kendi helper text yapınızı kullanın.",
+          "`aria-invalid={true}` → border and ring darken. Pair with a helper line below using `Typography variant=\"muted\"` (or your own helper-text component).",
       },
     },
   },
   render: () => (
     <div className="flex flex-col gap-1.5 w-72">
-      <Label htmlFor="email-invalid">E-posta</Label>
+      <Label htmlFor="email-invalid">Email</Label>
       <Input
         id="email-invalid"
         type="email"
-        defaultValue="geçersiz-email"
+        defaultValue="invalid-email"
         aria-invalid
         aria-describedby="email-error"
       />
       <Typography variant="muted" id="email-error" className="text-zinc-700">
-        Geçerli bir e-posta adresi girin.
+        Enter a valid email address.
       </Typography>
     </div>
   ),
@@ -178,8 +178,8 @@ export const Invalid: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
-      <Input disabled placeholder="Devre dışı (boş)" />
-      <Input disabled defaultValue="Düzenlenemez değer" />
+      <Input disabled placeholder="Disabled (empty)" />
+      <Input disabled defaultValue="Non-editable value" />
     </div>
   ),
 };
@@ -187,8 +187,8 @@ export const Disabled: Story = {
 export const ReadOnly: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
-      <Input readOnly defaultValue="Salt okunur metin" />
-      <Input readOnly type="email" defaultValue="okunur@example.com" />
+      <Input readOnly defaultValue="Read-only text" />
+      <Input readOnly type="email" defaultValue="readonly@example.com" />
     </div>
   ),
 };
@@ -201,36 +201,36 @@ export const FormExample: Story = {
     >
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="form-name" required>
-          Ad Soyad
+          Full name
         </Label>
         <Input
           id="form-name"
           name="name"
-          placeholder="Ahmet Yılmaz"
+          placeholder="Jane Doe"
           required
         />
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="form-email" required>
-          E-posta
+          Email
         </Label>
         <Input
           id="form-email"
           name="email"
           type="email"
-          placeholder="ornek@domain.com"
+          placeholder="you@example.com"
           required
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="form-website">Web Sitesi</Label>
+        <Label htmlFor="form-website">Website</Label>
         <Input
           id="form-website"
           name="website"
           type="url"
           placeholder="https://"
         />
-        <Typography variant="muted">İsteğe bağlı.</Typography>
+        <Typography variant="muted">Optional.</Typography>
       </div>
     </form>
   ),

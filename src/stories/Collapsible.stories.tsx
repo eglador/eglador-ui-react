@@ -37,7 +37,11 @@ type Story = StoryObj<typeof Collapsible>;
 
 export const Default: Story = {
   render: (args: CollapsibleProps) => (
-    <Collapsible {...args} className="w-[480px] space-y-2">
+    <Collapsible
+      key={`${args.defaultOpen}-${args.disabled}`}
+      {...args}
+      className="w-[480px] space-y-2"
+    >
       <div className="flex items-center justify-between gap-3 rounded-md border border-zinc-200 px-4 py-3">
         <div className="text-sm font-medium text-zinc-900">
           @alex starred 3 repositories

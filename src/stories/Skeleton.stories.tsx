@@ -9,7 +9,7 @@ const meta: Meta<typeof Skeleton> = {
     docs: {
       description: {
         component:
-          "Yükleniyor placeholder'ı. text / circular / rectangular / rounded varyantları; pulse / wave / none animasyonları; çoklu satır metin; özel boyutlandırma. wave animasyonu için keyframe'ler otomatik enjekte edilir.",
+          "Loading placeholder. text / circular / rectangular / rounded variants; pulse / wave / none animations; multi-line text; custom sizing. Wave animation keyframes are auto-injected.",
       },
     },
   },
@@ -21,24 +21,24 @@ const meta: Meta<typeof Skeleton> = {
     variant: {
       control: "select",
       options: ["text", "circular", "rectangular", "rounded"],
-      description: "Şekil varyantı.",
+      description: "Shape variant.",
     },
     animation: {
       control: "select",
       options: ["pulse", "wave", "none"],
-      description: "Animasyon tipi. pulse Tailwind built-in, wave kendi keyframe'i.",
+      description: "Animation type. `pulse` uses Tailwind's built-in; `wave` ships its own keyframes.",
     },
     width: {
       control: "text",
-      description: "Genişlik (px sayı veya CSS string).",
+      description: "Width (px number or CSS string).",
     },
     height: {
       control: "text",
-      description: "Yükseklik (px sayı veya CSS string).",
+      description: "Height (px number or CSS string).",
     },
     lines: {
       control: { type: "number", min: 1, max: 10 },
-      description: "Çoklu satır text. Son satır otomatik %60 genişlikte.",
+      description: "Multi-line text. The last line is automatically 60% width.",
     },
   },
 };
