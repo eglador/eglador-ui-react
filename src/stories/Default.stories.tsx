@@ -13,11 +13,11 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Avatar", done: true },
   { name: "Badge", done: true },
   { name: "Breadcrumb" },
-  { name: "ButtonGroup" },
-  { name: "Button" },
+  { name: "ButtonGroup", done: true },
+  { name: "Button", done: true },
   { name: "Calendar" },
-  { name: "CheckboxGroup" },
-  { name: "Checkbox" },
+  { name: "CheckboxGroup", done: true },
+  { name: "Checkbox", done: true },
   { name: "Collapsible" },
   { name: "Command" },
   { name: "ContextMenu" },
@@ -29,12 +29,12 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Empty", done: true },
   { name: "HoverCard" },
   { name: "ImageCropper" },
-  { name: "InputGroup" },
+  { name: "InputGroup", done: true },
   { name: "InputOTP" },
-  { name: "Input" },
+  { name: "Input", done: true },
   { name: "Kbd", done: true },
   { name: "Label", done: true },
-  { name: "Link" },
+  { name: "Link", done: true },
   { name: "Menubar" },
   { name: "MultiSelect" },
   { name: "NativeSelect" },
@@ -43,8 +43,8 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Pagination" },
   { name: "Popover" },
   { name: "Progress" },
-  { name: "RadioGroup" },
-  { name: "Radio" },
+  { name: "RadioGroup", done: true },
+  { name: "Radio", done: true },
   { name: "Resizable" },
   { name: "ScrollArea" },
   { name: "Select" },
@@ -54,10 +54,10 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "SpeedDial" },
   { name: "Spinner", done: true },
   { name: "Stepper" },
-  { name: "Switch" },
+  { name: "Switch", done: true },
   { name: "Table" },
   { name: "Tabs" },
-  { name: "Textarea" },
+  { name: "Textarea", done: true },
   { name: "Tooltip" },
   { name: "TreeView" },
   { name: "Typography", done: true },
@@ -87,13 +87,13 @@ function Overview() {
           </p>
           <div className="inline-flex items-center gap-2 px-3 h-7 text-xs rounded-sm border border-zinc-200 bg-white text-zinc-600">
             <span className="size-1.5 rounded-full bg-amber-500" />
-            Pre-alpha — {doneCount}/{total} bileşen hazır ({percent}%)
+            Pre-alpha — {doneCount}/{total} components shipped ({percent}%)
           </div>
         </div>
 
         <div className="bg-white border border-zinc-200 rounded-sm p-6">
           <div className="flex items-baseline justify-between mb-4">
-            <h2 className="text-sm font-semibold text-zinc-900">Bileşenler</h2>
+            <h2 className="text-sm font-semibold text-zinc-900">Components</h2>
             <span className="text-xs text-zinc-500 tabular-nums">
               {doneCount}/{total}
             </span>
@@ -131,26 +131,28 @@ function Overview() {
           <div className="mt-4 flex items-center gap-4 text-xs text-zinc-500">
             <div className="inline-flex items-center gap-1.5">
               <span className="inline-block size-2.5 rounded-sm bg-zinc-900" />
-              Hazır
+              Shipped
             </div>
             <div className="inline-flex items-center gap-1.5">
               <span className="inline-block size-2.5 rounded-sm bg-zinc-50 border border-zinc-200" />
-              Planlı
+              Planned
             </div>
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-zinc-500">
           <div className="bg-white border border-zinc-200 rounded-sm p-4">
-            <div className="font-medium text-zinc-900 mb-1">Hazır</div>
-            Build pipeline (tsup), TypeScript strict, Tailwind v4 entegrasyonu,
-            Storybook 10, CI / npm publish workflow, Tier 1 bileşenlerin
-            tamamı.
+            <div className="font-medium text-zinc-900 mb-1">Shipped</div>
+            Tier 1 (Display complete) and most of Tier 2 (Button, ButtonGroup,
+            Link, Input, InputGroup, Textarea, Switch, Checkbox, CheckboxGroup,
+            Radio, RadioGroup). Shared vocabulary: variants solid / soft /
+            outline / ghost / link; sizes xs / sm / md / lg / xl.
           </div>
           <div className="bg-white border border-zinc-200 rounded-sm p-4">
-            <div className="font-medium text-zinc-900 mb-1">Sıradaki</div>
-            Tier 2 — basit state'li form bileşenleri (Button, Input, Switch,
-            Checkbox, Radio, Progress vb.).
+            <div className="font-medium text-zinc-900 mb-1">Next up</div>
+            Progress (closes Tier 2), then Tier 3 — Alert, Notification, Tabs,
+            Accordion, Collapsible, Breadcrumb, Pagination, Stepper,
+            ScrollArea.
           </div>
         </div>
       </div>

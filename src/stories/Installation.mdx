@@ -4,11 +4,11 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Installation
 
-Paket kurulumu, peer dependency'ler ve Tailwind v4 entegrasyonu.
+Package installation, peer dependencies, and Tailwind v4 integration.
 
 ---
 
-## 1. Paketi kur
+## 1. Install the package
 
 ```bash
 npm install eglador-ui-react
@@ -26,7 +26,7 @@ pnpm add eglador-ui-react
 
 ## 2. Peer dependencies
 
-Projenizde aşağıdaki peer dep'ler bulunmalı:
+The following peer dependencies must be present in your project:
 
 <table>
   <thead>
@@ -51,13 +51,15 @@ Projenizde aşağıdaki peer dep'ler bulunmalı:
   </tbody>
 </table>
 
-Modern React projelerinde (Next.js, Vite, Remix) bunlar zaten mevcuttur.
+These are typically already present in modern React projects (Next.js, Vite, Remix).
 
-> **Zero runtime dependencies.** `clsx` ve `tailwind-merge` pre-bundle edilmiştir.
+> **Zero runtime dependencies.** `clsx` and `tailwind-merge` are pre-bundled — nothing else is pulled into your app.
 
 ---
 
-## 3. Tailwind v4 için `@source` ekle
+## 3. Add `@source` for Tailwind v4
+
+Tailwind needs to scan classes inside the package. Add the `@source` directive to your global stylesheet:
 
 ```css
 @import "tailwindcss";
@@ -65,14 +67,14 @@ Modern React projelerinde (Next.js, Vite, Remix) bunlar zaten mevcuttur.
 @source "../node_modules/eglador-ui-react";
 ```
 
-`@source` yolu CSS dosyanızın konumuna göre değişir:
+The `@source` path depends on your CSS file location:
 
 <table>
   <thead>
     <tr>
       <th align="left">Framework</th>
-      <th align="left">CSS dosyası</th>
-      <th align="left"><code>@source</code> yolu</th>
+      <th align="left">CSS file</th>
+      <th align="left"><code>@source</code> path</th>
     </tr>
   </thead>
   <tbody>
@@ -96,12 +98,12 @@ Modern React projelerinde (Next.js, Vite, Remix) bunlar zaten mevcuttur.
 
 ---
 
-## 4. Server components notu (Next.js)
+## 4. Server components note (Next.js)
 
-Bileşenler `"use client"` ile işaretlidir. Onları bir client component içine veya `"use client"` direktifi olan bir dosyaya yerleştirin.
+Components that use state (`useState` / `useEffect`) are marked `"use client"`. Place them inside a client component, or import them from a file that already has the `"use client"` directive at the top.
 
 ---
 
-## Sorun mu var?
+## Troubleshooting
 
-[GitHub'da issue açın](https://github.com/eglador/eglador-ui-react/issues).
+Open an [issue on GitHub](https://github.com/eglador/eglador-ui-react/issues).

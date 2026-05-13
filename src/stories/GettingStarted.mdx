@@ -4,62 +4,144 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Getting Started
 
-> **Status:** Pre-alpha — 10/55 bileşen hazır. Tier 2 (form bileşenleri) sürüyor.
+> **Status:** Pre-alpha — 21/55 components shipped. Tier 1 (Display complete) and most of Tier 2 are done.
 
 ---
 
-## Hazır olan
+## What's ready
 
-**Altyapı:**
+**Infrastructure:**
 
 - Build pipeline (`tsup` → CJS + ESM + DTS)
 - TypeScript strict mode (`tsc --noEmit`)
-- Tailwind v4 + `@source` entegrasyonu
+- Tailwind v4 + `@source` integration
 - Storybook 10 (`@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-vitest`)
 - CI / npm publish workflows
-- LICENSE, README, package metadata
 
-**Tier 1 bileşenler (10/10):**
+**Tier 1 (10/10):**
 
-- `<AspectRatio>` — preset + numeric ratio
-- `<Avatar>` + `<AvatarGroup>` — src/initials/icon fallback, +N overflow
-- `<Badge>` — solid/soft/outline + removable
-- `<Empty>` — empty state slot'lar
-- `<Kbd>` + `<KbdGroup>` — klavye kısayolu
-- `<Label>` — form label, required indicator
-- `<Separator>` — yatay/dikey divider, label slot
-- `<Skeleton>` — text/circular/rectangular/rounded + pulse/wave animasyonu
-- `<Spinner>` — yükleniyor göstergesi
-- `<Typography>` — h1-h4, p, lead, blockquote, list, code, kbd; RTL safe
+- `<AspectRatio>` — 7 ratio presets + numeric ratio
+- `<Avatar>` + `<AvatarGroup>` — src / initials / icon fallback, +N overflow
+- `<Badge>` — solid / soft / outline, removable, with icons
+- `<Empty>` — empty-state shell with icon / title / description / action slots
+- `<Kbd>` + `<KbdGroup>` — keyboard shortcut display
+- `<Label>` — form label with `required` indicator
+- `<Separator>` — horizontal / vertical divider, optional label
+- `<Skeleton>` — text / circular / rectangular / rounded, pulse / wave / none
+- `<Spinner>` — loading indicator with sr-only fallback
+- `<Typography>` — h1-h4, p, lead, large, small, muted, blockquote, list, code, kbd; RTL-safe
 
-Tüm bileşenler:
-- `xs/sm/md/lg/xl` size standardı (size prop'u olanlar)
-- `React.forwardRef` + `React.HTMLAttributes` spread
-- Zinc-only paleti
-- `rounded-sm` paket konvansiyonu
+**Tier 2 (11/12):**
 
-## Sıradaki — Tier 2
+- `<Button>` + `buttonVariants()` helper — 5 variants (solid / soft / outline / ghost / link), 5 sizes, 3 shapes, icon / loading / active
+- `<ButtonGroup>` + `<ButtonGroupSeparator>` + `<ButtonGroupText>` — fused buttons via CSS sibling selectors, orientation, context-aware separator
+- `<Link>` — underline hover / always / none, 5 sizes, `external` auto handling, `buttonVariants()` for anchor-as-button
+- `<Input>` — outline / soft / ghost variants, 5 sizes, 3 shapes, `aria-invalid`, file: modifier
+- `<InputGroup>` + `<InputGroupInput>` + `<InputGroupTextarea>` + `<InputGroupAddon>` + `<InputGroupButton>` + `<InputGroupText>` — shadcn-style single-wrapper border, `align` prop (inline-start / inline-end / block-start / block-end)
+- `<Textarea>` + `autoGrow` + `maxRows` — scrollHeight-based line clamp
+- `<Switch>` — native `role="switch"`, controlled / uncontrolled, 5 sizes
+- `<Checkbox>` — `indeterminate` 3rd state via DOM property + `useEffect`
+- `<CheckboxGroup>` + `<CheckboxGroupItem>` — multi-select, `<fieldset>` + `<legend>`, context-driven
+- `<Radio>` — native `type="radio"`, mutually-exclusive grouping via shared `name`
+- `<RadioGroup>` + `<RadioGroupItem>` — single-select, `role="radiogroup"`, auto `name` (useId fallback)
 
-Basit state'li form bileşenleri:
+## Next up
 
-Button · ButtonGroup · Link · Input · InputGroup · Textarea · Switch · Checkbox · CheckboxGroup · Radio · RadioGroup · Progress
+- **Progress** (closes Tier 2)
+- **Tier 3** — Alert, Notification, Tabs, Accordion, Collapsible, Breadcrumb, Pagination, Stepper, ScrollArea
 
 ---
 
-## Tasarım prensipleri
+## Shared vocabulary
 
-- **Headless öncelikli** — her bileşenin bir hook karşılığı; render kullanıcıya
-- **Compound API** — `<X.Root>`, `<X.Header>`, `<X.Body>` vb. tam markup kontrolü
-- **A11y** — keyboard navigation, ARIA roles, focus management
-- **TypeScript-first** — generic prop'lar, strict mode
-- **Tailwind v4** — `zinc` paleti, `rounded-sm`, modern utility-first
-- **Zero runtime deps** — `clsx` ve `tailwind-merge` pre-bundled
+**Variants** (visual hierarchy): `solid` (filled high-contrast) · `soft` (filled muted) · `outline` (bordered) · `ghost` (transparent) · `link` (inline text)
+
+**Sizes**: `xs` · `sm` · `md` · `lg` · `xl`
+
+**Shapes** (where applicable): `square` · `rounded` · `pill` · `circle`
+
+**Palette:** zinc-only — `text-zinc-{50→900}`, `bg-white`, `bg-zinc-{50→900}`, `border-zinc-{200→900}`. No color schemes (primary / danger / success etc.); theming is handled separately.
+
+---
+
+## Quick examples
+
+### Form composition
+
+```tsx
+import { Label, Input, Typography, Button } from "eglador-ui-react";
+
+<div className="flex flex-col gap-1.5">
+  <Label htmlFor="email" required>Email</Label>
+  <Input id="email" type="email" placeholder="you@example.com" />
+  <Typography variant="muted">Used to verify your account.</Typography>
+</div>
+
+<Button>Submit</Button>
+```
+
+### Search bar (InputGroup)
+
+```tsx
+import {
+  InputGroup,
+  InputGroupInput,
+  InputGroupAddon,
+  InputGroupButton,
+} from "eglador-ui-react";
+import { Search } from "lucide-react";
+
+<InputGroup>
+  <InputGroupInput placeholder="Search…" />
+  <InputGroupAddon align="inline-start"><Search /></InputGroupAddon>
+  <InputGroupAddon align="inline-end">
+    <InputGroupButton variant="solid" size="sm">Search</InputGroupButton>
+  </InputGroupAddon>
+</InputGroup>
+```
+
+### Single-select (RadioGroup)
+
+```tsx
+import { RadioGroup, RadioGroupItem } from "eglador-ui-react";
+
+<RadioGroup
+  legend="Plan"
+  name="plan"
+  defaultValue="pro"
+  onValueChange={(v) => console.log(v)}
+>
+  <RadioGroupItem value="free" label="Free" description="Solo projects" />
+  <RadioGroupItem value="pro" label="Pro" description="For professionals" />
+  <RadioGroupItem value="enterprise" label="Enterprise" description="Custom" />
+</RadioGroup>
+```
+
+### Anchor styled as a button
+
+```tsx
+import { buttonVariants } from "eglador-ui-react";
+
+<a href="/docs" className={buttonVariants({ variant: "outline", size: "sm" })}>
+  Documentation
+</a>
+```
+
+---
+
+## Design principles
+
+- **Headless-first** — native HTML semantics are the foundation; styling is opt-in via Tailwind classes
+- **Compound API** — Group / Item / Addon parts wired via context
+- **A11y** — `role`, `aria-*`, focus-visible ring, `<fieldset>` / `<legend>` / `<label htmlFor>`
+- **TypeScript-first** — generic props, strict mode
+- **Tailwind v4** — `zinc` palette, `rounded-sm` default, logical CSS (`ps-*`, `me-*`, RTL automatic)
+- **Zero runtime deps** — `clsx` and `tailwind-merge` are pre-bundled
+- **Controlled + Uncontrolled** — every stateful form component supports both patterns
 
 ---
 
 ## Setup recap
-
-[Installation](?path=/docs/installation--docs) sayfasındaki adımları takip edin.
 
 ```bash
 npm install eglador-ui-react
@@ -70,6 +152,8 @@ npm install eglador-ui-react
 @source "../node_modules/eglador-ui-react";
 ```
 
+See [Installation](?path=/docs/installation--docs) for details.
+
 ---
 
-Hata bildirimleri veya öneriler için [GitHub'da issue açın](https://github.com/eglador/eglador-ui-react/issues).
+For bugs or suggestions, [open an issue on GitHub](https://github.com/eglador/eglador-ui-react/issues).
