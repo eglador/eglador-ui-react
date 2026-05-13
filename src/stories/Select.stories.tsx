@@ -29,12 +29,14 @@ const meta: Meta<typeof Select> = {
     variant: { control: "select", options: ["outline", "soft", "ghost"] },
     shape: { control: "select", options: ["square", "rounded", "pill"] },
     disabled: { control: "boolean" },
+    defaultOpen: { control: "boolean" },
   },
   args: {
     size: "md",
     variant: "outline",
     shape: "rounded",
     disabled: false,
+    defaultOpen: false,
   },
 };
 
@@ -45,7 +47,7 @@ export const Default: Story = {
   render: (args: SelectProps) => (
     <div className="flex flex-col gap-2 max-w-xs">
       <Label htmlFor="fruit">Favourite fruit</Label>
-      <Select {...(args as SelectProps)}>
+      <Select key={String(args.defaultOpen)} {...(args as SelectProps)}>
         <SelectTrigger>
           <SelectValue placeholder="Pick a fruit" />
         </SelectTrigger>
