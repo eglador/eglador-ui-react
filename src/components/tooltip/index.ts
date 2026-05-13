@@ -3,4 +3,8 @@ export type {
   TooltipProps,
   TooltipTriggerProps,
   TooltipContentProps,
+  TooltipSize,
+  TooltipVariant,
+  TooltipShape,
+  TooltipShadow,
 } from "./tooltip";
