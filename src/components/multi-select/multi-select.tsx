@@ -341,3 +341,5 @@ export function MultiSelect({
   // suppress unused warning since hook + ctx are wired
   void useMultiSelect;
 }
+
+MultiSelect.displayName = "MultiSelect";

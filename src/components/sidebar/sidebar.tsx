@@ -13,7 +13,7 @@ export type SidebarState = "expanded" | "collapsed";
 
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
-const SIDEBAR_WIDTH_ICON = "3rem";
+const SIDEBAR_WIDTH_ICON = "4rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 const MOBILE_BREAKPOINT = 768;
 
@@ -772,9 +772,9 @@ export const SidebarMenuButton = React.forwardRef<
     "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
     "data-[active=true]:bg-zinc-100 data-[active=true]:text-zinc-900 data-[active=true]:font-medium",
     "[&>svg]:size-4 [&>svg]:shrink-0",
-    // icon-collapsed mode: square button, center its remaining child, hide span labels
-    "group-data-[collapsible=icon]/sidebar:!size-8 group-data-[collapsible=icon]/sidebar:!p-2",
-    "group-data-[collapsible=icon]/sidebar:!justify-center",
+    // icon-collapsed mode: square button centered in its row, hide span labels
+    "group-data-[collapsible=icon]/sidebar:!size-9 group-data-[collapsible=icon]/sidebar:!p-2",
+    "group-data-[collapsible=icon]/sidebar:!justify-center group-data-[collapsible=icon]/sidebar:mx-auto",
     "group-data-[collapsible=icon]/sidebar:[&>span]:hidden",
     MENU_BUTTON_SIZES[size],
     className,

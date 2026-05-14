@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 
 export type CardVariant = "solid" | "soft" | "outline" | "ghost";
-export type CardShape = "square" | "rounded";
+export type CardShape = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 export type CardShadow = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 
 const VARIANTS: Record<CardVariant, string> = {
@@ -13,8 +13,12 @@ const VARIANTS: Record<CardVariant, string> = {
 };
 
 const SHAPES: Record<CardShape, string> = {
-  square: "rounded-none",
-  rounded: "rounded-md",
+  none: "rounded-none",
+  xs: "rounded-xs",
+  sm: "rounded-sm",
+  md: "rounded-md",
+  lg: "rounded-lg",
+  xl: "rounded-xl",
 };
 
 const SHADOWS: Record<CardShadow, string> = {
@@ -34,7 +38,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   function Card(
-    { variant = "solid", shape = "rounded", shadow = "xs", className, ...rest },
+    { variant = "solid", shape = "md", shadow = "xs", className, ...rest },
     ref,
   ) {
     return (

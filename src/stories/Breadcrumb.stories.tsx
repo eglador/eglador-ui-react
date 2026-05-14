@@ -200,23 +200,13 @@ export const AsChild: Story = {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <button
-              type="button"
-              onClick={() => console.log("Custom routing for Home")}
-            >
-              Home
-            </button>
+            <button type="button">Home</button>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <button
-              type="button"
-              onClick={() => console.log("Custom routing for Settings")}
-            >
-              Settings
-            </button>
+            <button type="button">Settings</button>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
