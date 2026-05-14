@@ -32,11 +32,13 @@ const meta: Meta<typeof AlertDialog> = {
       control: "select",
       options: ["none", "xs", "sm", "md", "lg", "xl"],
     },
+    defaultOpen: { control: "boolean" },
   },
   args: {
     size: "md",
     shape: "rounded",
     shadow: "lg",
+    defaultOpen: false,
   },
 };
 
@@ -45,7 +47,7 @@ type Story = StoryObj<typeof AlertDialog>;
 
 export const Default: Story = {
   render: (args: AlertDialogProps) => (
-    <AlertDialog {...args}>
+    <AlertDialog key={String(args.defaultOpen)} {...args}>
       <AlertDialogTrigger asChild>
         <Button variant="outline" size="sm">
           Delete account

@@ -36,12 +36,14 @@ const meta: Meta<typeof Drawer> = {
       control: "select",
       options: ["none", "xs", "sm", "md", "lg", "xl"],
     },
+    defaultOpen: { control: "boolean" },
   },
   args: {
     side: "right",
     size: "md",
     shape: "square",
     shadow: "lg",
+    defaultOpen: false,
   },
 };
 
@@ -50,7 +52,7 @@ type Story = StoryObj<typeof Drawer>;
 
 export const Default: Story = {
   render: (args: DrawerProps) => (
-    <Drawer {...args}>
+    <Drawer key={String(args.defaultOpen)} {...args}>
       <DrawerTrigger asChild>
         <Button variant="outline" size="sm">
           Open drawer

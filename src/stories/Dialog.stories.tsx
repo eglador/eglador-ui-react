@@ -37,8 +37,9 @@ const meta: Meta<typeof Dialog> = {
       options: ["none", "xs", "sm", "md", "lg", "xl"],
     },
     modal: { control: "boolean" },
+    defaultOpen: { control: "boolean" },
   },
-  args: { size: "md", shape: "rounded", shadow: "lg", modal: true },
+  args: { size: "md", shape: "rounded", shadow: "lg", modal: true, defaultOpen: false },
 };
 
 export default meta;
@@ -46,7 +47,7 @@ type Story = StoryObj<typeof Dialog>;
 
 export const Default: Story = {
   render: (args: DialogProps) => (
-    <Dialog {...args}>
+    <Dialog key={String(args.defaultOpen)} {...args}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           Edit profile

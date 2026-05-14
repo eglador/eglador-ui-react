@@ -25,10 +25,18 @@ const meta: Meta<typeof Popover> = {
   argTypes: {
     side: { control: "select", options: ["top", "right", "bottom", "left"] },
     align: { control: "select", options: ["start", "center", "end"] },
+    sideOffset: { control: "number" },
+    alignOffset: { control: "number" },
+    modal: { control: "boolean" },
+    defaultOpen: { control: "boolean" },
   },
   args: {
     side: "bottom",
     align: "center",
+    sideOffset: 6,
+    alignOffset: 0,
+    modal: false,
+    defaultOpen: false,
   },
 };
 

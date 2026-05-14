@@ -39,6 +39,10 @@ const meta: Meta<typeof Notification> = {
     size: "md",
     shape: "rounded",
     shadow: "md",
+    duration: 0,
+    showProgress: false,
+    pauseOnHover: true,
+    dismissLabel: "Dismiss",
   },
   argTypes: {
     variant: { control: "select", options: ["soft", "outline", "solid"] },
@@ -48,6 +52,10 @@ const meta: Meta<typeof Notification> = {
       control: "select",
       options: ["none", "xs", "sm", "md", "lg", "xl"],
     },
+    duration: { control: { type: "number", min: 0, max: 30000, step: 500 } },
+    showProgress: { control: "boolean" },
+    pauseOnHover: { control: "boolean" },
+    dismissLabel: { control: "text" },
     onDismiss: { action: "dismissed" },
   },
 };
