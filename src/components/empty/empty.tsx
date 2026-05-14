@@ -1,130 +1,130 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { InboxIcon } from "../../lib/icons";
 
-export type EmptySize = "xs" | "sm" | "md" | "lg" | "xl";
-
-export interface EmptyProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
-  icon?: React.ReactNode;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  size?: EmptySize;
-  action?: React.ReactNode;
-  children?: React.ReactNode;
-}
-
-const SIZES: Record<
-  EmptySize,
-  {
-    containerSize: string;
-    iconSize: string;
-    titleFont: string;
-    descFont: string;
-    maxWidth: string;
-    padding: string;
-  }
-> = {
-  xs: {
-    containerSize: "size-10",
-    iconSize: "size-5",
-    titleFont: "text-xs",
-    descFont: "text-[11px]",
-    maxWidth: "max-w-2xs",
-    padding: "py-5 px-3",
-  },
-  sm: {
-    containerSize: "size-12",
-    iconSize: "size-6",
-    titleFont: "text-sm",
-    descFont: "text-xs",
-    maxWidth: "max-w-xs",
-    padding: "py-8 px-4",
-  },
-  md: {
-    containerSize: "size-16",
-    iconSize: "size-7",
-    titleFont: "text-base",
-    descFont: "text-sm",
-    maxWidth: "max-w-sm",
-    padding: "py-12 px-6",
-  },
-  lg: {
-    containerSize: "size-20",
-    iconSize: "size-9",
-    titleFont: "text-lg",
-    descFont: "text-base",
-    maxWidth: "max-w-md",
-    padding: "py-16 px-8",
-  },
-  xl: {
-    containerSize: "size-24",
-    iconSize: "size-11",
-    titleFont: "text-xl",
-    descFont: "text-base",
-    maxWidth: "max-w-lg",
-    padding: "py-20 px-10",
-  },
-};
+export interface EmptyProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
-  function Empty(
-    { icon, title, description, size = "md", action, className, children, ...rest },
-    ref,
-  ) {
-    const s = SIZES[size];
+  function Empty({ className, ...rest }, ref) {
     return (
       <div
         ref={ref}
+        data-slot="empty"
         className={cn(
-          "flex flex-col items-center justify-center text-center gap-4",
-          s.padding,
+          "flex w-full flex-col items-center justify-center gap-6 p-6 text-center md:p-12",
           className,
         )}
         {...rest}
-      >
-        <div
-          className={cn(
-            "flex items-center justify-center rounded-full bg-zinc-100",
-            s.containerSize,
-          )}
-        >
-          <span
-            className={cn(
-              "text-zinc-400 [&>svg]:w-full [&>svg]:h-full",
-              s.iconSize,
-            )}
-          >
-            {icon ?? <InboxIcon className="w-full h-full" />}
-          </span>
-        </div>
-
-        {(title || description) && (
-          <div className="flex flex-col gap-1.5">
-            {title && (
-              <h3 className={cn("font-semibold text-zinc-900", s.titleFont)}>
-                {title}
-              </h3>
-            )}
-            {description && (
-              <p
-                className={cn(
-                  "text-zinc-500 leading-relaxed",
-                  s.descFont,
-                  s.maxWidth,
-                )}
-              >
-                {description}
-              </p>
-            )}
-          </div>
-        )}
-
-        {action && <div className="mt-1">{action}</div>}
-
-        {children}
-      </div>
+      />
     );
   },
 );
 
 Empty.displayName = "Empty";
+
+export interface EmptyHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const EmptyHeader = React.forwardRef<HTMLDivElement, EmptyHeaderProps>(
+  function EmptyHeader({ className, ...rest }, ref) {
+    return (
+      <div
+        ref={ref}
+        data-slot="empty-header"
+        className={cn("flex flex-col items-center gap-2", className)}
+        {...rest}
+      />
+    );
+  },
+);
+
+EmptyHeader.displayName = "EmptyHeader";
+
+export type EmptyMediaVariant = "default" | "icon";
+
+export interface EmptyMediaProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: EmptyMediaVariant;
+}
+
+export const EmptyMedia = React.forwardRef<HTMLDivElement, EmptyMediaProps>(
+  function EmptyMedia({ variant = "default", className, ...rest }, ref) {
+    return (
+      <div
+        ref={ref}
+        data-slot="empty-media"
+        data-variant={variant}
+        className={cn(
+          "mb-2 flex items-center justify-center",
+          variant === "icon" &&
+            "size-12 rounded-full bg-zinc-100 text-zinc-600 [&_svg]:size-6 [&_svg]:shrink-0",
+          className,
+        )}
+        {...rest}
+      />
+    );
+  },
+);
+
+EmptyMedia.displayName = "EmptyMedia";
+
+export interface EmptyTitleProps
+  extends React.HTMLAttributes<HTMLHeadingElement> {}
+
+export const EmptyTitle = React.forwardRef<HTMLHeadingElement, EmptyTitleProps>(
+  function EmptyTitle({ className, ...rest }, ref) {
+    return (
+      <h3
+        ref={ref}
+        data-slot="empty-title"
+        className={cn(
+          "text-base font-semibold tracking-tight text-zinc-900",
+          className,
+        )}
+        {...rest}
+      />
+    );
+  },
+);
+
+EmptyTitle.displayName = "EmptyTitle";
+
+export interface EmptyDescriptionProps
+  extends React.HTMLAttributes<HTMLParagraphElement> {}
+
+export const EmptyDescription = React.forwardRef<
+  HTMLParagraphElement,
+  EmptyDescriptionProps
+>(function EmptyDescription({ className, ...rest }, ref) {
+  return (
+    <p
+      ref={ref}
+      data-slot="empty-description"
+      className={cn(
+        "max-w-sm text-sm leading-relaxed text-zinc-500",
+        className,
+      )}
+      {...rest}
+    />
+  );
+});
+
+EmptyDescription.displayName = "EmptyDescription";
+
+export interface EmptyContentProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const EmptyContent = React.forwardRef<HTMLDivElement, EmptyContentProps>(
+  function EmptyContent({ className, ...rest }, ref) {
+    return (
+      <div
+        ref={ref}
+        data-slot="empty-content"
+        className={cn(
+          "flex w-full max-w-sm flex-col items-center gap-2",
+          className,
+        )}
+        {...rest}
+      />
+    );
+  },
+);
+
+EmptyContent.displayName = "EmptyContent";
