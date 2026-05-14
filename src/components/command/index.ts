@@ -7,6 +7,7 @@ export {
   CommandItem,
   CommandSeparator,
   CommandShortcut,
+  CommandDialog,
 } from "./command";
 export type {
   CommandProps,
@@ -17,4 +18,5 @@ export type {
   CommandItemProps,
   CommandSeparatorProps,
   CommandShortcutProps,
+  CommandDialogProps,
 } from "./command";
