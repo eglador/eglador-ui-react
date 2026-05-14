@@ -217,3 +217,5 @@ export function DatePicker(props: DatePickerProps) {
     </Popover>
   );
 }
+
+DatePicker.displayName = "DatePicker";

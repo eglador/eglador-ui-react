@@ -293,3 +293,5 @@ export function DateTimePicker({
     </Popover>
   );
 }
+
+DateTimePicker.displayName = "DateTimePicker";

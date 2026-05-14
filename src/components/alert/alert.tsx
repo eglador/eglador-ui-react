@@ -37,6 +37,7 @@ const SIZES: Record<
     descFont: string;
     closeOffset: string;
     closeSize: string;
+    closeIconSize: string;
   }
 > = {
   xs: {
@@ -48,6 +49,7 @@ const SIZES: Record<
     descFont: "text-[11px]",
     closeOffset: "top-2 end-2",
     closeSize: "size-4",
+    closeIconSize: "size-3",
   },
   sm: {
     padding: "p-3",
@@ -58,6 +60,7 @@ const SIZES: Record<
     descFont: "text-xs",
     closeOffset: "top-2.5 end-2.5",
     closeSize: "size-5",
+    closeIconSize: "size-3.5",
   },
   md: {
     padding: "p-4",
@@ -68,6 +71,7 @@ const SIZES: Record<
     descFont: "text-sm",
     closeOffset: "top-3 end-3",
     closeSize: "size-5",
+    closeIconSize: "size-3.5",
   },
   lg: {
     padding: "p-5",
@@ -78,6 +82,7 @@ const SIZES: Record<
     descFont: "text-base",
     closeOffset: "top-4 end-4",
     closeSize: "size-6",
+    closeIconSize: "size-4",
   },
   xl: {
     padding: "p-6",
@@ -88,6 +93,7 @@ const SIZES: Record<
     descFont: "text-lg",
     closeOffset: "top-5 end-5",
     closeSize: "size-7",
+    closeIconSize: "size-4.5",
   },
 };
 
@@ -176,7 +182,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
                 v.close,
               )}
             >
-              <XIcon className="size-3.5" />
+              <XIcon className={s.closeIconSize} />
             </button>
           )}
         </div>

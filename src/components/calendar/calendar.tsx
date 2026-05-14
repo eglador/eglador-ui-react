@@ -696,3 +696,5 @@ function CalendarMonthPanel({
     </div>
   );
 }
+
+Calendar.displayName = "Calendar";

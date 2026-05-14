@@ -28,7 +28,10 @@ const meta: Meta<typeof Card> = {
   },
   argTypes: {
     variant: { control: "select", options: ["solid", "soft", "outline", "ghost"] },
-    shape: { control: "select", options: ["square", "rounded"] },
+    shape: {
+      control: "select",
+      options: ["none", "xs", "sm", "md", "lg", "xl"],
+    },
     shadow: {
       control: "select",
       options: ["none", "xs", "sm", "md", "lg", "xl"],
@@ -36,7 +39,7 @@ const meta: Meta<typeof Card> = {
   },
   args: {
     variant: "solid",
-    shape: "rounded",
+    shape: "md",
     shadow: "xs",
   },
 };
@@ -93,10 +96,18 @@ export const Variants: Story = {
 };
 
 export const Shapes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`shape` maps to Tailwind's full radius scale: `none` (0), `xs` (2px), `sm` (4px), `md` (6px, default), `lg` (8px), `xl` (12px).",
+      },
+    },
+  },
   render: () => (
-    <div className="flex flex-wrap gap-4">
-      {(["square", "rounded"] as const).map((shape) => (
-        <Card key={shape} shape={shape} className="w-[260px]">
+    <div className="grid grid-cols-3 gap-4 w-[760px]">
+      {(["none", "xs", "sm", "md", "lg", "xl"] as const).map((shape) => (
+        <Card key={shape} shape={shape}>
           <CardHeader>
             <CardTitle>shape = {shape}</CardTitle>
             <CardDescription>Corner radius preset.</CardDescription>

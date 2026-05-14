@@ -163,3 +163,5 @@ export function ImageCropper({
     </div>
   );
 }
+
+ImageCropper.displayName = "ImageCropper";

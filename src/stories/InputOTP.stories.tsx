@@ -52,9 +52,15 @@ export const Default: Story = {
 export const Controlled: Story = {
   render: function ControlledStory() {
     const [v, setV] = React.useState("");
+    const [completed, setCompleted] = React.useState<string | null>(null);
     return (
       <div className="flex flex-col gap-3">
-        <InputOTP value={v} onChange={setV} length={4} onComplete={(val) => console.log("Complete:", val)}>
+        <InputOTP
+          value={v}
+          onChange={setV}
+          length={4}
+          onComplete={setCompleted}
+        >
           <InputOTPGroup>
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
@@ -63,8 +69,19 @@ export const Controlled: Story = {
           </InputOTPGroup>
         </InputOTP>
         <div className="text-xs text-zinc-500">
-          Value: <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">{v || "(empty)"}</code>
+          Value:{" "}
+          <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
+            {v || "(empty)"}
+          </code>
         </div>
+        {completed && (
+          <div className="text-xs text-zinc-500">
+            Last completed:{" "}
+            <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
+              {completed}
+            </code>
+          </div>
+        )}
       </div>
     );
   },
