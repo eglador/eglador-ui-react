@@ -1,6 +1,6 @@
 {
   "name": "eglador-ui-react",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "Eglador UI for React — headless, accessible component library. Compound subcomponents, Tailwind v4, zero runtime dependencies.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
