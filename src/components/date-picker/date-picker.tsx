@@ -2,8 +2,15 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { CalendarIcon, XIcon } from "../../lib/icons";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
-import { Calendar } from "../calendar";
+import {
+  Calendar,
+  type CalendarSize,
+  type CalendarCaptionLayout,
+  type CalendarRange,
+  type CalendarWeekdayFormat,
+} from "../calendar";
 
 function formatDate(d: Date | undefined): string {
   if (!d) return "";
@@ -14,38 +21,144 @@ function formatDate(d: Date | undefined): string {
   });
 }
 
-export interface DatePickerProps {
+function formatRange(r: CalendarRange | undefined): string {
+  if (!r?.from) return "";
+  if (!r.to) return formatDate(r.from);
+  return `${formatDate(r.from)} – ${formatDate(r.to)}`;
+}
+
+type DatePickerSingleProps = {
+  mode?: "single";
   value?: Date | undefined;
   defaultValue?: Date;
   onValueChange?: (value: Date | undefined) => void;
+  format?: (d: Date | undefined) => string;
+};
+
+type DatePickerRangeProps = {
+  mode: "range";
+  value?: CalendarRange;
+  defaultValue?: CalendarRange;
+  onValueChange?: (value: CalendarRange) => void;
+  format?: (r: CalendarRange | undefined) => string;
+};
+
+type SharedDatePickerProps = {
   placeholder?: string;
   disabled?: boolean;
-  format?: (d: Date | undefined) => string;
+  clearable?: boolean;
   className?: string;
   minDate?: Date;
   maxDate?: Date;
-}
+  disabledDates?: (d: Date) => boolean;
+  size?: CalendarSize;
+  captionLayout?: CalendarCaptionLayout;
+  numberOfMonths?: number;
+  firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  locale?: string;
+  weekdayFormat?: CalendarWeekdayFormat;
+  yearRange?: [number, number];
+  showWeekNumber?: boolean;
+  showOutsideDays?: boolean;
+  fixedWeeks?: boolean;
+  dir?: "ltr" | "rtl";
+};
 
-export function DatePicker({
-  value: controlled,
-  defaultValue,
-  onValueChange,
-  placeholder = "Pick a date",
-  disabled = false,
-  format = formatDate,
-  className,
-  minDate,
-  maxDate,
-}: DatePickerProps) {
-  const [internal, setInternal] = React.useState<Date | undefined>(defaultValue);
-  const isControlled = controlled !== undefined;
-  const value = isControlled ? controlled : internal;
+export type DatePickerProps = (
+  | DatePickerSingleProps
+  | DatePickerRangeProps
+) &
+  SharedDatePickerProps;
+
+export function DatePicker(props: DatePickerProps) {
+  const {
+    placeholder,
+    disabled = false,
+    clearable = false,
+    className,
+    minDate,
+    maxDate,
+    disabledDates,
+    size,
+    captionLayout,
+    numberOfMonths,
+    firstDayOfWeek,
+    locale,
+    weekdayFormat,
+    yearRange,
+    showWeekNumber,
+    showOutsideDays,
+    fixedWeeks,
+    dir,
+  } = props as DatePickerProps;
+
+  const isRange = props.mode === "range";
   const [open, setOpen] = React.useState(false);
 
-  const setValue = (next: Date | undefined) => {
-    if (!isControlled) setInternal(next);
-    onValueChange?.(next);
+  const [singleInternal, setSingleInternal] = React.useState<Date | undefined>(
+    () => (props as DatePickerSingleProps).defaultValue,
+  );
+  const [rangeInternal, setRangeInternal] = React.useState<CalendarRange>(
+    () => (props as DatePickerRangeProps).defaultValue ?? {},
+  );
+
+  const isControlled =
+    (props as { value?: unknown }).value !== undefined;
+
+  const singleValue: Date | undefined = !isRange
+    ? isControlled
+      ? (props as DatePickerSingleProps).value
+      : singleInternal
+    : undefined;
+
+  const rangeValue: CalendarRange = isRange
+    ? isControlled
+      ? ((props as DatePickerRangeProps).value ?? {})
+      : rangeInternal
+    : {};
+
+  const setSingle = (next: Date | undefined) => {
+    if (!isControlled) setSingleInternal(next);
+    (props as DatePickerSingleProps).onValueChange?.(next);
     if (next) setOpen(false);
+  };
+
+  const setRange = (next: CalendarRange) => {
+    if (!isControlled) setRangeInternal(next);
+    (props as DatePickerRangeProps).onValueChange?.(next);
+    if (next.from && next.to) setOpen(false);
+  };
+
+  const hasValue = isRange ? Boolean(rangeValue.from) : Boolean(singleValue);
+
+  const display = isRange
+    ? ((props as DatePickerRangeProps).format ?? formatRange)(rangeValue)
+    : ((props as DatePickerSingleProps).format ?? formatDate)(singleValue);
+
+  const resolvedPlaceholder =
+    placeholder ?? (isRange ? "Pick a date range" : "Pick a date");
+
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isRange) setRange({});
+    else setSingle(undefined);
+  };
+
+  const calendarProps = {
+    minDate,
+    maxDate,
+    disabledDates,
+    size,
+    captionLayout,
+    numberOfMonths: numberOfMonths ?? (isRange ? 2 : 1),
+    firstDayOfWeek,
+    locale,
+    weekdayFormat,
+    yearRange,
+    showWeekNumber,
+    showOutsideDays,
+    fixedWeeks,
+    dir,
   };
 
   return (
@@ -54,28 +167,52 @@ export function DatePicker({
         <button
           type="button"
           disabled={disabled}
+          dir={dir}
           data-slot="date-picker-trigger"
           data-state={open ? "open" : "closed"}
+          data-empty={!hasValue}
           className={cn(
-            "inline-flex h-9 w-full items-center justify-between rounded-md border border-zinc-300 bg-white px-3 text-sm transition-colors hover:border-zinc-400 cursor-pointer outline-none",
+            "group inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-zinc-300 bg-white px-3 text-sm transition-colors hover:border-zinc-400 cursor-pointer outline-none",
             "focus-visible:ring-2 focus-visible:ring-zinc-900/20",
             "disabled:opacity-50 disabled:cursor-not-allowed",
-            !value && "text-zinc-400",
-            value && "text-zinc-900",
+            !hasValue && "text-zinc-400",
+            hasValue && "text-zinc-900",
             className,
           )}
         >
-          {value ? format(value) : placeholder}
+          <span className="inline-flex items-center gap-2 truncate">
+            <CalendarIcon className="size-4 shrink-0 text-zinc-500" />
+            <span className="truncate">{hasValue ? display : resolvedPlaceholder}</span>
+          </span>
+          {clearable && hasValue && !disabled && (
+            <span
+              role="button"
+              tabIndex={-1}
+              aria-label="Clear"
+              onClick={handleClear}
+              className="inline-flex size-4 shrink-0 items-center justify-center rounded-sm text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900"
+            >
+              <XIcon className="size-3" />
+            </span>
+          )}
         </button>
       </PopoverTrigger>
       <PopoverContent className="p-0 w-auto">
-        <Calendar
-          mode="single"
-          value={value}
-          onValueChange={setValue}
-          minDate={minDate}
-          maxDate={maxDate}
-        />
+        {isRange ? (
+          <Calendar
+            mode="range"
+            value={rangeValue}
+            onValueChange={setRange}
+            {...calendarProps}
+          />
+        ) : (
+          <Calendar
+            mode="single"
+            value={singleValue}
+            onValueChange={setSingle}
+            {...calendarProps}
+          />
+        )}
       </PopoverContent>
     </Popover>
   );
