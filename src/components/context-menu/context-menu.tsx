@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
-import { CheckIcon, DotIcon } from "../../lib/icons";
+import { CheckIcon, DotIcon, ChevronRightIcon } from "../../lib/icons";
 
 interface ContextMenuContextValue {
   open: boolean;
@@ -29,20 +29,38 @@ function useContextMenu() {
   return ctx;
 }
 
+interface MenuLevelContextValue {
+  activeSubId: string | null;
+  setActiveSubId: (id: string | null) => void;
+}
+
+const MenuLevelContext = React.createContext<MenuLevelContextValue | null>(null);
+
+function MenuLevelProvider({ children }: { children: React.ReactNode }) {
+  const [activeSubId, setActiveSubId] = React.useState<string | null>(null);
+  const value = React.useMemo(
+    () => ({ activeSubId, setActiveSubId }),
+    [activeSubId],
+  );
+  return (
+    <MenuLevelContext.Provider value={value}>
+      {children}
+    </MenuLevelContext.Provider>
+  );
+}
+
 export interface ContextMenuProps {
   open?: boolean;
-  defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
 }
 
 export function ContextMenu({
   open: controlled,
-  defaultOpen = false,
   onOpenChange,
   children,
 }: ContextMenuProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(false);
   const isControlled = controlled !== undefined;
   const open = isControlled ? controlled : internalOpen;
   const [position, setPosition] = React.useState<
@@ -140,7 +158,6 @@ export const ContextMenuTrigger = React.forwardRef<
     const vh = window.innerHeight;
     let top = e.clientY;
     let left = e.clientX;
-    // approximate clamp; refined when content sizes
     if (top > vh - 200) top = vh - 200 - pad;
     if (left > vw - 200) left = vw - 200 - pad;
     ctx.setPosition({ top, left });
@@ -218,6 +235,8 @@ export const ContextMenuContent = React.forwardRef<
     const onDown = (e: MouseEvent) => {
       const f = ctx.floatingRef.current;
       if (f && f.contains(e.target as Node)) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("[data-slot='context-menu-sub-content']")) return;
       ctx.setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
@@ -265,7 +284,7 @@ export const ContextMenuContent = React.forwardRef<
       style={{ top: ctx.position.top, left: ctx.position.left }}
       {...rest}
     >
-      {children}
+      <MenuLevelProvider>{children}</MenuLevelProvider>
     </div>,
     document.body,
   );
@@ -273,10 +292,13 @@ export const ContextMenuContent = React.forwardRef<
 
 ContextMenuContent.displayName = "ContextMenuContent";
 
+export type ContextMenuItemVariant = "default" | "destructive";
+
 export interface ContextMenuItemProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect"> {
   disabled?: boolean;
   inset?: boolean;
+  variant?: ContextMenuItemVariant;
   onSelect?: (e: Event) => void;
 }
 
@@ -284,7 +306,17 @@ export const ContextMenuItem = React.forwardRef<
   HTMLDivElement,
   ContextMenuItemProps
 >(function ContextMenuItem(
-  { disabled = false, inset = false, onSelect, className, children, onClick, onKeyDown, ...rest },
+  {
+    disabled = false,
+    inset = false,
+    variant = "default",
+    onSelect,
+    className,
+    children,
+    onClick,
+    onKeyDown,
+    ...rest
+  },
   ref,
 ) {
   const ctx = useContextMenu();
@@ -298,8 +330,6 @@ export const ContextMenuItem = React.forwardRef<
     },
     [ctx, id, ref],
   );
-
-  React.useEffect(() => () => ctx.registerItem(null, id), [ctx, id]);
 
   const select = (origin: Event | React.SyntheticEvent) => {
     if (disabled) return;
@@ -315,6 +345,7 @@ export const ContextMenuItem = React.forwardRef<
       tabIndex={-1}
       aria-disabled={disabled || undefined}
       data-disabled={disabled || undefined}
+      data-variant={variant}
       data-slot="context-menu-item"
       onClick={(e) => {
         onClick?.(e);
@@ -335,6 +366,8 @@ export const ContextMenuItem = React.forwardRef<
       className={cn(
         "relative flex select-none items-center gap-2 rounded-sm px-2 py-1.5 cursor-pointer outline-none",
         "focus:bg-zinc-100 focus:text-zinc-900 hover:bg-zinc-100",
+        variant === "destructive" &&
+          "text-red-600 focus:bg-red-50 focus:text-red-700 hover:bg-red-50 hover:text-red-700",
         inset && "ps-8",
         disabled && "opacity-50 cursor-not-allowed pointer-events-none",
         className,
@@ -458,6 +491,26 @@ export const ContextMenuRadioItem = React.forwardRef<
 
 ContextMenuRadioItem.displayName = "ContextMenuRadioItem";
 
+export interface ContextMenuGroupProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const ContextMenuGroup = React.forwardRef<
+  HTMLDivElement,
+  ContextMenuGroupProps
+>(function ContextMenuGroup({ className, ...rest }, ref) {
+  return (
+    <div
+      ref={ref}
+      role="group"
+      data-slot="context-menu-group"
+      className={cn(className)}
+      {...rest}
+    />
+  );
+});
+
+ContextMenuGroup.displayName = "ContextMenuGroup";
+
 export interface ContextMenuLabelProps
   extends React.HTMLAttributes<HTMLDivElement> {
   inset?: boolean;
@@ -524,3 +577,290 @@ export const ContextMenuShortcut = React.forwardRef<
 });
 
 ContextMenuShortcut.displayName = "ContextMenuShortcut";
+
+export type ContextMenuSubSide = "right" | "left";
+
+interface ContextMenuSubContextValue {
+  open: boolean;
+  setOpen: (v: boolean) => void;
+  triggerRef: React.MutableRefObject<HTMLDivElement | null>;
+  cancelClose: () => void;
+  scheduleClose: () => void;
+}
+
+const ContextMenuSubContext =
+  React.createContext<ContextMenuSubContextValue | null>(null);
+
+function useContextMenuSub() {
+  const ctx = React.useContext(ContextMenuSubContext);
+  if (!ctx)
+    throw new Error(
+      "ContextMenuSub subcomponents must be used within <ContextMenuSub>",
+    );
+  return ctx;
+}
+
+export interface ContextMenuSubProps {
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+}
+
+const SUB_CLOSE_DELAY = 120;
+
+export function ContextMenuSub({
+  open: controlled,
+  defaultOpen = false,
+  onOpenChange,
+  children,
+}: ContextMenuSubProps) {
+  const id = React.useId();
+  const level = React.useContext(MenuLevelContext);
+  const triggerRef = React.useRef<HTMLDivElement | null>(null);
+  const closeTimerRef = React.useRef<number | null>(null);
+  const open = level ? level.activeSubId === id : false;
+  const isControlled = controlled !== undefined;
+
+  const setOpen = React.useCallback(
+    (v: boolean) => {
+      if (!level) return;
+      if (v) {
+        if (level.activeSubId !== id) level.setActiveSubId(id);
+      } else if (level.activeSubId === id) {
+        level.setActiveSubId(null);
+      }
+    },
+    [level, id],
+  );
+
+  const initRef = React.useRef(false);
+  React.useEffect(() => {
+    if (initRef.current || !level) return;
+    initRef.current = true;
+    if (defaultOpen && level.activeSubId === null) level.setActiveSubId(id);
+  }, [defaultOpen, level, id]);
+
+  React.useEffect(() => {
+    if (!isControlled || !level) return;
+    if (controlled && level.activeSubId !== id) level.setActiveSubId(id);
+    else if (!controlled && level.activeSubId === id) level.setActiveSubId(null);
+  }, [isControlled, controlled, level, id]);
+
+  const prevOpenRef = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpenRef.current !== open) {
+      prevOpenRef.current = open;
+      onOpenChange?.(open);
+    }
+  }, [open, onOpenChange]);
+
+  const cancelClose = React.useCallback(() => {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }, []);
+
+  const scheduleClose = React.useCallback(() => {
+    cancelClose();
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      closeTimerRef.current = null;
+    }, SUB_CLOSE_DELAY);
+  }, [cancelClose, setOpen]);
+
+  React.useEffect(() => () => cancelClose(), [cancelClose]);
+
+  const value = React.useMemo(
+    () => ({ open, setOpen, triggerRef, cancelClose, scheduleClose }),
+    [open, setOpen, cancelClose, scheduleClose],
+  );
+
+  return (
+    <ContextMenuSubContext.Provider value={value}>
+      {children}
+    </ContextMenuSubContext.Provider>
+  );
+}
+
+export interface ContextMenuSubTriggerProps
+  extends Omit<ContextMenuItemProps, "onSelect"> {}
+
+export const ContextMenuSubTrigger = React.forwardRef<
+  HTMLDivElement,
+  ContextMenuSubTriggerProps
+>(function ContextMenuSubTrigger(
+  { children, className, onKeyDown, onMouseEnter, onMouseLeave, ...rest },
+  ref,
+) {
+  const sub = useContextMenuSub();
+
+  const setRefs = React.useCallback(
+    (n: HTMLDivElement | null) => {
+      sub.triggerRef.current = n;
+      if (typeof ref === "function") ref(n);
+      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = n;
+    },
+    [sub, ref],
+  );
+
+  return (
+    <ContextMenuItem
+      ref={setRefs}
+      data-slot="context-menu-sub-trigger"
+      data-state={sub.open ? "open" : "closed"}
+      onSelect={(e) => {
+        sub.setOpen(true);
+        e.preventDefault();
+      }}
+      onMouseEnter={(e) => {
+        onMouseEnter?.(e);
+        sub.cancelClose();
+        sub.setOpen(true);
+      }}
+      onMouseLeave={(e) => {
+        onMouseLeave?.(e);
+        sub.scheduleClose();
+      }}
+      onKeyDown={(e) => {
+        onKeyDown?.(e);
+        if (e.defaultPrevented) return;
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          sub.setOpen(true);
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          sub.setOpen(false);
+        }
+      }}
+      className={cn("data-[state=open]:bg-zinc-100", className)}
+      {...rest}
+    >
+      {children}
+      <ChevronRightIcon className="ms-auto size-4 rtl:rotate-180" />
+    </ContextMenuItem>
+  );
+});
+
+ContextMenuSubTrigger.displayName = "ContextMenuSubTrigger";
+
+export interface ContextMenuSubContentProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  side?: ContextMenuSubSide;
+  sideOffset?: number;
+}
+
+export const ContextMenuSubContent = React.forwardRef<
+  HTMLDivElement,
+  ContextMenuSubContentProps
+>(function ContextMenuSubContent(
+  {
+    side = "right",
+    sideOffset = 4,
+    className,
+    children,
+    onMouseEnter,
+    onMouseLeave,
+    ...rest
+  },
+  ref,
+) {
+  const sub = useContextMenuSub();
+  const root = useContextMenu();
+  const localRef = React.useRef<HTMLDivElement | null>(null);
+  const [pos, setPos] = React.useState<{ top: number; left: number } | null>(
+    null,
+  );
+
+  const setRefs = React.useCallback(
+    (n: HTMLDivElement | null) => {
+      localRef.current = n;
+      if (typeof ref === "function") ref(n);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = n;
+    },
+    [ref],
+  );
+
+  React.useLayoutEffect(() => {
+    if (!sub.open) {
+      setPos(null);
+      return;
+    }
+    const trigger = sub.triggerRef.current;
+    const content = localRef.current;
+    if (!trigger || !content) return;
+    const t = trigger.getBoundingClientRect();
+    const c = content.getBoundingClientRect();
+    const pad = 8;
+    let top = t.top;
+    let left =
+      side === "right" ? t.right + sideOffset : t.left - c.width - sideOffset;
+
+    if (side === "right" && left + c.width > window.innerWidth - pad) {
+      left = t.left - c.width - sideOffset;
+    } else if (side === "left" && left < pad) {
+      left = t.right + sideOffset;
+    }
+    if (top + c.height > window.innerHeight - pad) {
+      top = Math.max(pad, window.innerHeight - c.height - pad);
+    }
+    setPos({ top, left });
+  }, [sub.open, side, sideOffset]);
+
+  React.useEffect(() => {
+    if (!sub.open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        sub.setOpen(false);
+        sub.triggerRef.current?.focus();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        sub.setOpen(false);
+        sub.triggerRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [sub]);
+
+  if (!sub.open || !root.open) return null;
+  if (typeof document === "undefined") return null;
+
+  return ReactDOM.createPortal(
+    <div
+      ref={setRefs}
+      role="menu"
+      data-slot="context-menu-sub-content"
+      data-state="open"
+      className={cn(
+        "fixed z-[9999] outline-none",
+        "min-w-44 rounded-md border border-zinc-200 bg-white p-1 text-sm text-zinc-700 shadow-md",
+        "animate-in fade-in-0 zoom-in-95",
+        className,
+      )}
+      style={{
+        top: pos?.top,
+        left: pos?.left,
+        opacity: pos ? 1 : 0,
+        pointerEvents: pos ? "auto" : "none",
+      }}
+      onMouseEnter={(e) => {
+        onMouseEnter?.(e);
+        sub.cancelClose();
+      }}
+      onMouseLeave={(e) => {
+        onMouseLeave?.(e);
+        sub.scheduleClose();
+      }}
+      {...rest}
+    >
+      <MenuLevelProvider>{children}</MenuLevelProvider>
+    </div>,
+    document.body,
+  );
+});
+
+ContextMenuSubContent.displayName = "ContextMenuSubContent";

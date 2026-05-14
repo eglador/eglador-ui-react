@@ -3,25 +3,42 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { SearchIcon } from "../../lib/icons";
+import {
+  Dialog,
+  DialogContent,
+  type DialogProps,
+  type DialogSize,
+  type DialogShape,
+  type DialogShadow,
+} from "../dialog";
 
 interface CommandContextValue {
   filter: string;
   setFilter: (v: string) => void;
-  registerItem: (el: HTMLElement | null, value: string, label: string) => void;
-  matches: (value: string, label: string) => boolean;
+  shouldFilter: boolean;
+  registerItem: (
+    el: HTMLElement | null,
+    value: string,
+    label: string,
+    keywords: string[],
+  ) => void;
+  matches: (value: string, label: string, keywords: string[]) => boolean;
   activeValue: string | null;
   setActiveValue: (v: string | null) => void;
   focusNext: () => void;
   focusPrev: () => void;
   focusFirst: () => void;
   focusLast: () => void;
+  registerVisibility: (value: string, visible: boolean) => void;
+  visibleCount: number;
 }
 
 const CommandContext = React.createContext<CommandContextValue | null>(null);
 
 function useCommand() {
   const ctx = React.useContext(CommandContext);
-  if (!ctx) throw new Error("Command subcomponents must be used within <Command>");
+  if (!ctx)
+    throw new Error("Command subcomponents must be used within <Command>");
   return ctx;
 }
 
@@ -29,11 +46,22 @@ export interface CommandProps extends React.HTMLAttributes<HTMLDivElement> {
   defaultFilter?: string;
   filter?: string;
   onFilterChange?: (filter: string) => void;
+  shouldFilter?: boolean;
+  loop?: boolean;
 }
 
 export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
   function Command(
-    { defaultFilter = "", filter: controlled, onFilterChange, className, children, ...rest },
+    {
+      defaultFilter = "",
+      filter: controlled,
+      onFilterChange,
+      shouldFilter = true,
+      loop = true,
+      className,
+      children,
+      ...rest
+    },
     ref,
   ) {
     const [internal, setInternal] = React.useState(defaultFilter);
@@ -45,30 +73,54 @@ export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
     };
 
     const itemsRef = React.useRef<
-      Map<string, { el: HTMLElement; label: string }>
+      Map<string, { el: HTMLElement; label: string; keywords: string[] }>
     >(new Map());
 
     const [activeValue, setActiveValue] = React.useState<string | null>(null);
+    const visibilityRef = React.useRef<Map<string, boolean>>(new Map());
+    const [visibleCount, setVisibleCount] = React.useState(0);
 
     const registerItem = React.useCallback(
-      (el: HTMLElement | null, value: string, label: string) => {
-        if (el) itemsRef.current.set(value, { el, label });
+      (
+        el: HTMLElement | null,
+        value: string,
+        label: string,
+        keywords: string[],
+      ) => {
+        if (el) itemsRef.current.set(value, { el, label, keywords });
         else itemsRef.current.delete(value);
       },
       [],
     );
 
     const matches = React.useCallback(
-      (_value: string, label: string) => {
-        if (!filter.trim()) return true;
-        return label.toLowerCase().includes(filter.toLowerCase());
+      (_value: string, label: string, keywords: string[]) => {
+        if (!shouldFilter) return true;
+        const q = filter.trim().toLowerCase();
+        if (!q) return true;
+        if (label.toLowerCase().includes(q)) return true;
+        return keywords.some((k) => k.toLowerCase().includes(q));
       },
-      [filter],
+      [filter, shouldFilter],
+    );
+
+    const registerVisibility = React.useCallback(
+      (value: string, visible: boolean) => {
+        const prev = visibilityRef.current.get(value);
+        if (prev === visible) return;
+        visibilityRef.current.set(value, visible);
+        let count = 0;
+        visibilityRef.current.forEach((v) => {
+          if (v) count++;
+        });
+        setVisibleCount(count);
+      },
+      [],
     );
 
     const visibleEntries = () =>
-      Array.from(itemsRef.current.entries()).filter(([v, { label }]) =>
-        matches(v, label),
+      Array.from(itemsRef.current.entries()).filter(([_v, { label, keywords }]) =>
+        matches(_v, label, keywords),
       );
 
     const focusNext = () => {
@@ -77,7 +129,8 @@ export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       const idx = activeValue
         ? entries.findIndex(([v]) => v === activeValue)
         : -1;
-      const next = (idx + 1) % entries.length;
+      let next = idx + 1;
+      if (next >= entries.length) next = loop ? 0 : entries.length - 1;
       const [v, { el }] = entries[next];
       setActiveValue(v);
       el.scrollIntoView({ block: "nearest" });
@@ -88,7 +141,8 @@ export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
       const idx = activeValue
         ? entries.findIndex(([v]) => v === activeValue)
         : 0;
-      const next = (idx - 1 + entries.length) % entries.length;
+      let next = idx - 1;
+      if (next < 0) next = loop ? entries.length - 1 : 0;
       const [v, { el }] = entries[next];
       setActiveValue(v);
       el.scrollIntoView({ block: "nearest" });
@@ -119,6 +173,7 @@ export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         value={{
           filter,
           setFilter,
+          shouldFilter,
           registerItem,
           matches,
           activeValue,
@@ -127,6 +182,8 @@ export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
           focusPrev,
           focusFirst,
           focusLast,
+          registerVisibility,
+          visibleCount,
         }}
       >
         <div
@@ -225,21 +282,13 @@ export interface CommandEmptyProps
 export const CommandEmpty = React.forwardRef<HTMLDivElement, CommandEmptyProps>(
   function CommandEmpty({ className, children = "No results found.", ...rest }, ref) {
     const ctx = useCommand();
-    const hasMatch = React.useMemo(() => {
-      // simple check by reading current dom on every render is not reliable; instead, expose hasMatches via context?
-      return false;
-    }, []);
-    // We'll let parent CommandGroup hide itself; CommandEmpty always renders but consumer should toggle visibility based on filter
-    void hasMatch;
     if (!ctx.filter) return null;
+    if (ctx.visibleCount > 0) return null;
     return (
       <div
         ref={ref}
         data-slot="command-empty"
-        className={cn(
-          "py-6 text-center text-sm text-zinc-500",
-          className,
-        )}
+        className={cn("py-6 text-center text-sm text-zinc-500", className)}
         {...rest}
       >
         {children}
@@ -281,30 +330,46 @@ CommandGroup.displayName = "CommandGroup";
 export interface CommandItemProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect"> {
   value: string;
+  keywords?: string[];
   disabled?: boolean;
   onSelect?: (value: string) => void;
 }
 
 export const CommandItem = React.forwardRef<HTMLDivElement, CommandItemProps>(
   function CommandItem(
-    { value, disabled = false, onSelect, className, children, onClick, ...rest },
+    {
+      value,
+      keywords,
+      disabled = false,
+      onSelect,
+      className,
+      children,
+      onClick,
+      ...rest
+    },
     ref,
   ) {
     const ctx = useCommand();
     const label = typeof children === "string" ? children : value;
+    const kw = keywords ?? [];
     const active = ctx.activeValue === value;
-    const visible = ctx.matches(value, label);
+    const visible = ctx.matches(value, label, kw);
+
+    React.useEffect(() => {
+      ctx.registerVisibility(value, visible);
+      return () => ctx.registerVisibility(value, false);
+    }, [ctx, value, visible]);
 
     const setRefs = React.useCallback(
       (n: HTMLDivElement | null) => {
-        ctx.registerItem(n, value, label);
+        ctx.registerItem(n, value, label, kw);
         if (typeof ref === "function") ref(n);
-        else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = n;
+        else if (ref)
+          (ref as React.MutableRefObject<HTMLDivElement | null>).current = n;
       },
-      [ctx, value, label, ref],
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [ctx, value, label, ref, kw.join("|")],
     );
-
-    React.useEffect(() => () => ctx.registerItem(null, value, label), [ctx, value, label]);
 
     if (!visible) return null;
 
@@ -369,13 +434,51 @@ export const CommandShortcut = React.forwardRef<
     <span
       ref={ref}
       data-slot="command-shortcut"
-      className={cn(
-        "ms-auto text-xs tracking-widest text-zinc-400",
-        className,
-      )}
+      className={cn("ms-auto text-xs tracking-widest text-zinc-400", className)}
       {...rest}
     />
   );
 });
 
 CommandShortcut.displayName = "CommandShortcut";
+
+export interface CommandDialogProps extends DialogProps {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  commandProps?: Omit<CommandProps, "children">;
+  size?: DialogSize;
+  shape?: DialogShape;
+  shadow?: DialogShadow;
+}
+
+export function CommandDialog({
+  title,
+  description,
+  commandProps,
+  children,
+  size,
+  shape,
+  shadow,
+  ...dialogProps
+}: CommandDialogProps & { children: React.ReactNode }) {
+  return (
+    <Dialog size={size} shape={shape} shadow={shadow} {...dialogProps}>
+      <DialogContent className="overflow-hidden p-0">
+        {(title || description) && (
+          <div className="sr-only">
+            {title && <h2>{title}</h2>}
+            {description && <p>{description}</p>}
+          </div>
+        )}
+        <Command
+          {...commandProps}
+          className={cn("rounded-none border-0", commandProps?.className)}
+        >
+          {children}
+        </Command>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+CommandDialog.displayName = "CommandDialog";
