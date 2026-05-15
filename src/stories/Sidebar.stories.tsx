@@ -85,19 +85,19 @@ function AppShell({
   args,
   children,
   defaultActiveId,
-  persistKey,
+  onOpenChange,
 }: {
   args: SidebarPlaygroundArgs;
   children?: React.ReactNode;
   defaultActiveId?: string;
-  persistKey?: string;
+  onOpenChange?: (open: boolean) => void;
 }) {
   return (
     <SidebarProvider
       key={`${args.defaultOpen}-${args.collapsible}-${args.side}-${args.variant}`}
       defaultOpen={args.defaultOpen}
       defaultActiveId={defaultActiveId}
-      persistKey={persistKey}
+      onOpenChange={onOpenChange}
     >
       <Sidebar
         side={args.side}
@@ -426,71 +426,94 @@ export const Persistence: Story = {
     docs: {
       description: {
         story:
-          "Pass `persistKey=\"my-app:sidebar\"` to the Provider; the open/collapsed state is written to `localStorage` under that key and restored on next mount. Toggle the sidebar, refresh the Storybook iframe — the state survives.",
+          "`SidebarProvider` is purely controlled/uncontrolled — it never touches storage itself. Drive `open` from your own state, write to whatever storage you want in `onOpenChange`. For Next.js SSR, write a cookie here and read it server-side (`next/headers` `cookies().get(...)`) to seed `defaultOpen` — that's how hydration stays clean.",
       },
     },
   },
-  render: (args) => (
-    <SidebarProvider
-      defaultOpen={args.defaultOpen}
-      persistKey="eglador:sidebar:demo"
-      defaultActiveId="home"
-    >
-      <Sidebar
-        side={args.side}
-        variant={args.variant}
-        collapsible={args.collapsible}
+  render: function PersistenceStory(args) {
+    const STORAGE_KEY = "eglador:sidebar:demo";
+    const [open, setOpen] = React.useState(args.defaultOpen);
+
+    React.useEffect(() => {
+      try {
+        const v = window.localStorage.getItem(STORAGE_KEY);
+        if (v !== null) setOpen(v === "true");
+      } catch {
+        /* ignore */
+      }
+    }, []);
+
+    const handleOpenChange = (next: boolean) => {
+      setOpen(next);
+      try {
+        window.localStorage.setItem(STORAGE_KEY, String(next));
+      } catch {
+        /* ignore */
+      }
+    };
+
+    return (
+      <SidebarProvider
+        open={open}
+        onOpenChange={handleOpenChange}
+        defaultActiveId="home"
       >
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Persistent</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton value="home" tooltip="Home">
-                    <Home />
-                    <span>Home</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton value="inbox" tooltip="Inbox">
-                    <Inbox />
-                    <span>Inbox</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton value="settings" tooltip="Settings">
-                    <Settings />
-                    <span>Settings</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-        <SidebarRail />
-      </Sidebar>
-      <SidebarInset>
-        <header className="flex h-14 items-center gap-2 border-b border-zinc-200 px-4">
-          <SidebarTrigger />
-          <span className="text-sm font-medium">Persistence</span>
-          <span className="ms-auto text-xs text-zinc-400">
-            Toggle, reload — state restored from{" "}
+        <Sidebar
+          side={args.side}
+          variant={args.variant}
+          collapsible={args.collapsible}
+        >
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupLabel>Persistent</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton value="home" tooltip="Home">
+                      <Home />
+                      <span>Home</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton value="inbox" tooltip="Inbox">
+                      <Inbox />
+                      <span>Inbox</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton value="settings" tooltip="Settings">
+                      <Settings />
+                      <span>Settings</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+          <SidebarRail />
+        </Sidebar>
+        <SidebarInset>
+          <header className="flex h-14 items-center gap-2 border-b border-zinc-200 px-4">
+            <SidebarTrigger />
+            <span className="text-sm font-medium">Persistence</span>
+            <span className="ms-auto text-xs text-zinc-400">
+              Toggle, reload — state from{" "}
+              <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
+                localStorage
+              </code>
+            </span>
+          </header>
+          <main className="flex-1 p-6 text-sm text-zinc-600">
+            The story owns the state and writes to{" "}
             <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
-              localStorage
-            </code>
-          </span>
-        </header>
-        <main className="flex-1 p-6 text-sm text-zinc-600">
-          The Provider writes to{" "}
-          <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
-            localStorage["eglador:sidebar:demo"]
-          </code>{" "}
-          on every toggle.
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
-  ),
+              localStorage[&quot;{STORAGE_KEY}&quot;]
+            </code>{" "}
+            inside <code>onOpenChange</code>.
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    );
+  },
 };
 
 export const ActiveIdControlled: Story = {
