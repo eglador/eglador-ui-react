@@ -71,8 +71,6 @@ export interface SidebarProviderProps
   defaultActiveId?: string;
   activeId?: string;
   onActiveIdChange?: (id: string | undefined) => void;
-  /** When set, the open state is persisted to localStorage under this key. */
-  persistKey?: string;
 }
 
 export const SidebarProvider = React.forwardRef<
@@ -86,7 +84,6 @@ export const SidebarProvider = React.forwardRef<
     defaultActiveId,
     activeId: controlledActiveId,
     onActiveIdChange,
-    persistKey,
     className,
     style,
     children,
@@ -96,25 +93,12 @@ export const SidebarProvider = React.forwardRef<
 ) {
   const isMobile = useIsMobile();
 
-  const readPersisted = React.useCallback((): boolean | null => {
-    if (typeof window === "undefined" || !persistKey) return null;
-    try {
-      const v = window.localStorage.getItem(persistKey);
-      if (v === null) return null;
-      return v === "true";
-    } catch {
-      return null;
-    }
-  }, [persistKey]);
-
-  const [internalOpen, setInternalOpen] = React.useState(() => {
-    const persisted = readPersisted();
-    return persisted ?? defaultOpen;
-  });
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const [openMobile, setOpenMobile] = React.useState(false);
 
   const isOpenControlled = controlled !== undefined;
   const open = isOpenControlled ? controlled : internalOpen;
+
   const setOpen = React.useCallback(
     (next: boolean | ((prev: boolean) => boolean)) => {
       const value = typeof next === "function" ? next(open) : next;
@@ -123,15 +107,6 @@ export const SidebarProvider = React.forwardRef<
     },
     [open, isOpenControlled, onOpenChange],
   );
-
-  React.useEffect(() => {
-    if (typeof window === "undefined" || !persistKey) return;
-    try {
-      window.localStorage.setItem(persistKey, String(open));
-    } catch {
-      /* ignore quota / privacy errors */
-    }
-  }, [open, persistKey]);
 
   const [internalActiveId, setInternalActiveId] = React.useState<
     string | undefined
