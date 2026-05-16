@@ -27,9 +27,9 @@ const SHAPES: Record<NativeSelectShape, string> = {
 
 const VARIANTS: Record<NativeSelectVariant, string> = {
   outline:
-    "border border-zinc-300 bg-white hover:border-zinc-400 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10",
-  soft: "border border-transparent bg-zinc-100 hover:bg-zinc-200 focus:bg-zinc-50 focus:ring-2 focus:ring-zinc-900/10",
-  ghost: "border border-transparent bg-transparent hover:bg-zinc-100 focus:ring-2 focus:ring-zinc-900/10",
+    "border border-zinc-300 bg-white hover:border-zinc-400 focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06]",
+  soft: "border border-transparent bg-zinc-100 hover:bg-zinc-200 focus:bg-zinc-50 focus:ring-[3px] focus:ring-zinc-900/[0.06]",
+  ghost: "border border-transparent bg-transparent hover:bg-zinc-100 focus:ring-[3px] focus:ring-zinc-900/[0.06]",
 };
 
 export interface NativeSelectProps
@@ -69,7 +69,7 @@ export const NativeSelect = React.forwardRef<
         className={cn(
           "appearance-none w-full ps-3 outline-none transition-colors cursor-pointer text-zinc-900",
           "disabled:opacity-50 disabled:cursor-not-allowed",
-          "aria-[invalid=true]:border-zinc-900 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-zinc-900/10",
+          "aria-[invalid=true]:border-red-500 aria-[invalid=true]:ring-[3px] aria-[invalid=true]:ring-red-500/10",
           s.control,
           s.font,
           s.padEnd,

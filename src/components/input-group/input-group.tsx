@@ -14,13 +14,12 @@ export const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
         className={cn(
           "relative isolate flex items-stretch w-full",
           "bg-white border border-zinc-300 rounded-sm transition-colors",
-          "has-[[data-slot=input-group-control]:focus-visible]:ring-2",
-          "has-[[data-slot=input-group-control]:focus-visible]:ring-zinc-900",
-          "has-[[data-slot=input-group-control]:focus-visible]:ring-offset-1",
-          "has-[[data-slot=input-group-control]:focus-visible]:border-zinc-900",
-          "has-[[aria-invalid=true]]:border-zinc-900",
-          "has-[[aria-invalid=true]]:ring-2",
-          "has-[[aria-invalid=true]]:ring-zinc-200",
+          "has-[[data-slot=input-group-control]:focus-visible]:ring-[3px]",
+          "has-[[data-slot=input-group-control]:focus-visible]:ring-zinc-900/[0.06]",
+          "has-[[data-slot=input-group-control]:focus-visible]:border-zinc-400",
+          "has-[[aria-invalid=true]]:border-red-500",
+          "has-[[aria-invalid=true]]:ring-[3px]",
+          "has-[[aria-invalid=true]]:ring-red-500/10",
           "has-[[data-align=block-start]]:flex-col",
           "has-[[data-align=block-end]]:flex-col",
           "[&_[data-slot=input-group-control]]:border-0",
@@ -137,7 +136,7 @@ export const InputGroupButton = React.forwardRef<
       data-slot="input-group-button"
       className={cn(
         "inline-flex items-center justify-center font-medium rounded-sm transition-colors cursor-pointer shrink-0 select-none",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20",
         "disabled:opacity-50 disabled:pointer-events-none",
         BTN_SIZES[size],
         BTN_VARIANTS[variant],

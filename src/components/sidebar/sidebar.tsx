@@ -1074,7 +1074,7 @@ export const SidebarInput = React.forwardRef<HTMLInputElement, SidebarInputProps
         data-slot="sidebar-input"
         className={cn(
           "flex h-8 w-full rounded-sm border border-zinc-200 bg-white px-2 text-sm text-zinc-900 outline-none transition-colors",
-          "placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10",
+          "placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06]",
           className,
         )}
         {...rest}

@@ -173,7 +173,8 @@ export function DatePicker(props: DatePickerProps) {
           data-empty={!hasValue}
           className={cn(
             "group inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-zinc-300 bg-white px-3 text-sm transition-colors hover:border-zinc-400 cursor-pointer outline-none",
-            "focus-visible:ring-2 focus-visible:ring-zinc-900/20",
+            "focus-visible:border-zinc-400 focus-visible:ring-[3px] focus-visible:ring-zinc-900/[0.06]",
+            "aria-invalid:border-red-500 aria-invalid:ring-[3px] aria-invalid:ring-red-500/10",
             "disabled:opacity-50 disabled:cursor-not-allowed",
             !hasValue && "text-zinc-400",
             hasValue && "text-zinc-900",

@@ -62,7 +62,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
         className={cn(
           "inline-flex items-center font-medium transition-colors",
           "text-zinc-900 hover:text-zinc-700",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1 rounded-sm",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 rounded-sm",
           "cursor-pointer",
           s.font,
           s.gap,

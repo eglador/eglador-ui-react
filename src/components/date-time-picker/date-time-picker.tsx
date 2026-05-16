@@ -16,7 +16,7 @@ function pad(n: number): string {
 }
 
 const TIME_INPUT_CLASS =
-  "h-7 w-12 rounded-sm border border-zinc-200 bg-white px-1 text-center text-sm tabular-nums text-zinc-900 outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
+  "h-7 w-12 rounded-sm border border-zinc-200 bg-white px-1 text-center text-sm tabular-nums text-zinc-900 outline-none focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
 
 function formatDT(d: Date | undefined, hour12: boolean): string {
   if (!d) return "";
@@ -187,7 +187,8 @@ export function DateTimePicker({
           data-empty={!value}
           className={cn(
             "group inline-flex h-9 w-full items-center justify-between gap-2 rounded-md border border-zinc-300 bg-white px-3 text-sm transition-colors hover:border-zinc-400 cursor-pointer outline-none",
-            "focus-visible:ring-2 focus-visible:ring-zinc-900/20",
+            "focus-visible:border-zinc-400 focus-visible:ring-[3px] focus-visible:ring-zinc-900/[0.06]",
+            "aria-invalid:border-red-500 aria-invalid:ring-[3px] aria-invalid:ring-red-500/10",
             "disabled:opacity-50 disabled:cursor-not-allowed",
             !value && "text-zinc-400",
             value && "text-zinc-900",
@@ -281,7 +282,7 @@ export function DateTimePicker({
                 <button
                   type="button"
                   onClick={togglePeriod}
-                  className="ms-1 h-7 rounded-sm border border-zinc-200 bg-white px-2 text-xs font-medium text-zinc-900 outline-none cursor-pointer hover:bg-zinc-50 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+                  className="ms-1 h-7 rounded-sm border border-zinc-200 bg-white px-2 text-xs font-medium text-zinc-900 outline-none cursor-pointer hover:bg-zinc-50 focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06]"
                 >
                   {period}
                 </button>
