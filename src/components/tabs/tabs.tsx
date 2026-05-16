@@ -31,7 +31,9 @@ const SIZES: Record<
   {
     list: string;
     listPad: string;
+    listGap: string;
     trigger: string;
+    triggerPad: string;
     triggerFont: string;
     iconSize: string;
   }
@@ -39,35 +41,45 @@ const SIZES: Record<
   xs: {
     list: "h-8",
     listPad: "p-0.5 gap-0.5",
-    trigger: "px-2.5 py-1 gap-1",
+    listGap: "gap-2",
+    trigger: "gap-1",
+    triggerPad: "px-2.5 py-1",
     triggerFont: "text-xs",
     iconSize: "size-3",
   },
   sm: {
     list: "h-9",
     listPad: "p-1 gap-1",
-    trigger: "px-3 py-1.5 gap-1.5",
+    listGap: "gap-4",
+    trigger: "gap-1.5",
+    triggerPad: "px-3 py-1.5",
     triggerFont: "text-xs",
     iconSize: "size-3.5",
   },
   md: {
     list: "h-10",
     listPad: "p-1 gap-1",
-    trigger: "px-4 py-2 gap-2",
+    listGap: "gap-4",
+    trigger: "gap-2",
+    triggerPad: "px-4 py-2",
     triggerFont: "text-sm",
     iconSize: "size-4",
   },
   lg: {
     list: "h-11",
     listPad: "p-1 gap-1",
-    trigger: "px-5 py-2.5 gap-2",
+    listGap: "gap-4",
+    trigger: "gap-2",
+    triggerPad: "px-5 py-2.5",
     triggerFont: "text-base",
     iconSize: "size-5",
   },
   xl: {
     list: "h-12",
     listPad: "p-1.5 gap-1.5",
-    trigger: "px-6 py-3 gap-2.5",
+    listGap: "gap-6",
+    trigger: "gap-2.5",
+    triggerPad: "px-6 py-3",
     triggerFont: "text-lg",
     iconSize: "size-6",
   },
@@ -223,10 +235,20 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(function Tabs(
 
 Tabs.displayName = "Tabs";
 
-export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
+  scrollable?: boolean;
+}
+
+const SCROLLBAR_STYLES = cn(
+  "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5",
+  "[&::-webkit-scrollbar-track]:bg-transparent",
+  "[&::-webkit-scrollbar-thumb]:rounded-full",
+  "[&::-webkit-scrollbar-corner]:bg-transparent",
+  "[&::-webkit-scrollbar-thumb]:bg-zinc-300 [&::-webkit-scrollbar-thumb:hover]:bg-zinc-400",
+);
 
 export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
-  function TabsList({ className, ...rest }, ref) {
+  function TabsList({ className, scrollable = false, ...rest }, ref) {
     const { variant, size, orientation } = useTabs();
     const s = SIZES[size];
     const v = LIST_VARIANTS[variant];
@@ -244,7 +266,15 @@ export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
           isHorizontal ? "flex-row" : "flex-col",
           !isUnderline && isHorizontal && s.list,
           !isUnderline && s.listPad,
+          isUnderline && s.listGap,
           isHorizontal ? v.horizontal : v.vertical,
+          scrollable && [
+            "max-w-full",
+            isHorizontal
+              ? "overflow-x-auto overflow-y-hidden"
+              : "overflow-y-auto overflow-x-hidden",
+            SCROLLBAR_STYLES,
+          ],
           className,
         )}
         {...rest}
@@ -339,6 +369,7 @@ export const TabsTrigger = React.forwardRef<
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20",
         "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
         s.trigger,
+        variant !== "underline" && s.triggerPad,
         s.triggerFont,
         orientation === "horizontal" && (variant === "underline" ? s.list : "h-full"),
         v.base,
