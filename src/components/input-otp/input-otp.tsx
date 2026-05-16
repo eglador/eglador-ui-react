@@ -225,7 +225,8 @@ export const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps
         onFocus={(e) => e.currentTarget.select()}
         className={cn(
           "border border-zinc-300 text-center font-medium text-zinc-900 outline-none transition-colors -ms-px first:ms-0 first:rounded-s-md last:rounded-e-md",
-          "focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 focus:z-10",
+          "focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06] focus:z-10",
+          "aria-invalid:border-red-500 aria-invalid:ring-[3px] aria-invalid:ring-red-500/10 aria-invalid:z-10",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           s.slot,
           s.font,

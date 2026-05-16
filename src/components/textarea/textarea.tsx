@@ -107,8 +107,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         className={cn(
           "w-full transition-colors",
           "text-zinc-900 placeholder:text-zinc-400",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1 focus-visible:border-zinc-900",
-          "aria-invalid:border-zinc-900 aria-invalid:ring-2 aria-invalid:ring-zinc-200",
+          "focus-visible:outline-none focus-visible:border-zinc-400 focus-visible:ring-[3px] focus-visible:ring-zinc-900/[0.06]",
+          "aria-invalid:border-red-500 aria-invalid:ring-[3px] aria-invalid:ring-red-500/10",
           "disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-zinc-50",
           "read-only:bg-zinc-50 read-only:text-zinc-600",
           VARIANTS[variant],

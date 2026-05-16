@@ -80,8 +80,8 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             checked
               ? "bg-white border-zinc-900"
               : "bg-white border-zinc-300 peer-hover:border-zinc-400",
-            "peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-900 peer-focus-visible:ring-offset-1",
-            "peer-aria-invalid:border-zinc-900 peer-aria-invalid:ring-2 peer-aria-invalid:ring-zinc-200",
+            "peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-900/20",
+            "peer-aria-invalid:border-red-500 peer-aria-invalid:ring-2 peer-aria-invalid:ring-red-500/10",
             s.box,
           )}
         >

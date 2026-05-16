@@ -81,8 +81,8 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
           className={cn(
             "relative inline-block rounded-full transition-colors",
             "bg-zinc-200 peer-checked:bg-zinc-900",
-            "peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-900 peer-focus-visible:ring-offset-1",
-            "peer-aria-invalid:ring-2 peer-aria-invalid:ring-zinc-200",
+            "peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-900/20",
+            "peer-aria-invalid:ring-2 peer-aria-invalid:ring-red-500/10",
             disabled ? "cursor-not-allowed" : "cursor-pointer",
             s.track,
           )}

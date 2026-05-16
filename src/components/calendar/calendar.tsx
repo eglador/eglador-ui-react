@@ -473,7 +473,7 @@ function CalendarToolbar({
             onChange={(e) =>
               setMonth(new Date(month.getFullYear(), Number(e.target.value), 1))
             }
-            className="h-7 rounded-sm border border-zinc-200 bg-white px-2 text-sm font-medium text-zinc-900 outline-none cursor-pointer hover:border-zinc-300 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+            className="h-7 rounded-sm border border-zinc-200 bg-white px-2 text-sm font-medium text-zinc-900 outline-none cursor-pointer hover:border-zinc-300 focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06]"
           >
             {monthNames.map((name, i) => (
               <option key={i} value={i}>
@@ -489,7 +489,7 @@ function CalendarToolbar({
             onChange={(e) =>
               setMonth(new Date(Number(e.target.value), month.getMonth(), 1))
             }
-            className="h-7 rounded-sm border border-zinc-200 bg-white px-2 text-sm font-medium text-zinc-900 outline-none cursor-pointer hover:border-zinc-300 focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+            className="h-7 rounded-sm border border-zinc-200 bg-white px-2 text-sm font-medium text-zinc-900 outline-none cursor-pointer hover:border-zinc-300 focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06]"
           >
             {yearOptions.map((y) => (
               <option key={y} value={y}>

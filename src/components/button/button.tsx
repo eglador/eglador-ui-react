@@ -64,7 +64,7 @@ const VARIANTS: Record<ButtonVariant, { base: string; active: string }> = {
 };
 
 const BASE_CLASSES =
-  "inline-flex items-center justify-center font-medium transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none";
+  "inline-flex items-center justify-center font-medium transition-colors cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 disabled:opacity-50 disabled:pointer-events-none";
 
 export interface ButtonVariantOptions {
   variant?: ButtonVariant;

@@ -229,7 +229,8 @@ export const SelectTrigger = React.forwardRef<
       className={cn(
         "inline-flex w-full items-center justify-between gap-2 outline-none transition-colors cursor-pointer text-zinc-900",
         "disabled:opacity-50 disabled:cursor-not-allowed",
-        "focus-visible:ring-2 focus-visible:ring-zinc-900/20",
+        "focus-visible:border-zinc-400 focus-visible:ring-[3px] focus-visible:ring-zinc-900/[0.06]",
+        "aria-invalid:border-red-500 aria-invalid:ring-[3px] aria-invalid:ring-red-500/10",
         s.control,
         s.font,
         s.pad,
