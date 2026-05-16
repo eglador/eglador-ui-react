@@ -50,6 +50,7 @@ export * from "./components/stepper";
 export * from "./components/switch";
 export * from "./components/table";
 export * from "./components/tabs";
+export * from "./components/tag-input";
 export * from "./components/tooltip";
 export * from "./components/textarea";
 export * from "./components/tree-view";
