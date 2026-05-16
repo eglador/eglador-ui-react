@@ -34,6 +34,7 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Input", status: "shipped" },
   { name: "InputGroup", status: "shipped" },
   { name: "InputOTP", status: "shipped" },
+  { name: "InputTag", status: "shipped" },
   { name: "Kbd", status: "shipped" },
   { name: "Label", status: "shipped" },
   { name: "Link", status: "shipped" },
@@ -169,8 +170,8 @@ function Overview() {
             <div className="font-medium text-zinc-900 mb-1">
               Status — Alpha (v1.0.0-alpha.4)
             </div>
-            All 55 primitives shipped: Layout (7), Display (7), Navigation (7),
-            Forms (15), Date & Time (3), Overlays (10), Data (1), Misc (5).
+            All 56 primitives shipped: Layout (7), Display (7), Navigation (7),
+            Forms (16), Date & Time (3), Overlays (10), Data (1), Misc (5).
             Shared vocabulary: variants solid / soft / outline / ghost / link;
             sizes xs / sm / md / lg / xl; shapes square / rounded / pill /
             circle; shadows none / xs / sm / md / lg / xl.

@@ -4,16 +4,16 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import { XIcon } from "../../lib/icons";
 
-export type TagInputSize = "xs" | "sm" | "md" | "lg" | "xl";
-export type TagInputVariant = "outline" | "soft" | "ghost";
-export type TagInputShape = "square" | "rounded" | "pill";
+export type InputTagSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type InputTagVariant = "outline" | "soft" | "ghost";
+export type InputTagShape = "square" | "rounded" | "pill";
 
-export interface TagInputRenderTagHelpers {
+export interface InputTagRenderTagHelpers {
   remove: () => void;
   index: number;
 }
 
-export interface TagInputProps
+export interface InputTagProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     "value" | "defaultValue" | "onChange" | "size" | "onClick"
@@ -22,9 +22,9 @@ export interface TagInputProps
   defaultValue?: string[];
   onValueChange?: (tags: string[]) => void;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
-  size?: TagInputSize;
-  variant?: TagInputVariant;
-  shape?: TagInputShape;
+  size?: InputTagSize;
+  variant?: InputTagVariant;
+  shape?: InputTagShape;
   /** Extra characters that commit the draft as a tag. Enter is always active. */
   delimiters?: string[];
   /** Whether the same value may appear more than once. */
@@ -38,11 +38,11 @@ export interface TagInputProps
   /** Auto-split pasted content using newline + delimiters. */
   splitOnPaste?: boolean;
   /** Custom chip renderer. */
-  renderTag?: (tag: string, helpers: TagInputRenderTagHelpers) => React.ReactNode;
+  renderTag?: (tag: string, helpers: InputTagRenderTagHelpers) => React.ReactNode;
 }
 
 const SIZES: Record<
-  TagInputSize,
+  InputTagSize,
   {
     control: string;
     font: string;
@@ -106,19 +106,19 @@ const SIZES: Record<
   },
 };
 
-const SHAPES: Record<TagInputShape, string> = {
+const SHAPES: Record<InputTagShape, string> = {
   square: "rounded-none",
   rounded: "rounded-md",
   pill: "rounded-full",
 };
 
-const CHIP_SHAPES: Record<TagInputShape, string> = {
+const CHIP_SHAPES: Record<InputTagShape, string> = {
   square: "rounded-none",
   rounded: "rounded-sm",
   pill: "rounded-full",
 };
 
-const VARIANTS: Record<TagInputVariant, string> = {
+const VARIANTS: Record<InputTagVariant, string> = {
   outline: "border border-zinc-300 bg-white hover:border-zinc-400",
   soft: "border border-transparent bg-zinc-100",
   ghost: "border border-transparent bg-transparent",
@@ -126,8 +126,8 @@ const VARIANTS: Record<TagInputVariant, string> = {
 
 const defaultTransform = (raw: string) => raw.trim();
 
-export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
-  function TagInput(
+export const InputTag = React.forwardRef<HTMLInputElement, InputTagProps>(
+  function InputTag(
     {
       value: controlled,
       defaultValue = [],
@@ -303,7 +303,7 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
     return (
       <div
         role="group"
-        data-slot="tag-input"
+        data-slot="input-tag"
         data-disabled={disabled || undefined}
         data-readonly={readOnly || undefined}
         aria-invalid={ariaInvalid}
@@ -337,7 +337,7 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
           return (
             <span
               key={`${tag}-${i}`}
-              data-slot="tag-input-chip"
+              data-slot="input-tag-chip"
               data-state={isChipFocused ? "focused" : "default"}
               className={cn(
                 "inline-flex items-center gap-1 bg-zinc-100 text-zinc-800 font-medium select-none",
@@ -396,4 +396,4 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
   },
 );
 
-TagInput.displayName = "TagInput";
+InputTag.displayName = "InputTag";

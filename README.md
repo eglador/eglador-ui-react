@@ -12,7 +12,7 @@
 
 Eglador UI for React — headless, accessible component library. Compound subcomponents, **Tailwind CSS v4**, zero runtime dependencies.
 
-> **Status:** Alpha — 55/55 components shipped.
+> **Status:** Alpha — 56/56 components shipped.
 
 ## Installation
 
@@ -46,7 +46,7 @@ All components share the same vocabulary:
 - **Palette**: zinc-only (no color schemes; theming handled separately)
 - **A11y**: native HTML inputs, `aria-*` attributes, focus-visible rings, RTL-safe Tailwind logical properties
 
-## Components (55/55)
+## Components (56/56)
 
 **Layout & Structure (7/7)** — ✓ Accordion · ✓ AspectRatio · ✓ Collapsible · ✓ Resizable · ✓ ScrollArea · ✓ Separator · ✓ Sidebar
 
@@ -54,7 +54,7 @@ All components share the same vocabulary:
 
 **Navigation (7/7)** — ✓ Breadcrumb · ✓ Menubar · ✓ NavigationMenu · ✓ Pagination · ✓ Stepper · ✓ Tabs · ✓ TreeView
 
-**Forms (15/15)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Switch · ✓ Textarea
+**Forms (16/16)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Switch · ✓ Textarea
 
 **Date & Time (3/3)** — ✓ Calendar · ✓ DatePicker · ✓ DateTimePicker
 

@@ -15,6 +15,7 @@ const preview: Preview = {
     layout: "padded",
     options: {
       storySort: {
+        method: "alphabetical",
         order: [
           "Default",
           "Welcome",

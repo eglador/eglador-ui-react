@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
-import { TagInput, type TagInputProps } from "../components/tag-input";
+import { InputTag, type InputTagProps } from "../components/input-tag";
 
-const meta: Meta<typeof TagInput> = {
-  title: "Components/TagInput",
-  component: TagInput,
+const meta: Meta<typeof InputTag> = {
+  title: "Components/InputTag",
+  component: InputTag,
   tags: ["autodocs"],
   parameters: {
     docs: {
@@ -38,7 +38,7 @@ const meta: Meta<typeof TagInput> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof TagInput>;
+type Story = StoryObj<typeof InputTag>;
 
 const Field = ({
   label,
@@ -57,9 +57,9 @@ const Field = ({
 );
 
 export const Default: Story = {
-  render: (args: TagInputProps) => (
+  render: (args: InputTagProps) => (
     <div className="w-[420px]">
-      <TagInput {...args} defaultValue={["react", "typescript", "tailwind"]} />
+      <InputTag {...args} defaultValue={["react", "typescript", "tailwind"]} />
     </div>
   ),
 };
@@ -68,21 +68,21 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <Field label="outline">
-        <TagInput
+        <InputTag
           variant="outline"
           defaultValue={["alpha", "beta"]}
           placeholder="Add a tag…"
         />
       </Field>
       <Field label="soft">
-        <TagInput
+        <InputTag
           variant="soft"
           defaultValue={["alpha", "beta"]}
           placeholder="Add a tag…"
         />
       </Field>
       <Field label="ghost">
-        <TagInput
+        <InputTag
           variant="ghost"
           defaultValue={["alpha", "beta"]}
           placeholder="Add a tag…"
@@ -97,7 +97,7 @@ export const Sizes: Story = {
     <div className="flex flex-col gap-4">
       {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
         <Field key={size} label={`size = ${size}`}>
-          <TagInput
+          <InputTag
             size={size}
             defaultValue={["one", "two", "three"]}
             placeholder="Add a tag…"
@@ -113,7 +113,7 @@ export const Shapes: Story = {
     <div className="flex flex-col gap-4">
       {(["square", "rounded", "pill"] as const).map((shape) => (
         <Field key={shape} label={`shape = ${shape}`}>
-          <TagInput
+          <InputTag
             shape={shape}
             defaultValue={["one", "two"]}
             placeholder="Add a tag…"
@@ -138,7 +138,7 @@ export const Delimiters: Story = {
       label="Delimiters: Enter, comma, semicolon"
       hint="Type values separated by , or ; to commit instantly."
     >
-      <TagInput
+      <InputTag
         delimiters={[",", ";"]}
         placeholder="red, green; blue…"
         defaultValue={["amber"]}
@@ -153,7 +153,7 @@ export const MaxTags: Story = {
       label="maxTags = 5"
       hint="Further entries are silently rejected once the limit is reached."
     >
-      <TagInput
+      <InputTag
         maxTags={5}
         defaultValue={["one", "two", "three"]}
         placeholder="Up to 5 tags…"
@@ -166,10 +166,10 @@ export const AllowDuplicates: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <Field label="allowDuplicates = false (default)">
-        <TagInput defaultValue={["alpha"]} placeholder="Try adding 'alpha' again…" />
+        <InputTag defaultValue={["alpha"]} placeholder="Try adding 'alpha' again…" />
       </Field>
       <Field label="allowDuplicates = true">
-        <TagInput allowDuplicates defaultValue={["alpha"]} placeholder="Duplicates allowed…" />
+        <InputTag allowDuplicates defaultValue={["alpha"]} placeholder="Duplicates allowed…" />
       </Field>
     </div>
   ),
@@ -191,7 +191,7 @@ export const WithValidation: Story = {
         label="Email addresses only"
         hint={hint || "Add a valid email and press Enter."}
       >
-        <TagInput
+        <InputTag
           value={tags}
           onValueChange={(next) => {
             setTags(next);
@@ -213,7 +213,7 @@ export const WithValidation: Story = {
 export const Invalid: Story = {
   render: () => (
     <Field label="aria-invalid = true">
-      <TagInput
+      <InputTag
         aria-invalid
         defaultValue={["broken-state"]}
         placeholder="Add a tag…"
@@ -225,7 +225,7 @@ export const Invalid: Story = {
 export const Disabled: Story = {
   render: () => (
     <Field label="disabled">
-      <TagInput
+      <InputTag
         disabled
         defaultValue={["read", "only"]}
         placeholder="Add a tag…"
@@ -237,7 +237,7 @@ export const Disabled: Story = {
 export const ReadOnly: Story = {
   render: () => (
     <Field label="readOnly">
-      <TagInput
+      <InputTag
         readOnly
         defaultValue={["snapshot", "frozen"]}
         placeholder="Add a tag…"
@@ -264,7 +264,7 @@ export const Controlled: Story = {
             Clear
           </button>
         </div>
-        <TagInput
+        <InputTag
           value={tags}
           onValueChange={setTags}
           placeholder="Add a tag…"
@@ -295,7 +295,7 @@ export const CustomTagRenderer: Story = {
         label="Custom chip renderer"
         hint="Each tag gets a deterministic color dot."
       >
-        <TagInput
+        <InputTag
           defaultValue={["urgent", "ops", "backend"]}
           placeholder="Add a label…"
           renderTag={(tag, { remove }) => (
@@ -336,7 +336,7 @@ export const PasteToSplit: Story = {
       label="Paste to split (delimiters: , ;)"
       hint="Try: react, vue, svelte, solid — Cmd/Ctrl+V"
     >
-      <TagInput
+      <InputTag
         delimiters={[",", ";"]}
         placeholder="Paste a comma-separated list…"
       />
