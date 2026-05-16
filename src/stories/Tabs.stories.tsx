@@ -1,6 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
-import { User, Settings, Bell, Shield, CreditCard } from "lucide-react";
+import {
+  User,
+  Settings,
+  Bell,
+  Shield,
+  CreditCard,
+  LayoutDashboard,
+  Users,
+  FileText,
+  BarChart3,
+  Mail,
+  Calendar,
+  Folder,
+  Tag,
+  Globe,
+  Database,
+  KeyRound,
+  Activity,
+} from "lucide-react";
 import {
   Tabs,
   TabsList,
@@ -284,6 +302,69 @@ export const Vertical: Story = {
       </TabsContent>
     </Tabs>
   ),
+};
+
+export const ManyTabs: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Tabs with many entries — useful for admin panels or settings pages where the navigation has a long list of sections.",
+      },
+    },
+  },
+  render: () => {
+    const items = [
+      { value: "dashboard", label: "Dashboard", icon: <LayoutDashboard /> },
+      { value: "users", label: "Users", icon: <Users /> },
+      { value: "posts", label: "Posts", icon: <FileText /> },
+      { value: "analytics", label: "Analytics", icon: <BarChart3 /> },
+      { value: "messages", label: "Messages", icon: <Mail /> },
+      { value: "calendar", label: "Calendar", icon: <Calendar /> },
+      { value: "files", label: "Files", icon: <Folder /> },
+      { value: "tags", label: "Tags", icon: <Tag /> },
+      { value: "domains", label: "Domains", icon: <Globe /> },
+      { value: "database", label: "Database", icon: <Database /> },
+      { value: "api-keys", label: "API Keys", icon: <KeyRound /> },
+      { value: "activity", label: "Activity", icon: <Activity /> },
+      { value: "billing", label: "Billing", icon: <CreditCard /> },
+      { value: "security", label: "Security", icon: <Shield /> },
+      { value: "settings", label: "Settings", icon: <Settings /> },
+    ];
+    return (
+      <Tabs
+        defaultValue="dashboard"
+        variant="underline"
+        className="w-[480px]"
+      >
+        <TabsList scrollable>
+          {items.map((item) => (
+            <TabsTrigger
+              key={item.value}
+              value={item.value}
+              icon={item.icon}
+            >
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {items.map((item) => (
+          <TabsContent key={item.value} value={item.value}>
+            <div className="text-sm text-zinc-600 leading-relaxed space-y-2">
+              <h3 className="text-base font-semibold text-zinc-900">
+                {item.label}
+              </h3>
+              <p>
+                This is the {item.label.toLowerCase()} section. Use arrow keys
+                to navigate between tabs; Home and End jump to the first and
+                last tab.
+              </p>
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
+    );
+  },
 };
 
 export const Controlled: Story = {
