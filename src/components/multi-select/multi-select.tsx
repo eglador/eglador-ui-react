@@ -127,6 +127,19 @@ export function MultiSelect({
     sideOffset: 4,
   });
 
+  const searchInputRef = React.useRef<HTMLInputElement | null>(null);
+  const didFocusSearchRef = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!open) {
+      didFocusSearchRef.current = false;
+      return;
+    }
+    if (!searchable || !position || didFocusSearchRef.current) return;
+    didFocusSearchRef.current = true;
+    searchInputRef.current?.focus();
+  }, [open, searchable, position]);
+
   const s = SIZES[size];
   const visibleChips = values.slice(0, maxDisplay);
   const overflow = values.length - visibleChips.length;
@@ -292,7 +305,7 @@ export function MultiSelect({
                 {searchable && (
                   <div className="p-2 border-b border-zinc-200">
                     <input
-                      autoFocus
+                      ref={searchInputRef}
                       type="text"
                       placeholder="Search…"
                       value={filter}
