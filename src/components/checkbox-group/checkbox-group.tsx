@@ -109,10 +109,7 @@ export const CheckboxGroup = React.forwardRef<
 CheckboxGroup.displayName = "CheckboxGroup";
 
 export interface CheckboxGroupItemProps
-  extends Omit<
-    React.LabelHTMLAttributes<HTMLLabelElement>,
-    "onChange" | "htmlFor"
-  > {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value: string;
   label?: React.ReactNode;
   description?: React.ReactNode;
@@ -120,7 +117,7 @@ export interface CheckboxGroupItemProps
 }
 
 export const CheckboxGroupItem = React.forwardRef<
-  HTMLLabelElement,
+  HTMLDivElement,
   CheckboxGroupItemProps
 >(function CheckboxGroupItem(
   { value, label, description, disabled: itemDisabled, className, ...rest },
@@ -135,12 +132,11 @@ export const CheckboxGroupItem = React.forwardRef<
   const disabled = ctx.disabled || !!itemDisabled;
 
   return (
-    <label
+    <div
       ref={ref}
-      htmlFor={autoId}
       className={cn(
-        "inline-flex items-start gap-2.5 select-none",
-        disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+        "inline-flex items-start select-none",
+        disabled && "opacity-50",
         className,
       )}
       {...rest}
@@ -157,16 +153,22 @@ export const CheckboxGroupItem = React.forwardRef<
         className="mt-0.5"
       />
       {(label || description) && (
-        <div className="flex flex-col gap-0.5 min-w-0">
+        <label
+          htmlFor={autoId}
+          className={cn(
+            "flex flex-col gap-0.5 min-w-0 pl-2.5",
+            disabled ? "cursor-not-allowed" : "cursor-pointer",
+          )}
+        >
           {label && (
             <span className="text-sm font-medium text-zinc-700">{label}</span>
           )}
           {description && (
             <span className="text-xs text-zinc-500">{description}</span>
           )}
-        </div>
+        </label>
       )}
-    </label>
+    </div>
   );
 });
 

@@ -80,10 +80,11 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const isActive = checked || indeterminate;
 
     return (
-      <span
+      <label
+        htmlFor={id}
         className={cn(
           "relative inline-flex shrink-0 items-center justify-center",
-          disabled && "opacity-50 cursor-not-allowed",
+          disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
           className,
         )}
       >
@@ -103,7 +104,6 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           aria-hidden="true"
           className={cn(
             "inline-flex items-center justify-center rounded-sm transition-colors border",
-            disabled ? "cursor-not-allowed" : "cursor-pointer",
             isActive
               ? "bg-zinc-900 border-zinc-900 text-white"
               : "bg-white border-zinc-300 peer-hover:border-zinc-400",
@@ -118,7 +118,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             <CheckIcon className={s.icon} strokeWidth={s.stroke} />
           ) : null}
         </span>
-      </span>
+      </label>
     );
   },
 );
