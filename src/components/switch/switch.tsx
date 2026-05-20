@@ -57,10 +57,11 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
     };
 
     return (
-      <span
+      <label
+        htmlFor={id}
         className={cn(
           "relative inline-flex shrink-0 items-center",
-          disabled && "opacity-50 cursor-not-allowed",
+          disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
           className,
         )}
       >
@@ -83,7 +84,6 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
             "bg-zinc-200 peer-checked:bg-zinc-900",
             "peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-900/20",
             "peer-aria-invalid:ring-2 peer-aria-invalid:ring-red-500/10",
-            disabled ? "cursor-not-allowed" : "cursor-pointer",
             s.track,
           )}
         >
@@ -95,7 +95,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
             )}
           />
         </span>
-      </span>
+      </label>
     );
   },
 );
