@@ -12,7 +12,7 @@
 
 Eglador UI for React — headless, accessible component library. Compound subcomponents, **Tailwind CSS v4**, zero runtime dependencies.
 
-> **Status:** Alpha — 64/64 components shipped.
+> **Status:** Alpha — 65/65 components shipped.
 
 ## Installation
 
@@ -57,7 +57,7 @@ Baslangic 1000+ — tuketici uygulamasinin tipik `z-10 / z-20 / z-50` z-index ar
 | Tooltip | `z-[1200]` | Tooltip |
 | Notification | `z-[1300]` | Notification |
 
-## Components (64/64)
+## Components (65/65)
 
 **Layout & Structure (7/7)** — ✓ Accordion · ✓ AspectRatio · ✓ Collapsible · ✓ Resizable · ✓ ScrollArea · ✓ Separator · ✓ Sidebar
 
@@ -65,7 +65,7 @@ Baslangic 1000+ — tuketici uygulamasinin tipik `z-10 / z-20 / z-50` z-index ar
 
 **Navigation (7/7)** — ✓ Breadcrumb · ✓ Menubar · ✓ NavigationMenu · ✓ Pagination · ✓ Stepper · ✓ Tabs · ✓ TreeView
 
-**Forms (23/23)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ ColorPicker · ✓ Combobox · ✓ Dropzone · ✓ Form · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Slider · ✓ Switch · ✓ Textarea · ✓ Toggle · ✓ ToggleGroup
+**Forms (24/24)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ ColorPicker · ✓ Combobox · ✓ Dropzone · ✓ Form · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ NumberInput · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Slider · ✓ Switch · ✓ Textarea · ✓ Toggle · ✓ ToggleGroup
 
 **Date & Time (3/3)** — ✓ Calendar · ✓ DatePicker · ✓ DateTimePicker
 

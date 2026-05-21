@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Getting Started
 
-> **Status:** Alpha — 64/64 components shipped.
+> **Status:** Alpha — 65/65 components shipped.
 
 ---
 
@@ -27,7 +27,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 **Navigation (7/7):** Breadcrumb · Menubar · NavigationMenu · Pagination · Stepper · Tabs · TreeView
 
-**Forms (23/23):** Button · ButtonGroup · Checkbox · CheckboxGroup · ColorPicker · Combobox · Dropzone · Form · Input · InputGroup · InputOTP · InputTag · Label · MultiSelect · NativeSelect · Radio · RadioGroup · Select · Slider · Switch · Textarea · Toggle · ToggleGroup
+**Forms (24/24):** Button · ButtonGroup · Checkbox · CheckboxGroup · ColorPicker · Combobox · Dropzone · Form · Input · InputGroup · InputOTP · InputTag · Label · MultiSelect · NativeSelect · NumberInput · Radio · RadioGroup · Select · Slider · Switch · Textarea · Toggle · ToggleGroup
 
 **Date & Time (3/3):** Calendar · DatePicker · DateTimePicker
 
@@ -136,6 +136,68 @@ import { Slider } from "eglador-ui-react";
   step={10}
   marks={[0, 250, 500, 750, 1000]}
 />
+```
+
+### Stepper numeric (NumberInput)
+
+```tsx
+import { NumberInput } from "eglador-ui-react";
+
+// Quantity picker
+<NumberInput value={qty} onValueChange={setQty} min={1} max={99} />
+
+// Price with currency prefix + Intl formatting
+<NumberInput
+  value={price}
+  onValueChange={setPrice}
+  prefix="₺"
+  precision={2}
+  step={0.01}
+  locale="tr-TR"
+  formatOptions={{ minimumFractionDigits: 2 }}
+/>
+```
+
+### Date range (DatePicker mode="range")
+
+`DateRangePicker` ayri component degil — `<DatePicker mode="range">` discriminated union ile ayni componentten erisilir, default 2 ay yan yana gosterir.
+
+```tsx
+import { DatePicker, type CalendarRange } from "eglador-ui-react";
+
+<DatePicker
+  mode="range"
+  value={range}
+  onValueChange={setRange}
+  numberOfMonths={2}
+/>
+```
+
+### Side panel (Drawer)
+
+`Sheet` ayri component degil — `<Drawer side="right">` aynı semantigi karsilar (4 yon destegi: top/right/bottom/left).
+
+```tsx
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerBody,
+} from "eglador-ui-react";
+
+<Drawer side="right" size="md">
+  <DrawerTrigger asChild>
+    <Button>Hizli onizleme</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Detaylar</DrawerTitle>
+    </DrawerHeader>
+    <DrawerBody>...</DrawerBody>
+  </DrawerContent>
+</Drawer>
 ```
 
 ### File upload (Dropzone)
