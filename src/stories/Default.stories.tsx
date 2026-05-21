@@ -18,9 +18,12 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Button", status: "shipped" },
   { name: "ButtonGroup", status: "shipped" },
   { name: "Calendar", status: "shipped" },
+  { name: "Card", status: "shipped" },
   { name: "Checkbox", status: "shipped" },
   { name: "CheckboxGroup", status: "shipped" },
   { name: "Collapsible", status: "shipped" },
+  { name: "ColorPicker", status: "shipped" },
+  { name: "Combobox", status: "shipped" },
   { name: "Command", status: "shipped" },
   { name: "ContextMenu", status: "shipped" },
   { name: "DatePicker", status: "shipped" },
@@ -28,7 +31,9 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Dialog", status: "shipped" },
   { name: "Drawer", status: "shipped" },
   { name: "Dropdown", status: "shipped" },
+  { name: "Dropzone", status: "shipped" },
   { name: "Empty", status: "shipped" },
+  { name: "Form", status: "shipped" },
   { name: "HoverCard", status: "shipped" },
   { name: "ImageCropper", status: "shipped" },
   { name: "Input", status: "shipped" },
@@ -54,6 +59,7 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Separator", status: "shipped" },
   { name: "Sidebar", status: "shipped" },
   { name: "Skeleton", status: "shipped" },
+  { name: "Slider", status: "shipped" },
   { name: "SpeedDial", status: "shipped" },
   { name: "Spinner", status: "shipped" },
   { name: "Stepper", status: "shipped" },
@@ -61,6 +67,8 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "Table", status: "shipped" },
   { name: "Tabs", status: "shipped" },
   { name: "Textarea", status: "shipped" },
+  { name: "Toggle", status: "shipped" },
+  { name: "ToggleGroup", status: "shipped" },
   { name: "Tooltip", status: "shipped" },
   { name: "TreeView", status: "shipped" },
   { name: "Typography", status: "shipped" },
@@ -168,13 +176,15 @@ function Overview() {
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-zinc-500">
           <div className="bg-white border border-zinc-200 rounded-sm p-4">
             <div className="font-medium text-zinc-900 mb-1">
-              Status — Alpha (v1.0.0-alpha.4)
+              Status — Alpha (v1.0.0-alpha.18)
             </div>
-            All 56 primitives shipped: Layout (7), Display (7), Navigation (7),
-            Forms (16), Date & Time (3), Overlays (10), Data (1), Misc (5).
+            All 64 primitives shipped: Layout (7), Display (8), Navigation (7),
+            Forms (23), Date & Time (3), Overlays (10), Data (1), Misc (5).
             Shared vocabulary: variants solid / soft / outline / ghost / link;
             sizes xs / sm / md / lg / xl; shapes square / rounded / pill /
-            circle; shadows none / xs / sm / md / lg / xl.
+            circle; shadows none / xs / sm / md / lg / xl. Z-index hierarchy:
+            modal z-[1000] → popup z-[1100] → tooltip z-[1200] → notification
+            z-[1300] (1000+ tuketici cakismasini engeller).
           </div>
           <div className="bg-white border border-zinc-200 rounded-sm p-4">
             <div className="font-medium text-zinc-900 mb-1">

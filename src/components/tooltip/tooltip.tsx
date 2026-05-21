@@ -325,7 +325,7 @@ export const TooltipContent = React.forwardRef<
       onMouseEnter={() => ctx.cancelTimers()}
       onMouseLeave={() => ctx.scheduleClose()}
       className={cn(
-        "fixed z-[9999] pointer-events-auto font-medium whitespace-nowrap",
+        "fixed z-[1200] pointer-events-auto font-medium whitespace-nowrap",
         "animate-in fade-in-0 zoom-in-95",
         SIZES[ctx.size],
         SHAPES[ctx.shape],

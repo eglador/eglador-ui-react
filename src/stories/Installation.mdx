@@ -38,11 +38,11 @@ The following peer dependencies must be present in your project:
   <tbody>
     <tr>
       <td><code>react</code></td>
-      <td><code>{">= 18"}</code></td>
+      <td><code>^19.0.0</code></td>
     </tr>
     <tr>
       <td><code>react-dom</code></td>
-      <td><code>{">= 18"}</code></td>
+      <td><code>^19.0.0</code></td>
     </tr>
     <tr>
       <td><code>tailwindcss</code></td>
@@ -51,7 +51,7 @@ The following peer dependencies must be present in your project:
   </tbody>
 </table>
 
-These are typically already present in modern React projects (Next.js, Vite, Remix).
+These are typically already present in modern React projects (Next.js 16+, Vite, Remix). Peer ranges are major-locked: any React 19.x and Tailwind 4.x patch/minor surumu kabul edilir.
 
 > **Zero runtime dependencies.** `clsx` and `tailwind-merge` are pre-bundled — nothing else is pulled into your app.
 
@@ -101,6 +101,26 @@ The `@source` path depends on your CSS file location:
 ## 4. Server components note (Next.js)
 
 Components that use state (`useState` / `useEffect`) are marked `"use client"`. Place them inside a client component, or import them from a file that already has the `"use client"` directive at the top.
+
+---
+
+## 5. Z-index awareness
+
+Modal'lar (Dialog/AlertDialog/Drawer/Sidebar) ve floating popup'lar (Popover/Combobox/Select/ColorPicker/DateTimePicker/Tooltip vb.) ortak bir hierarchy uzerinde calisir:
+
+<table>
+  <thead>
+    <tr><th align="left">Katman</th><th align="left">Z-Index</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Modal</td><td><code>z-[1000]</code></td></tr>
+    <tr><td>Floating popup</td><td><code>z-[1100]</code></td></tr>
+    <tr><td>Tooltip</td><td><code>z-[1200]</code></td></tr>
+    <tr><td>Notification</td><td><code>z-[1300]</code></td></tr>
+  </tbody>
+</table>
+
+Bu sayede `<Dialog>` icindeki `<DateTimePicker>` / `<Combobox>` / `<ColorPicker>` popover'lari Dialog content'inin uzerinde dogru sirayla render edilir. Baslangic degerleri **1000'den** itibaren — tuketici uygulamasinin tipik `z-10 / z-20 / z-50` araliklariyla cakismaz. Custom overlay veya portal kullanirken bu araliklara dikkat edin (1000 alti tuketici, 1000+ kutuphane).
 
 ---
 

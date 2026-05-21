@@ -194,7 +194,7 @@ export const NavigationMenuContent = React.forwardRef<
       data-slot="navigation-menu-content"
       data-state="open"
       className={cn(
-        "absolute start-0 top-full z-50 mt-1 min-w-[20rem] rounded-md border border-zinc-200 bg-white p-4 shadow-md",
+        "absolute start-0 top-full z-[1100] mt-1 min-w-[20rem] rounded-md border border-zinc-200 bg-white p-4 shadow-md",
         "animate-in fade-in-0 zoom-in-95",
         className,
       )}

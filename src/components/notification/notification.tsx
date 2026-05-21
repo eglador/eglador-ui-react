@@ -487,7 +487,7 @@ export const NotificationContainer = React.forwardRef<
       data-slot="notification-container"
       data-position={position}
       className={cn(
-        "fixed z-[9999] flex flex-col gap-3 pointer-events-none",
+        "fixed z-[1300] flex flex-col gap-3 pointer-events-none",
         POSITIONS[position],
         className,
       )}

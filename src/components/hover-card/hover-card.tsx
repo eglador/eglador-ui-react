@@ -209,7 +209,7 @@ export const HoverCardContent = React.forwardRef<
       onMouseEnter={() => ctx.cancelTimers()}
       onMouseLeave={() => ctx.scheduleClose()}
       className={cn(
-        "fixed z-[9999] w-64 rounded-md border border-zinc-200 bg-white p-4 text-sm text-zinc-700 shadow-md",
+        "fixed z-[1100] w-64 rounded-md border border-zinc-200 bg-white p-4 text-sm text-zinc-700 shadow-md",
         "animate-in fade-in-0 zoom-in-95",
         className,
       )}

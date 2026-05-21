@@ -147,7 +147,7 @@ export const DialogOverlay = React.forwardRef<
       ref={ref}
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 z-[9999] bg-zinc-900/50 backdrop-blur-sm animate-in fade-in-0",
+        "fixed inset-0 z-[1000] bg-zinc-900/50 backdrop-blur-sm animate-in fade-in-0",
         className,
       )}
       {...rest}
@@ -214,7 +214,7 @@ export const DialogContent = React.forwardRef<
         data-slot="dialog-content"
         data-state="open"
         className={cn(
-          "fixed left-1/2 top-1/2 z-[10000] -translate-x-1/2 -translate-y-1/2 w-full",
+          "fixed left-1/2 top-1/2 z-[1000] -translate-x-1/2 -translate-y-1/2 w-full",
           "bg-white border border-zinc-200 p-6 outline-none",
           "animate-in fade-in-0 zoom-in-95",
           SIZES[ctx.size],

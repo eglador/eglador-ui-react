@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import * as React from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -13,6 +14,13 @@ import {
 import { Button } from "../components/button";
 import { Input } from "../components/input";
 import { Label } from "../components/label";
+import { DateTimePicker } from "../components/date-time-picker";
+import { DatePicker } from "../components/date-picker";
+import { Combobox } from "../components/combobox";
+import { MultiSelect } from "../components/multi-select";
+import { ColorPicker } from "../components/color-picker";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../components/select";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../components/tooltip";
 
 const meta: Meta<typeof Dialog> = {
   title: "Components/Dialog",
@@ -159,4 +167,111 @@ export const Shadows: Story = {
       ))}
     </div>
   ),
+};
+
+export const FloatingPopupsInsideDialog: Story = {
+  name: "Floating Popups Inside Dialog",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Z-index hierarchy dogrulamasi — Dialog (z-50) icindeki floating popup'lar (DatePicker/DateTimePicker, Combobox, MultiSelect, Select, ColorPicker, Tooltip — hepsi z-[60] veya z-[70]) Dialog'un uzerinde dogru sirayla render edilir. Schedule publish, edit profile gibi gercek CRUD CMS pattern'leri icin gerekli.",
+      },
+    },
+  },
+  render: function InsideDialogStory() {
+    const [publishAt, setPublishAt] = React.useState<Date | undefined>();
+    const [publishDate, setPublishDate] = React.useState<Date | undefined>();
+    const [author, setAuthor] = React.useState<string | undefined>("u1");
+    const [tags, setTags] = React.useState<string[]>(["news"]);
+    const [color, setColor] = React.useState("#3b82f6");
+    const [status, setStatus] = React.useState("draft");
+
+    return (
+      <Dialog defaultOpen size="md">
+        <DialogTrigger>
+          <Button>Schedule Publish</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Yayin Zamanla</DialogTitle>
+            <DialogDescription>
+              Tum floating popup tipleri Dialog icinde dogru sirada render olur.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 py-2">
+            <div className="flex flex-col gap-1.5">
+              <Label>Yayin Tarihi (DatePicker)</Label>
+              <DatePicker value={publishDate} onValueChange={setPublishDate} />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>Yayin Zamani (DateTimePicker)</Label>
+              <DateTimePicker value={publishAt} onValueChange={setPublishAt} />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>Yazar (Combobox)</Label>
+              <Combobox
+                value={author}
+                onValueChange={setAuthor}
+                options={[
+                  { value: "u1", label: "Kenan Gundogan" },
+                  { value: "u2", label: "Ayse Yilmaz" },
+                  { value: "u3", label: "Mehmet Demir" },
+                ]}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>Etiketler (MultiSelect)</Label>
+              <MultiSelect
+                value={tags}
+                onValueChange={setTags}
+                options={[
+                  { value: "news", label: "Haber" },
+                  { value: "tech", label: "Teknoloji" },
+                  { value: "design", label: "Tasarim" },
+                  { value: "culture", label: "Kultur" },
+                ]}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>Durum (Select)</Label>
+              <Select value={status} onValueChange={setStatus}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="draft">Taslak</SelectItem>
+                  <SelectItem value="review">Onayda</SelectItem>
+                  <SelectItem value="published">Yayinda</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center justify-between">
+              <Label>Aksan Rengi (ColorPicker)</Label>
+              <ColorPicker value={color} onValueChange={setColor} />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label>Tooltip Test</Label>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button variant="outline" size="sm">
+                    Hover et
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  Tooltip da Dialog'un uzerinde gozukur (z-[70])
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose>
+              <Button variant="outline">Iptal</Button>
+            </DialogClose>
+            <Button>Zamanla</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  },
 };
