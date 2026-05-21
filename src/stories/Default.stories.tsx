@@ -48,6 +48,7 @@ const COMPONENTS: ComponentInfo[] = [
   { name: "NativeSelect", status: "shipped" },
   { name: "NavigationMenu", status: "shipped" },
   { name: "Notification", status: "shipped" },
+  { name: "NumberInput", status: "shipped" },
   { name: "Pagination", status: "shipped" },
   { name: "Popover", status: "shipped" },
   { name: "Progress", status: "shipped" },
@@ -178,8 +179,8 @@ function Overview() {
             <div className="font-medium text-zinc-900 mb-1">
               Status — Alpha (v1.0.0-alpha.18)
             </div>
-            All 64 primitives shipped: Layout (7), Display (8), Navigation (7),
-            Forms (23), Date & Time (3), Overlays (10), Data (1), Misc (5).
+            All 65 primitives shipped: Layout (7), Display (8), Navigation (7),
+            Forms (24), Date & Time (3), Overlays (10), Data (1), Misc (5).
             Shared vocabulary: variants solid / soft / outline / ghost / link;
             sizes xs / sm / md / lg / xl; shapes square / rounded / pill /
             circle; shadows none / xs / sm / md / lg / xl. Z-index hierarchy:
