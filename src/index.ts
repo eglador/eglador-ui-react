@@ -20,6 +20,7 @@ export * from "./components/date-time-picker";
 export * from "./components/dialog";
 export * from "./components/drawer";
 export * from "./components/dropdown";
+export * from "./components/dropzone";
 export * from "./components/empty";
 export * from "./components/form";
 export * from "./components/hover-card";
