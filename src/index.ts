@@ -46,6 +46,7 @@ export * from "./components/select";
 export * from "./components/separator";
 export * from "./components/sidebar";
 export * from "./components/skeleton";
+export * from "./components/slider";
 export * from "./components/speed-dial";
 export * from "./components/spinner";
 export * from "./components/stepper";
