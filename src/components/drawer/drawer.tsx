@@ -233,7 +233,7 @@ export const DrawerContent = React.forwardRef<
       <div
         data-slot="drawer-overlay"
         onClick={() => closeOnOverlay && ctx.setOpen(false)}
-        className="fixed inset-0 z-[9999] bg-zinc-900/50 backdrop-blur-sm animate-in fade-in-0"
+        className="fixed inset-0 z-[1000] bg-zinc-900/50 backdrop-blur-sm animate-in fade-in-0"
       />
       <div
         ref={setRefs}
@@ -246,7 +246,7 @@ export const DrawerContent = React.forwardRef<
         data-state="open"
         data-side={ctx.side}
         className={cn(
-          "fixed z-[10000] bg-white outline-none flex flex-col",
+          "fixed z-[1000] bg-white outline-none flex flex-col",
           "border-zinc-200",
           ctx.side === "right" && "border-s",
           ctx.side === "left" && "border-e",

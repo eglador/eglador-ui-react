@@ -344,7 +344,7 @@ export const SelectContent = React.forwardRef<
       data-slot="select-content"
       data-state="open"
       className={cn(
-        "fixed z-[9999] outline-none",
+        "fixed z-[1100] outline-none",
         "rounded-md border border-zinc-200 bg-white p-1 text-sm text-zinc-700 shadow-md",
         "animate-in fade-in-0 zoom-in-95 max-h-72 overflow-auto",
         className,

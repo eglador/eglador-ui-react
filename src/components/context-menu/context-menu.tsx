@@ -276,7 +276,7 @@ export const ContextMenuContent = React.forwardRef<
       data-slot="context-menu-content"
       data-state="open"
       className={cn(
-        "fixed z-[9999] outline-none",
+        "fixed z-[1100] outline-none",
         "min-w-44 rounded-md border border-zinc-200 bg-white p-1 text-sm text-zinc-700 shadow-md",
         "animate-in fade-in-0 zoom-in-95",
         className,
@@ -836,7 +836,7 @@ export const ContextMenuSubContent = React.forwardRef<
       data-slot="context-menu-sub-content"
       data-state="open"
       className={cn(
-        "fixed z-[9999] outline-none",
+        "fixed z-[1100] outline-none",
         "min-w-44 rounded-md border border-zinc-200 bg-white p-1 text-sm text-zinc-700 shadow-md",
         "animate-in fade-in-0 zoom-in-95",
         className,

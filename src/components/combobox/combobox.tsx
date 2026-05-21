@@ -308,7 +308,7 @@ export function Combobox({
               data-slot="combobox-content"
               data-state="open"
               className={cn(
-                "fixed z-[9999] outline-none flex flex-col",
+                "fixed z-[1100] outline-none flex flex-col",
                 "rounded-md border border-zinc-200 bg-white text-sm text-zinc-700 shadow-md",
                 "max-h-72",
               )}

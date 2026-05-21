@@ -281,7 +281,7 @@ export const DropdownContent = React.forwardRef<
       data-state="open"
       data-side={ctx.resolvedSide}
       className={cn(
-        "fixed z-[9999] outline-none",
+        "fixed z-[1100] outline-none",
         "min-w-44 rounded-md border border-zinc-200 bg-white p-1 text-sm text-zinc-700 shadow-md",
         "animate-in fade-in-0 zoom-in-95",
         className,

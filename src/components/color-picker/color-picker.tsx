@@ -449,7 +449,7 @@ export function ColorPicker({
               data-slot="color-picker-content"
               data-state="open"
               className={cn(
-                "fixed z-[9999] flex flex-col gap-3 p-3 outline-none",
+                "fixed z-[1100] flex flex-col gap-3 p-3 outline-none",
                 "rounded-md border border-zinc-200 bg-white shadow-md",
                 "w-64",
               )}

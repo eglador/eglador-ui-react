@@ -262,7 +262,7 @@ const SidebarInner = React.forwardRef<HTMLDivElement, SidebarProps>(
             <div
               data-slot="sidebar-mobile-overlay"
               onClick={() => setOpenMobile(false)}
-              className="fixed inset-0 z-[9999] bg-zinc-900/50 backdrop-blur-sm animate-in fade-in-0"
+              className="fixed inset-0 z-[1000] bg-zinc-900/50 backdrop-blur-sm animate-in fade-in-0"
             />
           )}
           {openMobile &&
@@ -277,7 +277,7 @@ const SidebarInner = React.forwardRef<HTMLDivElement, SidebarProps>(
                 data-variant={variant}
                 data-state="expanded"
                 className={cn(
-                  "fixed inset-y-0 z-[10000] flex h-svh w-(--sidebar-width-mobile) flex-col bg-white shadow-lg outline-none",
+                  "fixed inset-y-0 z-[1000] flex h-svh w-(--sidebar-width-mobile) flex-col bg-white shadow-lg outline-none",
                   side === "left"
                     ? "start-0 border-e border-zinc-200 animate-in slide-in-from-left duration-200"
                     : "end-0 border-s border-zinc-200 animate-in slide-in-from-right duration-200",

@@ -12,13 +12,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
   <img src="https://img.shields.io/npm/l/eglador-ui-react?style=flat-square" alt="license" />
   <img src="https://img.shields.io/badge/zero%20deps-runtime-22C55E?style=flat-square" alt="zero runtime deps" />
   <img src="https://img.shields.io/badge/tailwindcss-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="tailwind v4" />
-  <img src="https://img.shields.io/badge/react-%3E%3D18-61DAFB?style=flat-square&logo=react&logoColor=white" alt="react >= 18" />
+  <img src="https://img.shields.io/badge/react-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="react 19" />
   <img src="https://img.shields.io/badge/typescript-ready-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="typescript" />
 </div>
 
 Headless, accessible component library for React — compound subcomponents, Tailwind v4, zero runtime dependencies, TypeScript-first.
 
-> **Status:** Alpha — 56/56 components shipped.
+> **Status:** Alpha — 64/64 components shipped.
 
 ---
 
@@ -53,21 +53,27 @@ All components share the same vocabulary:
 
 **A11y:** Native HTML inputs, `aria-*` attributes, focus-visible rings, RTL-safe Tailwind logical properties
 
+**Z-index hierarchy** (modal + popup kombinasyonlari dogru sirada calisir, tuketici uygulamasinin tipik z-index araligindan yuksek):
+- Modal (Dialog/AlertDialog/Drawer/Sidebar mobile): `z-[1000]`
+- Floating popup (Popover/Combobox/Select/MultiSelect/ColorPicker/Dropdown/ContextMenu/Menubar/HoverCard/NavigationMenu): `z-[1100]`
+- Tooltip: `z-[1200]`
+- Notification: `z-[1300]`
+
 ---
 
-## Components (56/56)
+## Components (64/64)
 
 **Layout & Structure (7/7)**
 ✓ Accordion · ✓ AspectRatio · ✓ Collapsible · ✓ Resizable · ✓ ScrollArea · ✓ Separator · ✓ Sidebar
 
-**Display (7/7)**
-✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
+**Display (8/8)**
+✓ Avatar · ✓ Badge · ✓ Card · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
 
 **Navigation (7/7)**
 ✓ Breadcrumb · ✓ Menubar · ✓ NavigationMenu · ✓ Pagination · ✓ Stepper · ✓ Tabs · ✓ TreeView
 
-**Forms (16/16)**
-✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Switch · ✓ Textarea
+**Forms (23/23)**
+✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ ColorPicker · ✓ Combobox · ✓ Dropzone · ✓ Form · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Slider · ✓ Switch · ✓ Textarea · ✓ Toggle · ✓ ToggleGroup
 
 **Date & Time (3/3)**
 ✓ Calendar · ✓ DatePicker · ✓ DateTimePicker

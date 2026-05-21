@@ -7,12 +7,12 @@
 [![license](https://img.shields.io/npm/l/eglador-ui-react?style=flat-square)](https://github.com/eglador/eglador-ui-react/blob/main/LICENSE)
 ![zero runtime deps](https://img.shields.io/badge/zero%20deps-runtime-22C55E?style=flat-square)
 ![tailwind v4](https://img.shields.io/badge/tailwindcss-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![react >= 18](https://img.shields.io/badge/react-%3E%3D18-61DAFB?style=flat-square&logo=react&logoColor=white)
+![react 19](https://img.shields.io/badge/react-19-61DAFB?style=flat-square&logo=react&logoColor=white)
 ![typescript](https://img.shields.io/badge/typescript-ready-3178C6?style=flat-square&logo=typescript&logoColor=white)
 
 Eglador UI for React — headless, accessible component library. Compound subcomponents, **Tailwind CSS v4**, zero runtime dependencies.
 
-> **Status:** Alpha — 56/56 components shipped.
+> **Status:** Alpha — 64/64 components shipped.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Eglador UI for React — headless, accessible component library. Compound subcom
 npm install eglador-ui-react
 ```
 
-**Peer dependencies:** `react >= 18` · `react-dom >= 18` · `tailwindcss ^4`
+**Peer dependencies:** `react ^19` · `react-dom ^19` · `tailwindcss ^4`
 
 ## Setup
 
@@ -46,15 +46,26 @@ All components share the same vocabulary:
 - **Palette**: zinc-only (no color schemes; theming handled separately)
 - **A11y**: native HTML inputs, `aria-*` attributes, focus-visible rings, RTL-safe Tailwind logical properties
 
-## Components (56/56)
+### Z-index hierarchy
+
+Baslangic 1000+ — tuketici uygulamasinin tipik `z-10 / z-20 / z-50` z-index araligindan yuksek, cakisma yok.
+
+| Layer | Z-Index | Components |
+|---|---|---|
+| Modal | `z-[1000]` | Dialog, AlertDialog, Drawer, Sidebar (mobile) |
+| Floating popup | `z-[1100]` | Popover, Combobox, Select, MultiSelect, ColorPicker, Dropdown, ContextMenu, Menubar, HoverCard, NavigationMenu |
+| Tooltip | `z-[1200]` | Tooltip |
+| Notification | `z-[1300]` | Notification |
+
+## Components (64/64)
 
 **Layout & Structure (7/7)** — ✓ Accordion · ✓ AspectRatio · ✓ Collapsible · ✓ Resizable · ✓ ScrollArea · ✓ Separator · ✓ Sidebar
 
-**Display (7/7)** — ✓ Avatar · ✓ Badge · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
+**Display (8/8)** — ✓ Avatar · ✓ Badge · ✓ Card · ✓ Empty · ✓ Kbd · ✓ Skeleton · ✓ Spinner · ✓ Typography
 
 **Navigation (7/7)** — ✓ Breadcrumb · ✓ Menubar · ✓ NavigationMenu · ✓ Pagination · ✓ Stepper · ✓ Tabs · ✓ TreeView
 
-**Forms (16/16)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Switch · ✓ Textarea
+**Forms (23/23)** — ✓ Button · ✓ ButtonGroup · ✓ Checkbox · ✓ CheckboxGroup · ✓ ColorPicker · ✓ Combobox · ✓ Dropzone · ✓ Form · ✓ Input · ✓ InputGroup · ✓ InputOTP · ✓ InputTag · ✓ Label · ✓ MultiSelect · ✓ NativeSelect · ✓ Radio · ✓ RadioGroup · ✓ Select · ✓ Slider · ✓ Switch · ✓ Textarea · ✓ Toggle · ✓ ToggleGroup
 
 **Date & Time (3/3)** — ✓ Calendar · ✓ DatePicker · ✓ DateTimePicker
 
@@ -66,7 +77,7 @@ All components share the same vocabulary:
 
 ## Compatibility
 
-Works with any React-based framework: **Next.js**, **Remix**, **Vite + React**, **Gatsby**.
+Works with any React-based framework: **Next.js 16+**, **Remix**, **Vite + React**, **Gatsby**.
 
 Components are marked `"use client"`. Place them inside a client component or after a `"use client"` directive.
 

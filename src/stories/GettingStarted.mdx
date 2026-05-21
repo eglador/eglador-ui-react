@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Getting Started
 
-> **Status:** Alpha — 56/56 components shipped.
+> **Status:** Alpha — 64/64 components shipped.
 
 ---
 
@@ -18,15 +18,16 @@ import { Meta } from "@storybook/addon-docs/blocks";
 - Storybook 10 (`@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-vitest`)
 - CI / npm publish workflows
 - Shared floating-element positioning hook (`useFloating`) with viewport collision detection
-- Portal-rendered overlays (Tooltip, Popover, HoverCard, Dropdown, ContextMenu, Dialog, AlertDialog, Drawer, Notification, Select, MultiSelect, Menubar, Calendar popovers)
+- Semantic z-index hierarchy (modal `z-[1000]` → popup `z-[1100]` → tooltip `z-[1200]` → notification `z-[1300]`, 1000+ tuketici cakismasini engeller)
+- Portal-rendered overlays (Tooltip, Popover, HoverCard, Dropdown, ContextMenu, Dialog, AlertDialog, Drawer, Notification, Select, MultiSelect, Combobox, ColorPicker, Menubar, Calendar popovers)
 
 **Layout & Structure (7/7):** Accordion · AspectRatio · Collapsible · Resizable · ScrollArea · Separator · Sidebar
 
-**Display (7/7):** Avatar · Badge · Empty · Kbd · Skeleton · Spinner · Typography
+**Display (8/8):** Avatar · Badge · Card · Empty · Kbd · Skeleton · Spinner · Typography
 
 **Navigation (7/7):** Breadcrumb · Menubar · NavigationMenu · Pagination · Stepper · Tabs · TreeView
 
-**Forms (16/16):** Button · ButtonGroup · Checkbox · CheckboxGroup · Input · InputGroup · InputOTP · InputTag · Label · MultiSelect · NativeSelect · Radio · RadioGroup · Select · Switch · Textarea
+**Forms (23/23):** Button · ButtonGroup · Checkbox · CheckboxGroup · ColorPicker · Combobox · Dropzone · Form · Input · InputGroup · InputOTP · InputTag · Label · MultiSelect · NativeSelect · Radio · RadioGroup · Select · Slider · Switch · Textarea · Toggle · ToggleGroup
 
 **Date & Time (3/3):** Calendar · DatePicker · DateTimePicker
 
@@ -54,18 +55,34 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ## Quick examples
 
-### Form composition
+### Form composition (library-agnostic)
 
 ```tsx
-import { Label, Input, Typography, Button } from "eglador-ui-react";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  Input,
+  Button,
+} from "eglador-ui-react";
 
-<div className="flex flex-col gap-1.5">
-  <Label htmlFor="email" required>Email</Label>
-  <Input id="email" type="email" placeholder="you@example.com" />
-  <Typography variant="muted">Used to verify your account.</Typography>
-</div>
-
-<Button>Submit</Button>
+<Form onSubmit={handleSubmit}>
+  <FormField name="email" error={errors.email}>
+    <FormItem>
+      <FormLabel required>Email</FormLabel>
+      <FormControl>
+        <Input type="email" placeholder="you@example.com" />
+      </FormControl>
+      <FormDescription>Used to verify your account.</FormDescription>
+      <FormMessage />
+    </FormItem>
+  </FormField>
+  <Button type="submit">Submit</Button>
+</Form>
 ```
 
 ### Search bar (InputGroup)
@@ -86,6 +103,66 @@ import { Search } from "lucide-react";
     <InputGroupButton variant="solid" size="sm">Search</InputGroupButton>
   </InputGroupAddon>
 </InputGroup>
+```
+
+### Searchable single-select (Combobox)
+
+```tsx
+import { Combobox } from "eglador-ui-react";
+
+<Combobox
+  value={author}
+  onValueChange={setAuthor}
+  options={users.map((u) => ({ value: u.id, label: u.name }))}
+  placeholder="Yazar sec..."
+  searchPlaceholder="Isim ile ara..."
+/>
+```
+
+### Range / numeric input (Slider)
+
+```tsx
+import { Slider } from "eglador-ui-react";
+
+// Tekli
+<Slider value={[volume]} onValueChange={([v]) => setVolume(v)} />
+
+// Cift thumb (price range)
+<Slider
+  value={priceRange}
+  onValueChange={setPriceRange}
+  min={0}
+  max={1000}
+  step={10}
+  marks={[0, 250, 500, 750, 1000]}
+/>
+```
+
+### File upload (Dropzone)
+
+```tsx
+import { Dropzone } from "eglador-ui-react";
+
+<Dropzone
+  accept="image/*,application/pdf,.docx,.md"
+  maxSize={10 * 1024 * 1024}
+  maxFiles={5}
+  onAccept={(files) => uploadFiles(files)}
+  onReject={(rejections) => showErrors(rejections)}
+/>
+```
+
+### Color picker
+
+```tsx
+import { ColorPicker } from "eglador-ui-react";
+
+<ColorPicker
+  value={color}
+  onValueChange={setColor}
+  alpha             // 8-haneli #RRGGBBAA
+  presets={brandPalette}
+/>
 ```
 
 ### Confirmation dialog
@@ -192,6 +269,18 @@ import {
 </Table>
 ```
 
+### Toolbar with toggles (Toggle / ToggleGroup)
+
+```tsx
+import { ToggleGroup, ToggleGroupItem } from "eglador-ui-react";
+
+<ToggleGroup type="multiple" variant="outline" defaultValue={["bold"]}>
+  <ToggleGroupItem value="bold" icon={<Bold />} aria-label="Bold" />
+  <ToggleGroupItem value="italic" icon={<Italic />} aria-label="Italic" />
+  <ToggleGroupItem value="underline" icon={<Underline />} aria-label="Underline" />
+</ToggleGroup>
+```
+
 ### Anchor styled as a button
 
 ```tsx
@@ -209,11 +298,12 @@ import { buttonVariants } from "eglador-ui-react";
 - **Headless-first** — native HTML semantics are the foundation; styling is opt-in via Tailwind classes
 - **Compound API** — Group / Item / Addon / Trigger / Content parts wired via context
 - **A11y** — `role`, `aria-*`, focus-visible ring, `<fieldset>` / `<legend>` / `<label htmlFor>`, keyboard navigation
-- **TypeScript-first** — generic props, strict mode, discriminated unions where helpful (Accordion, Calendar)
+- **TypeScript-first** — generic props, strict mode, discriminated unions where helpful (Accordion, Calendar, ToggleGroup)
 - **Tailwind v4** — `zinc` palette, logical CSS (`ps-*`, `me-*`, `border-s`, RTL automatic)
 - **Zero runtime deps** — `clsx` and `tailwind-merge` are pre-bundled; portal positioning, focus traps, keyboard nav all implemented in-house
 - **Controlled + Uncontrolled** — every stateful component supports both patterns
 - **`asChild` projection** — most triggers and close buttons project props onto a single child via `cloneElement` so you can wrap Router `<Link>`s, custom Buttons, etc.
+- **Library-agnostic Form** — `<Form>` works with react-hook-form, Formik, Zod, or plain `useState`
 
 ---
 

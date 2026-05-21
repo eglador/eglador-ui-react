@@ -291,7 +291,7 @@ export function MultiSelect({
                 data-slot="multi-select-content"
                 data-state="open"
                 className={cn(
-                  "fixed z-[9999] outline-none flex flex-col",
+                  "fixed z-[1100] outline-none flex flex-col",
                   "rounded-md border border-zinc-200 bg-white text-sm text-zinc-700 shadow-md",
                   "animate-in fade-in-0 zoom-in-95 max-h-72",
                 )}
