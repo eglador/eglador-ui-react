@@ -43,7 +43,7 @@ const meta: Meta<typeof Toggle> = {
     docs: {
       description: {
         component:
-          "Two-state button — pressed/unpressed durumunu yansitan icon/text button. `aria-pressed` ile a11y dogru, 2 variant (default ghost-style, outline), 5 size (xs/sm/md/lg/xl), 3 shape (square/rounded/circle). Controlled (`pressed` + `onPressedChange`) ve uncontrolled (`defaultPressed`) destekler.",
+          "Two-state button — an icon/text button that reflects its pressed/unpressed state. A11y handled via `aria-pressed`; 2 variants (default ghost-style, outline), 5 sizes (xs/sm/md/lg/xl), 3 shapes (square/rounded/circle). Supports both controlled (`pressed` + `onPressedChange`) and uncontrolled (`defaultPressed`) usage.",
       },
     },
   },

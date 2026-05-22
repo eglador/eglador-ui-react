@@ -175,7 +175,7 @@ export const FloatingPopupsInsideDialog: Story = {
     docs: {
       description: {
         story:
-          "Z-index hierarchy dogrulamasi — Dialog (z-50) icindeki floating popup'lar (DatePicker/DateTimePicker, Combobox, MultiSelect, Select, ColorPicker, Tooltip — hepsi z-[60] veya z-[70]) Dialog'un uzerinde dogru sirayla render edilir. Schedule publish, edit profile gibi gercek CRUD CMS pattern'leri icin gerekli.",
+          "Z-index hierarchy verification — floating popups inside a Dialog (DatePicker/DateTimePicker, Combobox, MultiSelect, Select, ColorPicker, Tooltip) render in the correct order above the dialog content. Required by real-world CRUD/CMS flows like 'Schedule publish' and 'Edit profile'.",
       },
     },
   },
@@ -194,81 +194,81 @@ export const FloatingPopupsInsideDialog: Story = {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Yayin Zamanla</DialogTitle>
+            <DialogTitle>Schedule publish</DialogTitle>
             <DialogDescription>
-              Tum floating popup tipleri Dialog icinde dogru sirada render olur.
+              All floating popup types render in the correct order inside the dialog.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3 py-2">
             <div className="flex flex-col gap-1.5">
-              <Label>Yayin Tarihi (DatePicker)</Label>
+              <Label>Publish date (DatePicker)</Label>
               <DatePicker value={publishDate} onValueChange={setPublishDate} />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Yayin Zamani (DateTimePicker)</Label>
+              <Label>Publish time (DateTimePicker)</Label>
               <DateTimePicker value={publishAt} onValueChange={setPublishAt} />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Yazar (Combobox)</Label>
+              <Label>Author (Combobox)</Label>
               <Combobox
                 value={author}
                 onValueChange={setAuthor}
                 options={[
-                  { value: "u1", label: "Kenan Gundogan" },
-                  { value: "u2", label: "Ayse Yilmaz" },
-                  { value: "u3", label: "Mehmet Demir" },
+                  { value: "u1", label: "Alice Johnson" },
+                  { value: "u2", label: "Bob Smith" },
+                  { value: "u3", label: "Carol Williams" },
                 ]}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Etiketler (MultiSelect)</Label>
+              <Label>Tags (MultiSelect)</Label>
               <MultiSelect
                 value={tags}
                 onValueChange={setTags}
                 options={[
-                  { value: "news", label: "Haber" },
-                  { value: "tech", label: "Teknoloji" },
-                  { value: "design", label: "Tasarim" },
-                  { value: "culture", label: "Kultur" },
+                  { value: "news", label: "News" },
+                  { value: "tech", label: "Technology" },
+                  { value: "design", label: "Design" },
+                  { value: "culture", label: "Culture" },
                 ]}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Durum (Select)</Label>
+              <Label>Status (Select)</Label>
               <Select value={status} onValueChange={setStatus}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="draft">Taslak</SelectItem>
-                  <SelectItem value="review">Onayda</SelectItem>
-                  <SelectItem value="published">Yayinda</SelectItem>
+                  <SelectItem value="draft">Draft</SelectItem>
+                  <SelectItem value="review">In review</SelectItem>
+                  <SelectItem value="published">Published</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="flex items-center justify-between">
-              <Label>Aksan Rengi (ColorPicker)</Label>
+              <Label>Accent color (ColorPicker)</Label>
               <ColorPicker value={color} onValueChange={setColor} />
             </div>
             <div className="flex items-center justify-between">
-              <Label>Tooltip Test</Label>
+              <Label>Tooltip test</Label>
               <Tooltip>
                 <TooltipTrigger>
                   <Button variant="outline" size="sm">
-                    Hover et
+                    Hover me
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  Tooltip da Dialog'un uzerinde gozukur (z-[70])
+                  Tooltips also render above the Dialog (z-[1200])
                 </TooltipContent>
               </Tooltip>
             </div>
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button variant="outline">Iptal</Button>
+              <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button>Zamanla</Button>
+            <Button>Schedule</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -185,7 +185,7 @@ function Overview() {
             sizes xs / sm / md / lg / xl; shapes square / rounded / pill /
             circle; shadows none / xs / sm / md / lg / xl. Z-index hierarchy:
             modal z-[1000] → popup z-[1100] → tooltip z-[1200] → notification
-            z-[1300] (1000+ tuketici cakismasini engeller).
+            z-[1300] (the 1000+ baseline prevents collisions with consumer-app z-indexes).
           </div>
           <div className="bg-white border border-zinc-200 rounded-sm p-4">
             <div className="font-medium text-zinc-900 mb-1">

@@ -164,7 +164,7 @@ export const Locale: Story = {
   render: () => (
     <div className="flex flex-col gap-4 max-w-xs">
       <div className="flex flex-col gap-2">
-        <Label>tr-TR · Pazartesi başlangıçlı</Label>
+        <Label>tr-TR · Monday start</Label>
         <DateTimePicker locale="tr-TR" firstDayOfWeek={1} />
       </div>
       <div className="flex flex-col gap-2">

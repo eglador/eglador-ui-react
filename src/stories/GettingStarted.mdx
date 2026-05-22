@@ -18,7 +18,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 - Storybook 10 (`@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-vitest`)
 - CI / npm publish workflows
 - Shared floating-element positioning hook (`useFloating`) with viewport collision detection
-- Semantic z-index hierarchy (modal `z-[1000]` → popup `z-[1100]` → tooltip `z-[1200]` → notification `z-[1300]`, 1000+ tuketici cakismasini engeller)
+- Semantic z-index hierarchy (modal `z-[1000]` → popup `z-[1100]` → tooltip `z-[1200]` → notification `z-[1300]`, the 1000+ baseline prevents collisions with consumer-app z-indexes)
 - Portal-rendered overlays (Tooltip, Popover, HoverCard, Dropdown, ContextMenu, Dialog, AlertDialog, Drawer, Notification, Select, MultiSelect, Combobox, ColorPicker, Menubar, Calendar popovers)
 
 **Layout & Structure (7/7):** Accordion · AspectRatio · Collapsible · Resizable · ScrollArea · Separator · Sidebar
@@ -114,8 +114,8 @@ import { Combobox } from "eglador-ui-react";
   value={author}
   onValueChange={setAuthor}
   options={users.map((u) => ({ value: u.id, label: u.name }))}
-  placeholder="Yazar sec..."
-  searchPlaceholder="Isim ile ara..."
+  placeholder="Select author..."
+  searchPlaceholder="Search by name..."
 />
 ```
 
@@ -124,10 +124,10 @@ import { Combobox } from "eglador-ui-react";
 ```tsx
 import { Slider } from "eglador-ui-react";
 
-// Tekli
+// Single thumb
 <Slider value={[volume]} onValueChange={([v]) => setVolume(v)} />
 
-// Cift thumb (price range)
+// Double thumb (price range)
 <Slider
   value={priceRange}
   onValueChange={setPriceRange}
@@ -160,7 +160,7 @@ import { NumberInput } from "eglador-ui-react";
 
 ### Date range (DatePicker mode="range")
 
-`DateRangePicker` ayri component degil — `<DatePicker mode="range">` discriminated union ile ayni componentten erisilir, default 2 ay yan yana gosterir.
+`DateRangePicker` is not a separate component — `<DatePicker mode="range">` exposes range-picking from the same component via a discriminated union, defaulting to two months side-by-side.
 
 ```tsx
 import { DatePicker, type CalendarRange } from "eglador-ui-react";
@@ -175,7 +175,7 @@ import { DatePicker, type CalendarRange } from "eglador-ui-react";
 
 ### Side panel (Drawer)
 
-`Sheet` ayri component degil — `<Drawer side="right">` aynı semantigi karsilar (4 yon destegi: top/right/bottom/left).
+`Sheet` is not a separate component — `<Drawer side="right">` covers the same semantic (with four sides supported: top/right/bottom/left).
 
 ```tsx
 import {
@@ -189,11 +189,11 @@ import {
 
 <Drawer side="right" size="md">
   <DrawerTrigger asChild>
-    <Button>Hizli onizleme</Button>
+    <Button>Quick preview</Button>
   </DrawerTrigger>
   <DrawerContent>
     <DrawerHeader>
-      <DrawerTitle>Detaylar</DrawerTitle>
+      <DrawerTitle>Details</DrawerTitle>
     </DrawerHeader>
     <DrawerBody>...</DrawerBody>
   </DrawerContent>

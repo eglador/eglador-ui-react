@@ -50,7 +50,7 @@ const meta: Meta<typeof Form> = {
     docs: {
       description: {
         component:
-          "Library-agnostic form primitiveler — herhangi bir validation kutuphanesiyle (react-hook-form, Formik, Zod, kendi state) calisir. Compound API: `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage`. FormControl tek bir child input'a `id`, `aria-describedby`, `aria-invalid` otomatik baglar. 4 message status (error/warning/success/info), required marker, automatic disabled cascade. Input/Checkbox/Select'in yerini almaz; etrafindaki label/error/aria/spacing'i hazirlar.",
+          "Library-agnostic form primitives — works with any validation library (react-hook-form, Formik, Zod) or your own state. Compound API: `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage`. `FormControl` automatically wires `id`, `aria-describedby`, and `aria-invalid` onto its single child input. 4 message statuses (error/warning/success/info), required marker, automatic disabled cascade. Does not replace Input/Checkbox/Select — it builds the surrounding label/error/aria/spacing around them.",
       },
     },
   },
@@ -60,10 +60,10 @@ export default meta;
 type Story = StoryObj<typeof Form>;
 
 const AUTHOR_OPTIONS = [
-  { value: "1", label: "Kenan Gundogan" },
+  { value: "1", label: "Alice Johnson" },
   { value: "2", label: "Eglador Editor" },
-  { value: "3", label: "Misafir Yazar" },
-  { value: "4", label: "Anonim" },
+  { value: "3", label: "Guest Author" },
+  { value: "4", label: "Anonymous" },
 ];
 
 function Section({
@@ -118,7 +118,7 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          "Tum form bilesenlerinin yer aldigi kapsamli ornek — bir 'Yazi Olustur' formu. Input, Textarea, NativeSelect, MultiSelect, Checkbox, CheckboxGroup, RadioGroup, Switch, Toggle, ToggleGroup, DatePicker, DateTimePicker, InputTag, InputOTP, InputGroup tek bir kompozisyonda.",
+          "Comprehensive example using every form primitive — a 'Create Post' form composing Input, Textarea, NativeSelect, MultiSelect, Checkbox, CheckboxGroup, RadioGroup, Switch, Toggle, ToggleGroup, DatePicker, DateTimePicker, InputTag, InputOTP, and InputGroup in a single layout.",
       },
     },
   },
@@ -159,21 +159,21 @@ export const Default: Story = {
     return (
       <Form onSubmit={handleSubmit} className="max-w-3xl gap-8">
         <Section
-          title="Temel Bilgiler"
-          description="Yazinin ana metadata'si"
+          title="Basic Information"
+          description="Core post metadata"
         >
           <FormField name="title">
             <FormItem>
-              <FormLabel required>Baslik</FormLabel>
+              <FormLabel required>Title</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Yazinin basligi"
+                  placeholder="Post title"
                   value={values.title}
                   onChange={(e) => update("title", e.target.value)}
                 />
               </FormControl>
               <FormDescription>
-                Liste sayfalarinda ve sosyal medyada paylasilan baslik.
+                Shown on listing pages and shared on social media.
               </FormDescription>
             </FormItem>
           </FormField>
@@ -183,24 +183,24 @@ export const Default: Story = {
               <FormLabel>URL Slug</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="yazi-basligi"
+                  placeholder="post-title"
                   value={values.slug}
                   onChange={(e) => update("slug", e.target.value)}
                 />
               </FormControl>
               <FormDescription>
-                Bos birakirsan baslikan otomatik uretilir.
+                Leave empty to generate from the title automatically.
               </FormDescription>
             </FormItem>
           </FormField>
 
           <FormField name="excerpt">
             <FormItem>
-              <FormLabel>Ozet</FormLabel>
+              <FormLabel>Excerpt</FormLabel>
               <FormControl>
                 <Textarea
                   rows={2}
-                  placeholder="Kisa aciklama..."
+                  placeholder="Short description..."
                   value={values.excerpt}
                   onChange={(e) => update("excerpt", e.target.value)}
                 />
@@ -210,11 +210,11 @@ export const Default: Story = {
 
           <FormField name="body">
             <FormItem>
-              <FormLabel required>Icerik</FormLabel>
+              <FormLabel required>Content</FormLabel>
               <FormControl>
                 <Textarea
                   rows={5}
-                  placeholder="Yaziyi yaz..."
+                  placeholder="Write the post..."
                   value={values.body}
                   onChange={(e) => update("body", e.target.value)}
                 />
@@ -224,21 +224,21 @@ export const Default: Story = {
         </Section>
 
         <Section
-          title="Kategorizasyon"
-          description="Kategori, etiket ve yazarlar"
+          title="Categorization"
+          description="Category, tags, and authors"
         >
           <FormField name="category">
             <FormItem>
-              <FormLabel>Kategori</FormLabel>
+              <FormLabel>Category</FormLabel>
               <FormControl>
                 <NativeSelect
                   value={values.category}
                   onChange={(e) => update("category", e.target.value)}
                 >
-                  <option value="tech">Teknoloji</option>
-                  <option value="design">Tasarim</option>
-                  <option value="business">Is</option>
-                  <option value="culture">Kultur</option>
+                  <option value="tech">Technology</option>
+                  <option value="design">Design</option>
+                  <option value="business">Business</option>
+                  <option value="culture">Culture</option>
                 </NativeSelect>
               </FormControl>
             </FormItem>
@@ -246,45 +246,45 @@ export const Default: Story = {
 
           <FormField name="tags">
             <FormItem>
-              <FormLabel>Etiketler</FormLabel>
+              <FormLabel>Tags</FormLabel>
               <FormControl>
                 <InputTag
                   value={values.tags}
                   onValueChange={(t) => update("tags", t)}
-                  placeholder="Enter ile etiket ekle..."
+                  placeholder="Press Enter to add a tag..."
                 />
               </FormControl>
               <FormDescription>
-                Maksimum 5 etiket. Enter veya virgul ile ayir.
+                Up to 5 tags. Separate with Enter or a comma.
               </FormDescription>
             </FormItem>
           </FormField>
 
           <FormField name="authors">
             <FormItem>
-              <FormLabel>Yazarlar</FormLabel>
+              <FormLabel>Authors</FormLabel>
               <FormControl>
                 <MultiSelect
                   options={AUTHOR_OPTIONS}
                   value={values.authors}
                   onValueChange={(v) => update("authors", v)}
-                  placeholder="Yazar sec..."
+                  placeholder="Select authors..."
                 />
               </FormControl>
               <FormDescription>
-                Ortak yazi destekli — birden fazla yazar atayabilirsin.
+                Co-authoring is supported — you can assign multiple authors.
               </FormDescription>
             </FormItem>
           </FormField>
         </Section>
 
         <Section
-          title="Bicimlendirme"
-          description="Toolbar varsayilan davranisi"
+          title="Formatting"
+          description="Default toolbar behavior"
         >
           <FormField name="formatting">
             <FormItem>
-              <FormLabel>Default bicimlendirme</FormLabel>
+              <FormLabel>Default formatting</FormLabel>
               <FormControl>
                 <ToggleGroup
                   type="multiple"
@@ -298,7 +298,7 @@ export const Default: Story = {
                 </ToggleGroup>
               </FormControl>
               <FormDescription>
-                Yazi acildiginda toolbar'da aktif olacak bicimler.
+                Formats enabled in the toolbar when the editor opens.
               </FormDescription>
             </FormItem>
           </FormField>
@@ -313,19 +313,19 @@ export const Default: Story = {
                   onPressedChange={(p) => update("favorite", p)}
                 />
               </FormControl>
-              <FormLabel>Favorilere ekle</FormLabel>
+              <FormLabel>Add to favorites</FormLabel>
             </FormItem>
           </FormField>
         </Section>
 
         <Section
-          title="Yayinlama"
-          description="Tarih, durum ve gorunurluk"
+          title="Publishing"
+          description="Date, status, and visibility"
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField name="publishDate">
               <FormItem>
-                <FormLabel>Yayin Tarihi</FormLabel>
+                <FormLabel>Publish date</FormLabel>
                 <FormControl>
                   <DatePicker
                     value={values.publishDate}
@@ -337,7 +337,7 @@ export const Default: Story = {
 
             <FormField name="publishAt">
               <FormItem>
-                <FormLabel>Yayin Saati</FormLabel>
+                <FormLabel>Publish time</FormLabel>
                 <FormControl>
                   <DateTimePicker
                     value={values.publishAt}
@@ -345,29 +345,29 @@ export const Default: Story = {
                   />
                 </FormControl>
                 <FormDescription>
-                  Bos birakirsan hemen yayinlanir.
+                  Leave empty to publish immediately.
                 </FormDescription>
               </FormItem>
             </FormField>
           </div>
 
           <FormFieldSet>
-            <FormLegend>Durum</FormLegend>
+            <FormLegend>Status</FormLegend>
             <RadioGroup
               orientation="horizontal"
               value={values.status}
               onValueChange={(v) => update("status", v)}
             >
-              <RadioGroupItem value="draft" label="Taslak" />
-              <RadioGroupItem value="review" label="Onayda" />
-              <RadioGroupItem value="published" label="Yayinda" />
+              <RadioGroupItem value="draft" label="Draft" />
+              <RadioGroupItem value="review" label="In review" />
+              <RadioGroupItem value="published" label="Published" />
             </RadioGroup>
           </FormFieldSet>
 
           <FormFieldSet>
-            <FormLegend>Gorunurluk</FormLegend>
+            <FormLegend>Visibility</FormLegend>
             <FormDescription>
-              Yazinin kim tarafindan gorulebilecegini belirler.
+              Controls who can see the post.
             </FormDescription>
             <RadioGroup
               value={values.visibility}
@@ -375,33 +375,33 @@ export const Default: Story = {
             >
               <RadioGroupItem
                 value="public"
-                label="Acik"
-                description="Herkes gorebilir, arama motorlari indeksler"
+                label="Public"
+                description="Visible to everyone, indexed by search engines"
               />
               <RadioGroupItem
                 value="unlisted"
-                label="Listelenmemis"
-                description="Sadece link ile erisilebilir"
+                label="Unlisted"
+                description="Accessible only via direct link"
               />
               <RadioGroupItem
                 value="private"
-                label="Ozel"
-                description="Sadece yazarlar gorebilir"
+                label="Private"
+                description="Visible only to authors"
               />
             </RadioGroup>
           </FormFieldSet>
         </Section>
 
         <Section
-          title="Ayarlar"
-          description="Etkilesim ve bildirim tercihleri"
+          title="Settings"
+          description="Interaction and notification preferences"
         >
           <FormField name="allowComments">
             <FormItem className="flex-row items-center justify-between">
               <div className="flex flex-col gap-0.5">
-                <FormLabel>Yorumlara izin ver</FormLabel>
+                <FormLabel>Allow comments</FormLabel>
                 <FormDescription>
-                  Kullanicilar yazinin altina yorum birakabilir.
+                  Users can leave comments below the post.
                 </FormDescription>
               </div>
               <FormControl>
@@ -416,9 +416,9 @@ export const Default: Story = {
           <FormField name="allowSharing">
             <FormItem className="flex-row items-center justify-between">
               <div className="flex flex-col gap-0.5">
-                <FormLabel>Sosyal medyada paylasima izin ver</FormLabel>
+                <FormLabel>Allow social sharing</FormLabel>
                 <FormDescription>
-                  Yazinin altinda paylasim butonlari gozukur.
+                  Share buttons appear below the post.
                 </FormDescription>
               </div>
               <FormControl>
@@ -431,9 +431,10 @@ export const Default: Story = {
           </FormField>
 
           <FormFieldSet>
-            <FormLegend>Bildirim kanallari</FormLegend>
+            <FormLegend>Notification channels</FormLegend>
             <FormDescription>
-              Yazi yayinlandiginda bildirim almak istedigin kanallar.
+              Channels where you want to be notified when the post is
+              published.
             </FormDescription>
             <CheckboxGroup
               orientation="horizontal"
@@ -454,19 +455,19 @@ export const Default: Story = {
                   onCheckedChange={(c) => update("acceptedTerms", c)}
                 />
               </FormControl>
-              <FormLabel>Yayin politikasini okudum, kabul ediyorum</FormLabel>
+              <FormLabel>I have read and accept the publishing policy</FormLabel>
             </FormItem>
           </FormField>
         </Section>
 
         <Section
-          title="Stok ve Fiyatlandirma"
-          description="Premium icerik icin opsiyonel"
+          title="Inventory & Pricing"
+          description="Optional, for premium content"
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField name="quantity">
               <FormItem>
-                <FormLabel>Stok</FormLabel>
+                <FormLabel>Stock</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -482,11 +483,11 @@ export const Default: Story = {
 
             <FormField name="price">
               <FormItem>
-                <FormLabel>Fiyat</FormLabel>
+                <FormLabel>Price</FormLabel>
                 <FormControl>
                   <InputGroup>
                     <InputGroupAddon>
-                      <InputGroupText>₺</InputGroupText>
+                      <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
                     <InputGroupInput
                       type="number"
@@ -495,12 +496,12 @@ export const Default: Story = {
                       onChange={(e) => update("price", e.target.value)}
                     />
                     <InputGroupAddon>
-                      <InputGroupText>TRY</InputGroupText>
+                      <InputGroupText>USD</InputGroupText>
                     </InputGroupAddon>
                   </InputGroup>
                 </FormControl>
                 <FormDescription>
-                  Ucretsiz icerik icin bos birak.
+                  Leave empty for free content.
                 </FormDescription>
               </FormItem>
             </FormField>
@@ -508,12 +509,12 @@ export const Default: Story = {
         </Section>
 
         <Section
-          title="Guvenlik"
-          description="Hassas islem onayi"
+          title="Security"
+          description="Sensitive action confirmation"
         >
           <FormField name="otp">
             <FormItem>
-              <FormLabel>2FA Kodu</FormLabel>
+              <FormLabel>2FA code</FormLabel>
               <FormControl>
                 <InputOTP
                   length={6}
@@ -522,7 +523,7 @@ export const Default: Story = {
                 />
               </FormControl>
               <FormDescription>
-                Authenticator uygulamandaki 6 haneli kod.
+                The 6-digit code from your authenticator app.
               </FormDescription>
             </FormItem>
           </FormField>
@@ -530,12 +531,12 @@ export const Default: Story = {
 
         <div className="flex justify-end gap-2 border-t border-zinc-200 pt-6">
           <Button variant="outline" type="button">
-            Iptal
+            Cancel
           </Button>
           <Button variant="soft" type="submit">
-            Taslak olarak kaydet
+            Save as draft
           </Button>
-          <Button type="submit">Yayinla</Button>
+          <Button type="submit">Publish</Button>
         </div>
       </Form>
     );
@@ -550,12 +551,12 @@ export const WithValidation: Story = {
 
     const validate = (next: typeof values) => {
       const e: Record<string, string> = {};
-      if (!next.email) e.email = "Email zorunlu";
+      if (!next.email) e.email = "Email is required";
       else if (!/^[^@]+@[^@]+\.[^@]+$/.test(next.email))
-        e.email = "Gecerli bir email gir";
-      if (!next.password) e.password = "Sifre zorunlu";
+        e.email = "Enter a valid email";
+      if (!next.password) e.password = "Password is required";
       else if (next.password.length < 8)
-        e.password = "Sifre en az 8 karakter olmali";
+        e.password = "Password must be at least 8 characters";
       return e;
     };
 
@@ -586,7 +587,7 @@ export const WithValidation: Story = {
 
         <FormField name="password" error={errors.password}>
           <FormItem>
-            <FormLabel required>Sifre</FormLabel>
+            <FormLabel required>Password</FormLabel>
             <FormControl>
               <Input
                 type="password"
@@ -596,19 +597,19 @@ export const WithValidation: Story = {
                 }
               />
             </FormControl>
-            <FormDescription>En az 8 karakter.</FormDescription>
+            <FormDescription>At least 8 characters.</FormDescription>
             <FormMessage />
           </FormItem>
         </FormField>
 
         {submitted && (
           <p className="text-sm font-medium text-emerald-600">
-            Form basariyla gonderildi
+            Form submitted successfully
           </p>
         )}
 
         <div className="flex justify-end gap-2">
-          <Button type="submit">Gonder</Button>
+          <Button type="submit">Submit</Button>
         </div>
       </Form>
     );
@@ -620,31 +621,31 @@ export const AllInputTypes: Story = {
     <Form className="max-w-md">
       <FormField name="title">
         <FormItem>
-          <FormLabel required>Baslik</FormLabel>
+          <FormLabel required>Title</FormLabel>
           <FormControl>
-            <Input placeholder="Yazinin basligi" />
+            <Input placeholder="Post title" />
           </FormControl>
         </FormItem>
       </FormField>
 
       <FormField name="excerpt">
         <FormItem>
-          <FormLabel>Ozet</FormLabel>
+          <FormLabel>Excerpt</FormLabel>
           <FormControl>
-            <Textarea rows={3} placeholder="Kisa aciklama..." />
+            <Textarea rows={3} placeholder="Short description..." />
           </FormControl>
         </FormItem>
       </FormField>
 
       <FormField name="category">
         <FormItem>
-          <FormLabel>Kategori</FormLabel>
+          <FormLabel>Category</FormLabel>
           <FormControl>
             <NativeSelect>
-              <option value="">Sec...</option>
-              <option value="tech">Teknoloji</option>
-              <option value="design">Tasarim</option>
-              <option value="business">Is</option>
+              <option value="">Select...</option>
+              <option value="tech">Technology</option>
+              <option value="design">Design</option>
+              <option value="business">Business</option>
             </NativeSelect>
           </FormControl>
         </FormItem>
@@ -655,7 +656,7 @@ export const AllInputTypes: Story = {
           <FormControl>
             <Checkbox />
           </FormControl>
-          <FormLabel>Kosullari kabul ediyorum</FormLabel>
+          <FormLabel>I accept the terms</FormLabel>
         </FormItem>
       </FormField>
 
@@ -664,7 +665,7 @@ export const AllInputTypes: Story = {
           <FormControl>
             <Switch />
           </FormControl>
-          <FormLabel>Bultene abone ol</FormLabel>
+          <FormLabel>Subscribe to the newsletter</FormLabel>
         </FormItem>
       </FormField>
     </Form>
@@ -676,10 +677,10 @@ export const MessageStatuses: Story = {
     <div className="flex flex-col gap-6 max-w-md">
       {(
         [
-          ["error", "Bu alan zorunlu"],
-          ["warning", "Email dogrulanmamis"],
-          ["success", "Kullanici adi musait"],
-          ["info", "Bu alan opsiyoneldir"],
+          ["error", "This field is required"],
+          ["warning", "Email is not verified"],
+          ["success", "Username is available"],
+          ["info", "This field is optional"],
         ] as const
       ).map(([status, msg]) => (
         <FormField
@@ -690,7 +691,7 @@ export const MessageStatuses: Story = {
           <FormItem>
             <FormLabel>Status: {status}</FormLabel>
             <FormControl>
-              <Input placeholder="Ornek input" />
+              <Input placeholder="Sample input" />
             </FormControl>
             <FormMessage status={status}>{msg}</FormMessage>
           </FormItem>
@@ -706,7 +707,7 @@ export const WithFieldSet: Story = {
     docs: {
       description: {
         story:
-          "`FormFieldSet` + `FormLegend` semantic gruplama — native `<fieldset><legend>` HTML. RadioGroup, CheckboxGroup gibi cogul-secim componentleri veya ilgili field'lari mantiksal olarak gruplamak icin. `disabled` prop'u tum child input'lara native HTML cascade ile uygulanir.",
+          "`FormFieldSet` + `FormLegend` provide semantic grouping using native `<fieldset><legend>` HTML — for logically grouping multi-select components like RadioGroup and CheckboxGroup, or any related fields. The `disabled` prop cascades to every child input via native HTML.",
       },
     },
   },
@@ -719,53 +720,53 @@ export const WithFieldSet: Story = {
     return (
       <Form className="max-w-md">
         <FormFieldSet>
-          <FormLegend>Abonelik Plani</FormLegend>
+          <FormLegend>Subscription plan</FormLegend>
           <FormDescription>
-            Istediginiz zaman yukseltebilir veya dusurebilirsiniz.
+            Upgrade or downgrade at any time.
           </FormDescription>
           <RadioGroup value={plan} onValueChange={setPlan}>
             <RadioGroupItem
               value="free"
-              label="Ucretsiz"
-              description="Temel ozellikler, 3 proje limiti"
+              label="Free"
+              description="Basic features, 3-project limit"
             />
             <RadioGroupItem
               value="pro"
               label="Pro"
-              description="Sinirsiz proje, oncelikli destek"
+              description="Unlimited projects, priority support"
             />
             <RadioGroupItem
               value="team"
-              label="Takim"
-              description="Pro + 10 kullaniciya kadar takim isbirligi"
+              label="Team"
+              description="Pro + collaboration with up to 10 users"
             />
           </RadioGroup>
         </FormFieldSet>
 
         <FormFieldSet>
-          <FormLegend>Bildirim Tercihleri</FormLegend>
+          <FormLegend>Notification preferences</FormLegend>
           <FormDescription>
-            Hangi kanallardan haberdar olmak istersin?
+            Which channels would you like to be notified on?
           </FormDescription>
           <CheckboxGroup
             value={notifications}
             onValueChange={setNotifications}
           >
             <CheckboxGroupItem value="email" label="Email" />
-            <CheckboxGroupItem value="push" label="Push bildirim" />
+            <CheckboxGroupItem value="push" label="Push notifications" />
             <CheckboxGroupItem value="sms" label="SMS" />
             <CheckboxGroupItem value="slack" label="Slack" />
           </CheckboxGroup>
         </FormFieldSet>
 
         <FormFieldSet disabled>
-          <FormLegend>Devre Disi Bolum (disabled)</FormLegend>
+          <FormLegend>Disabled section (disabled)</FormLegend>
           <FormDescription>
-            `disabled` prop'u native HTML ile butun child input'lara uygulanir.
+            The `disabled` prop cascades to every child input via native HTML.
           </FormDescription>
           <RadioGroup defaultValue="a">
-            <RadioGroupItem value="a" label="Secenek A" />
-            <RadioGroupItem value="b" label="Secenek B" />
+            <RadioGroupItem value="a" label="Option A" />
+            <RadioGroupItem value="b" label="Option B" />
           </RadioGroup>
         </FormFieldSet>
       </Form>
@@ -779,7 +780,7 @@ export const ArrayFields: Story = {
     docs: {
       description: {
         story:
-          "Tekrar eden alanlar (kullanici emaileri gibi) icin `FormFieldSet` + `FormFieldGroup` pattern'i. React Hook Form'un `useFieldArray` ile kombine edilir, ama burada manuel useState ornegi.",
+          "`FormFieldSet` + `FormFieldGroup` pattern for repeating fields (e.g. multiple user emails). Pairs naturally with React Hook Form's `useFieldArray`; this example uses plain `useState`.",
       },
     },
   },
@@ -795,9 +796,9 @@ export const ArrayFields: Story = {
     return (
       <Form className="max-w-md">
         <FormFieldSet>
-          <FormLegend>Email Adresleri</FormLegend>
+          <FormLegend>Email addresses</FormLegend>
           <FormDescription>
-            En fazla 5 adres ekleyebilirsin.
+            Up to 5 addresses.
           </FormDescription>
           <FormFieldGroup>
             {emails.map((email, i) => (
@@ -816,9 +817,9 @@ export const ArrayFields: Story = {
                       type="button"
                       variant="outline"
                       onClick={() => remove(i)}
-                      aria-label={`${i + 1}. emaili sil`}
+                      aria-label={`Remove email ${i + 1}`}
                     >
-                      Sil
+                      Remove
                     </Button>
                   )}
                 </FormItem>
@@ -831,7 +832,7 @@ export const ArrayFields: Story = {
             onClick={append}
             disabled={emails.length >= 5}
           >
-            + Email ekle
+            + Add email
           </Button>
         </FormFieldSet>
       </Form>
@@ -853,7 +854,7 @@ export const RequiredAndOptional: Story = {
 
       <FormField name="phone">
         <FormItem>
-          <FormLabel>Telefon (opsiyonel)</FormLabel>
+          <FormLabel>Phone (optional)</FormLabel>
           <FormControl>
             <Input type="tel" />
           </FormControl>
@@ -870,19 +871,19 @@ export const DisabledField: Story = {
         <FormItem>
           <FormLabel>Email</FormLabel>
           <FormControl>
-            <Input type="email" value="kenan@eglador.dev" readOnly />
+            <Input type="email" value="user@eglador.dev" readOnly />
           </FormControl>
-          <FormDescription>Email degisikligi destekten talep et.</FormDescription>
+          <FormDescription>Contact support to change your email.</FormDescription>
         </FormItem>
       </FormField>
 
       <FormField name="username" disabled>
         <FormItem>
-          <FormLabel>Kullanici adi (disabled)</FormLabel>
+          <FormLabel>Username (disabled)</FormLabel>
           <FormControl>
             <Input defaultValue="kenangundogan" />
           </FormControl>
-          <FormDescription>Bu alan duzenlenemez.</FormDescription>
+          <FormDescription>This field cannot be edited.</FormDescription>
         </FormItem>
       </FormField>
     </Form>
@@ -903,7 +904,7 @@ function CharCounter() {
         />
       </FormControl>
       <FormDescription>
-        {value.length} / {max} karakter — alan: {field.name}
+        {value.length} / {max} characters — field: {field.name}
       </FormDescription>
     </>
   );
@@ -915,7 +916,7 @@ export const CustomFieldHook: Story = {
     docs: {
       description: {
         story:
-          "`useFormField()` hook'u ile FormField context'inden id, error, name vb. degerleri okuyup custom input/visual'lar yazabilirsin.",
+          "Use `useFormField()` to read id, error, name, etc. from the FormField context and build custom inputs or visualizations.",
       },
     },
   },
@@ -923,7 +924,7 @@ export const CustomFieldHook: Story = {
     <Form className="max-w-md">
       <FormField name="title">
         <FormItem>
-          <FormLabel>Baslik</FormLabel>
+          <FormLabel>Title</FormLabel>
           <CharCounter />
         </FormItem>
       </FormField>
