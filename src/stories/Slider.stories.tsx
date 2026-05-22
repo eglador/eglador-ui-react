@@ -24,7 +24,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Range input + thumb. Value array ile single (`[50]`) ve range (`[20, 80]`) mode ayni interface'de. 5 size (xs/sm/md/lg/xl), 2 orientation (horizontal/vertical), pointer + klavye nav (Arrow/Home/End/PageUp/PageDown), opsiyonel marks (label destekli), `minStepsBetweenThumbs` ile range mode'da minimum mesafe, native `<input type=\"hidden\">` form integration (name prop ile).",
+          "Range input + thumb. Single (`[50]`) and range (`[20, 80]`) modes share the same interface via a value array. 5 sizes (xs/sm/md/lg/xl), 2 orientations (horizontal/vertical), pointer + keyboard navigation (Arrow/Home/End/PageUp/PageDown), optional marks (with label support), `minStepsBetweenThumbs` to enforce a minimum gap in range mode, and form integration through a native `<input type=\"hidden\">` (via the `name` prop).",
       },
     },
   },
@@ -175,7 +175,7 @@ export const Controlled: Story = {
           </code>
         </p>
         <p className="text-sm text-zinc-600">
-          Commit (release sonrasi):{" "}
+          Commit (after release):{" "}
           <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
             [{committedValue.join(", ")}]
           </code>
@@ -186,7 +186,7 @@ export const Controlled: Story = {
 };
 
 export const RangeWithMinDistance: Story = {
-  name: "Range — minimum mesafe",
+  name: "Range — minimum distance",
   render: function RangeMinStory() {
     const [value, setValue] = React.useState<number[]>([30, 60]);
     return (
@@ -198,7 +198,7 @@ export const RangeWithMinDistance: Story = {
           step={1}
         />
         <p className="text-sm text-zinc-600">
-          Thumbs en az 10 birim arali olmali — [
+          Thumbs must be at least 10 units apart — [
           {value.join(", ")}]
         </p>
       </div>

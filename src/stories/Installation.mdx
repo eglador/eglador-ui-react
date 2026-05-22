@@ -51,7 +51,7 @@ The following peer dependencies must be present in your project:
   </tbody>
 </table>
 
-These are typically already present in modern React projects (Next.js 16+, Vite, Remix). Peer ranges are major-locked: any React 19.x and Tailwind 4.x patch/minor surumu kabul edilir.
+These are typically already present in modern React projects (Next.js 16+, Vite, Remix). Peer ranges are major-locked: any React 19.x or Tailwind 4.x patch/minor release is accepted.
 
 > **Zero runtime dependencies.** `clsx` and `tailwind-merge` are pre-bundled — nothing else is pulled into your app.
 
@@ -106,11 +106,11 @@ Components that use state (`useState` / `useEffect`) are marked `"use client"`. 
 
 ## 5. Z-index awareness
 
-Modal'lar (Dialog/AlertDialog/Drawer/Sidebar) ve floating popup'lar (Popover/Combobox/Select/ColorPicker/DateTimePicker/Tooltip vb.) ortak bir hierarchy uzerinde calisir:
+Modals (Dialog/AlertDialog/Drawer/Sidebar) and floating popups (Popover/Combobox/Select/ColorPicker/DateTimePicker/Tooltip, etc.) share a single z-index hierarchy:
 
 <table>
   <thead>
-    <tr><th align="left">Katman</th><th align="left">Z-Index</th></tr>
+    <tr><th align="left">Layer</th><th align="left">Z-Index</th></tr>
   </thead>
   <tbody>
     <tr><td>Modal</td><td><code>z-[1000]</code></td></tr>
@@ -120,7 +120,7 @@ Modal'lar (Dialog/AlertDialog/Drawer/Sidebar) ve floating popup'lar (Popover/Com
   </tbody>
 </table>
 
-Bu sayede `<Dialog>` icindeki `<DateTimePicker>` / `<Combobox>` / `<ColorPicker>` popover'lari Dialog content'inin uzerinde dogru sirayla render edilir. Baslangic degerleri **1000'den** itibaren — tuketici uygulamasinin tipik `z-10 / z-20 / z-50` araliklariyla cakismaz. Custom overlay veya portal kullanirken bu araliklara dikkat edin (1000 alti tuketici, 1000+ kutuphane).
+This way `<DateTimePicker>` / `<Combobox>` / `<ColorPicker>` popovers inside a `<Dialog>` render in the correct order above the dialog content. The baseline starts at **1000** — well above a consumer app's typical `z-10 / z-20 / z-50` range. Keep this in mind when using custom overlays or portals (consumer below 1000, library at 1000+).
 
 ---
 

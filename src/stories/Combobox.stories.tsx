@@ -65,7 +65,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Searchable single-select dropdown. MultiSelect'in tek-secim varyanti — options dropdown'i ile gosterilir, fuzzy search desteklenir, klavye nav (Arrow/Home/End/Enter/Escape) ile gezilebilir. 5-size (xs/sm/md/lg/xl), 3 variant (outline/soft/ghost), 3 shape (square/rounded/pill). Form integration native `<input type=\"hidden\" name>` ile, `aria-*` ARIA Combobox role'u tam destekli.",
+          "Searchable single-select dropdown. Single-select variant of MultiSelect — presented as an options dropdown with fuzzy search and keyboard navigation (Arrow/Home/End/Enter/Escape). 5-size (xs/sm/md/lg/xl), 3 variant (outline/soft/ghost), 3 shape (square/rounded/pill). Form integration via native `<input type=\"hidden\" name>` ; full ARIA Combobox role support via `aria-*`.",
       },
     },
   },
@@ -76,9 +76,9 @@ const meta: Meta<StoryArgs> = {
     disabled: false,
     clearable: true,
     searchable: true,
-    placeholder: "Cerceve sec...",
-    searchPlaceholder: "Ara...",
-    emptyMessage: "Sonuc bulunamadi",
+    placeholder: "Select framework...",
+    searchPlaceholder: "Search...",
+    emptyMessage: "No results",
   },
   argTypes: {
     size: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
@@ -177,12 +177,12 @@ export const Controlled: Story = {
           options={COUNTRIES}
           value={value}
           onValueChange={setValue}
-          placeholder="Ulke sec..."
+          placeholder="Select country..."
         />
         <p className="text-sm text-zinc-600">
-          Secili:{" "}
+          Selected:{" "}
           <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
-            {value ?? "(yok)"}
+            {value ?? "(none)"}
           </code>
         </p>
         <div className="flex gap-2">
@@ -191,14 +191,14 @@ export const Controlled: Story = {
             onClick={() => setValue("us")}
             className="text-xs underline underline-offset-4 text-zinc-700"
           >
-            ABD sec
+            Select USA
           </button>
           <button
             type="button"
             onClick={() => setValue(undefined)}
             className="text-xs underline underline-offset-4 text-zinc-700"
           >
-            Temizle
+            Clear
           </button>
         </div>
       </div>
@@ -211,7 +211,7 @@ export const WithDisabledOptions: Story = {
     <div className="w-72">
       <Combobox
         options={TAGS_WITH_DISABLED}
-        placeholder="Bir framework sec..."
+        placeholder="Select a framework..."
       />
     </div>
   ),
@@ -221,7 +221,7 @@ export const NotClearable: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
       <p className="text-xs text-zinc-500">
-        clearable=false — X butonu gozukmez, deger zorunlu kalir.
+        clearable=false — The X button is hidden and a value is required.
       </p>
       <Combobox
         options={FRAMEWORKS}
@@ -236,12 +236,12 @@ export const NotSearchable: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
       <p className="text-xs text-zinc-500">
-        searchable=false — Arama kutusu yok, sadece liste.
+        searchable=false — No search box, list only.
       </p>
       <Combobox
         options={FRAMEWORKS.slice(0, 5)}
         searchable={false}
-        placeholder="Sec..."
+        placeholder="Select..."
       />
     </div>
   ),
@@ -250,7 +250,7 @@ export const NotSearchable: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
-      <Combobox options={FRAMEWORKS} disabled placeholder="Devre disi" />
+      <Combobox options={FRAMEWORKS} disabled placeholder="Disabled" />
       <Combobox options={FRAMEWORKS} defaultValue="next" disabled />
     </div>
   ),
@@ -264,7 +264,7 @@ export const LongList: Story = {
     }));
     return (
       <div className="w-72">
-        <Combobox options={options} placeholder="100 ogeden sec..." />
+        <Combobox options={options} placeholder="Select from 100 items..." />
       </div>
     );
   },
@@ -287,18 +287,18 @@ export const UserPicker: Story = {
     return (
       <div className="flex flex-col gap-2 w-80 rounded-lg border border-zinc-200 p-4">
         <label className="text-sm font-medium text-zinc-700">
-          Atanacak Kisi
+          Assignee
         </label>
         <Combobox
           options={users}
           value={assignee}
           onValueChange={setAssignee}
-          placeholder="Kullanici ara..."
-          searchPlaceholder="Isim ile ara..."
+          placeholder="Search user..."
+          searchPlaceholder="Search by name..."
         />
         {assignee && (
           <p className="text-xs text-zinc-500">
-            Atandi:{" "}
+            Assigned:{" "}
             {users.find((u) => u.value === assignee)?.label}
           </p>
         )}

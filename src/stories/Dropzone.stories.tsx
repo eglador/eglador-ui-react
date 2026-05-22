@@ -50,7 +50,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Drag-and-drop file upload area. HTML5 native drag/drop + click-to-browse, MIME type ve dosya boyutu validasyonu, accepted/rejected dosya callback'leri. 5-size (xs/sm/md/lg/xl), 3 variant (outline/soft/ghost), data-state ile drag-accept/drag-reject/idle/disabled gorsel state'leri. Klavye erisilebilir (Enter/Space ile file picker'i acar). Default UI ozelleştirilebilir (label, hint, icon) ya da `children` ile tum content override edilebilir.",
+          "Drag-and-drop file upload area. HTML5 native drag/drop plus click-to-browse, MIME-type and file-size validation, and accepted/rejected file callbacks. 5 sizes (xs/sm/md/lg/xl), 3 variants (outline/soft/ghost); visual states (drag-accept/drag-reject/idle/disabled) exposed via `data-state`. Keyboard-accessible — Enter/Space opens the file picker. Default UI is customizable (label, hint, icon) or fully replaceable via `children`.",
       },
     },
   },
@@ -62,7 +62,7 @@ const meta: Meta<StoryArgs> = {
     maxSize: 10 * 1024 * 1024,
     maxFiles: 8,
     disabled: false,
-    label: "Dosyalari buraya birak veya tikla",
+    label: "Drop files here or click to browse",
     hint: "",
     viewMode: "list",
   },
@@ -73,7 +73,7 @@ const meta: Meta<StoryArgs> = {
     acceptedFormats: {
       control: "check",
       options: FORMAT_OPTIONS,
-      description: "Kabul edilen formatlar (MIME wildcard, MIME, ya da uzanti)",
+      description: "Accepted formats (MIME wildcard, MIME, or extension)",
     },
     multiple: { control: "boolean" },
     maxSize: { control: "number" },
@@ -176,7 +176,7 @@ function FileListView({
           <button
             type="button"
             onClick={() => onRemove(i)}
-            aria-label={`${file.name} sil`}
+            aria-label={`Remove ${file.name}`}
             className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700"
           >
             {TrashIcon}
@@ -216,7 +216,7 @@ function FileGalleryView({
             <button
               type="button"
               onClick={() => onRemove(i)}
-              aria-label={`${file.name} sil`}
+              aria-label={`Remove ${file.name}`}
               className="absolute top-1.5 right-1.5 inline-flex size-7 items-center justify-center rounded-md bg-black/60 text-white opacity-0 transition-opacity hover:bg-black/80 group-hover:opacity-100 focus-visible:opacity-100"
             >
               {TrashIcon}
@@ -290,7 +290,7 @@ export const Default: Story = {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-                Yuklenen ({files.length}
+                Uploaded ({files.length}
                 {args.maxFiles ? ` / ${args.maxFiles}` : ""})
               </p>
               <Button
@@ -299,7 +299,7 @@ export const Default: Story = {
                 size="xs"
                 onClick={clearAll}
               >
-                Tumunu sil
+                Remove all
               </Button>
             </div>
             {args.viewMode === "gallery" ? (
@@ -313,7 +313,7 @@ export const Default: Story = {
         {rejections.length > 0 && (
           <div className="flex flex-col gap-1.5">
             <p className="text-xs font-medium uppercase tracking-wide text-red-600">
-              Reddedildi ({rejections.length})
+              Rejected ({rejections.length})
             </p>
             <ul className="flex flex-col gap-1">
               {rejections.map((r, i) => (
@@ -407,7 +407,7 @@ export const PdfOnly: Story = {
           accept=".pdf,.doc,.docx,application/pdf"
           maxSize={10 * 1024 * 1024}
           label="Belge yukle"
-          hint="PDF veya Word, max 10MB"
+          hint="PDF or Word, max 10MB"
           onAccept={(f) => setFiles((s) => [...s, ...f])}
         />
         {files.map((f, i) => (
@@ -434,7 +434,7 @@ export const CustomContent: Story = {
     docs: {
       description: {
         story:
-          "`children` ile default UI override edilir. Marka renkleri, custom icon, special CTA gibi durumlar icin.",
+          "Override the default UI with `children` — useful for brand colors, custom icons, special CTAs, etc.",
       },
     },
   },

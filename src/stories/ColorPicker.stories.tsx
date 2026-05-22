@@ -25,7 +25,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "HSV-tabanli renk secici. 2D Saturation/Value alani + Hue slider + opsiyonel Alpha slider + Hex input + Tailwind palette presets. Trigger button kontrol disinda mevcut rengi swatch + hex string olarak gosterir, popover'da picker acilir. 5-size (xs/sm/md/lg/xl), 3 variant (outline/soft/ghost), 3 shape (square/rounded/pill). Klavye nav: Arrow keys SV/Hue/Alpha icin, PageUp/Down hue icin 10°, Home/End ile uc degerler. Form integration native hidden input ile.",
+          "HSV-based color picker. 2D Saturation/Value area + Hue slider + optional Alpha slider + Hex input + Tailwind palette presets. The trigger button shows the current color as a swatch + hex string and opens the picker in a popover. 5 sizes (xs/sm/md/lg/xl), 3 variants (outline/soft/ghost), 3 shapes (square/rounded/pill). Keyboard nav: Arrow keys for SV/Hue/Alpha, PageUp/Down for ±10° on hue, Home/End for the end values. Form integration via a native hidden input.",
       },
     },
   },
@@ -135,7 +135,7 @@ export const WithAlpha: Story = {
       <div className="flex flex-col gap-3">
         <ColorPicker value={color} onValueChange={setColor} alpha />
         <p className="text-sm text-zinc-600">
-          Hex (8-haneli):{" "}
+          Hex (8-digit):{" "}
           <code className="rounded-sm bg-zinc-100 px-1.5 py-0.5 font-mono text-xs">
             {color}
           </code>
@@ -197,7 +197,7 @@ export const Controlled: Story = {
             </code>
           </p>
           <p>
-            Commit (release sonrasi):{" "}
+            Commit (after release):{" "}
             <code className="rounded-sm bg-zinc-100 px-1.5 py-0.5 font-mono text-xs">
               {committed}
             </code>
@@ -246,9 +246,9 @@ export const ThemeColorEditor: Story = {
         }}
       >
         <div>
-          <h3 className="text-base font-semibold">Tema Onizleme</h3>
+          <h3 className="text-base font-semibold">Theme Preview</h3>
           <p className="text-sm opacity-70">
-            Renkleri degistirip kart goruntusunun nasil etkilenecegini gor.
+            Change the colors and watch the card preview update.
           </p>
         </div>
         <div className="flex gap-2">
@@ -306,7 +306,7 @@ export const PaletteSwatch: Story = {
     return (
       <div className="flex flex-col gap-3">
         <p className="text-sm font-medium text-zinc-700">
-          Paletini olustur
+          Build your palette
         </p>
         <div className="flex flex-wrap gap-2">
           {colors.map((c, i) => (

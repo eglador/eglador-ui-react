@@ -30,7 +30,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Explicit numeric input + stepper. min/max clamp, step increment, precision (decimal), keyboard nav (ArrowUp/Down, PageUp/Down, Home/End), opsiyonel mouse wheel. 5-size, 3 variant, 3 shape, 3 stepper position (inline / stacked / none). Prefix/suffix slot'lari para birimi, birim gibi durumlara. Intl.NumberFormat ile blur'da formatlanir.",
+          "Explicit numeric input + stepper. min/max clamp, step increment, precision (decimal), keyboard nav (ArrowUp/Down, PageUp/Down, Home/End), optional mouse wheel. 5 sizes, 3 variants, 3 shapes, 3 stepper positions (inline / stacked / none). Prefix/suffix slots for currency symbols, units, etc. Formats via Intl.NumberFormat on blur.",
       },
     },
   },
@@ -153,9 +153,9 @@ export const StepperPositions: Story = {
     <div className="flex flex-col gap-3 w-72">
       {(
         [
-          ["inline", "Inline (yan yana saga)"],
-          ["stacked", "Stacked (alt alta sag tarafta)"],
-          ["none", "None (sadece input)"],
+          ["inline", "Inline (horizontal, right side)"],
+          ["stacked", "Stacked (vertical, right side)"],
+          ["none", "None (input only)"],
         ] as const
       ).map(([pos, label]) => (
         <div key={pos} className="flex flex-col gap-1.5">
@@ -216,7 +216,7 @@ export const MinMaxClamp: Story = {
         <NumberInput defaultValue={0} min={-50} max={50} />
       </div>
       <div className="flex flex-col gap-1.5">
-        <span className="text-xs text-zinc-500">sadece min (max yok)</span>
+        <span className="text-xs text-zinc-500">min only (no max)</span>
         <NumberInput defaultValue={100} min={0} />
       </div>
     </div>
@@ -228,7 +228,7 @@ export const FormattedDisplay: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
       <div className="flex flex-col gap-1.5">
-        <span className="text-xs text-zinc-500">Turkish lira (focus disinda formatlanir)</span>
+        <span className="text-xs text-zinc-500">Turkish lira (formatted when not focused)</span>
         <NumberInput
           defaultValue={1234567.89}
           precision={2}
@@ -274,7 +274,7 @@ export const MouseWheel: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-72">
       <p className="text-xs text-zinc-500">
-        Input'a tikla ve mouse wheel ile arttir/azalt
+        Focus the input and use the mouse wheel to increase/decrease
       </p>
       <NumberInput defaultValue={50} min={0} max={100} allowMouseWheel />
     </div>
@@ -341,7 +341,7 @@ export const PriceEditor: Story = {
           formatOptions={{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}
         />
         <p className="text-xs text-zinc-500">
-          Focus icinde ham deger, blur sonrasi format gosterir
+          Raw value while focused, formatted value on blur
         </p>
       </div>
     );

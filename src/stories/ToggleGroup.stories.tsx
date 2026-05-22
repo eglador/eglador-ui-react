@@ -77,7 +77,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Bir grup `Toggle`'i tek mantik altinda yonetir. `type=\"single\"` segmented control (radio benzeri, deselect destekli), `type=\"multiple\"` cogul secim (checkbox benzeri). Toolbar action grup'lari, alignment selektor, view mode toggle gibi yerlerde kullanilir. `spacing` prop'u (default 2px) ile araliklar ayarlanir, `orientation` ile yatay/dikey, tum stil prop'lari (`size`, `variant`, `shape`, `disabled`) child item'lara yayilir.",
+          "Manages a group of `Toggle`s under a single logic. `type=\"single\"` for a segmented control (radio-like with deselect support); `type=\"multiple\"` for multi-select (checkbox-like). Used in toolbar action groups, alignment selectors, view-mode toggles, etc. The `spacing` prop (default 2px) controls the gap between items; `orientation` flips between horizontal and vertical; all style props (`size`, `variant`, `shape`, `disabled`) cascade to child items.",
       },
     },
   },
@@ -277,9 +277,9 @@ export const Controlled: Story = {
           <ToggleGroupItem value="right" icon={AlignRightIcon} aria-label="Saga" />
         </ToggleGroup>
         <p className="text-sm text-zinc-600">
-          Secili:{" "}
+          Selected:{" "}
           <code className="bg-zinc-100 px-1.5 py-0.5 rounded-sm">
-            {value || "(yok)"}
+            {value || "(none)"}
           </code>
         </p>
       </div>
