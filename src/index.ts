@@ -61,5 +61,6 @@ export * from "./components/toggle";
 export * from "./components/toggle-group";
 export * from "./components/tooltip";
 export * from "./components/textarea";
+export * from "./components/transfer-list";
 export * from "./components/tree-view";
 export * from "./components/typography";
