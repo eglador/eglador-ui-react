@@ -11,6 +11,7 @@ import {
   type CalendarRange,
   type CalendarWeekdayFormat,
 } from "../calendar";
+import { sameDate, useControlledSync } from "../../lib/use-controlled-sync";
 
 function formatDate(d: Date | undefined): string {
   if (!d) return "";
@@ -117,14 +118,26 @@ export function DatePicker(props: DatePickerProps) {
       : rangeInternal
     : {};
 
+  useControlledSync(
+    !isRange ? (props as DatePickerSingleProps).value : undefined,
+    (v) => setSingleInternal((prev) => (sameDate(prev, v) ? prev : v)),
+  );
+  useControlledSync(
+    isRange ? (props as DatePickerRangeProps).value : undefined,
+    (r) =>
+      setRangeInternal((prev) =>
+        sameDate(prev.from, r.from) && sameDate(prev.to, r.to) ? prev : r,
+      ),
+  );
+
   const setSingle = (next: Date | undefined) => {
-    if (!isControlled) setSingleInternal(next);
+    setSingleInternal(next);
     (props as DatePickerSingleProps).onValueChange?.(next);
     if (next) setOpen(false);
   };
 
   const setRange = (next: CalendarRange) => {
-    if (!isControlled) setRangeInternal(next);
+    setRangeInternal(next);
     (props as DatePickerRangeProps).onValueChange?.(next);
     if (next.from && next.to) setOpen(false);
   };

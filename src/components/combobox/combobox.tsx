@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { ChevronDownIcon, XIcon, CheckIcon } from "../../lib/icons";
 import { useFloating } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type ComboboxSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type ComboboxVariant = "outline" | "soft" | "ghost";
@@ -80,7 +81,7 @@ export function Combobox({
 }: ComboboxProps) {
   const isControlled = controlled !== undefined;
   const [internal, setInternal] = React.useState<string | undefined>(
-    defaultValue,
+    isControlled ? controlled : defaultValue,
   );
   const value = isControlled ? controlled : internal;
   const [open, setOpen] = React.useState(false);
@@ -88,8 +89,10 @@ export function Combobox({
   const [highlightedIndex, setHighlightedIndex] = React.useState<number>(-1);
   const baseId = React.useId();
 
+  useControlledSync(controlled, setInternal);
+
   const setValue = (next: string | undefined) => {
-    if (!isControlled) setInternal(next);
+    setInternal(next);
     onValueChange?.(next);
   };
 

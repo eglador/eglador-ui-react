@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { ChevronDownIcon, PlusIcon, MinusIcon } from "../../lib/icons";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type AccordionType = "single" | "multiple";
 export type AccordionVariant = "underline" | "outline" | "soft";
@@ -190,6 +191,15 @@ export const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
 
     const isControlled = props.value !== undefined;
 
+    useControlledSync(
+      type === "single" ? (props.value as string | undefined) : undefined,
+      setInternalSingle,
+    );
+    useControlledSync(
+      type === "multiple" ? (props.value as string[] | undefined) : undefined,
+      (v) => setInternalMultiple((prev) => (sameList(prev, v) ? prev : v)),
+    );
+
     const openValues: string[] = isControlled
       ? type === "single"
         ? (props.value as string) === ""
@@ -214,7 +224,7 @@ export const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
             ? ((props.value as string) ?? "")
             : internalSingle;
           const next = current === val ? (collapsible ? "" : current) : val;
-          if (!isControlled) setInternalSingle(next);
+          setInternalSingle(next);
           (
             (props as AccordionSingleProps).onValueChange as
               | ((v: string) => void)
@@ -227,7 +237,7 @@ export const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
           const next = current.includes(val)
             ? current.filter((v) => v !== val)
             : [...current, val];
-          if (!isControlled) setInternalMultiple(next);
+          setInternalMultiple(next);
           (
             (props as AccordionMultipleProps).onValueChange as
               | ((v: string[]) => void)

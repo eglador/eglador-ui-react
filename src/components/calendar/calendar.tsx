@@ -3,6 +3,11 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../lib/icons";
+import {
+  sameDate,
+  sameDateList,
+  useControlledSync,
+} from "../../lib/use-controlled-sync";
 
 export type CalendarMode = "single" | "range" | "multiple";
 export type CalendarSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -228,9 +233,14 @@ export function Calendar(props: CalendarProps) {
   );
   const month = isMonthControlled ? controlledMonth : internalMonth;
 
+  useControlledSync(controlledMonth, (m) => {
+    const next = startOfMonth(m);
+    setInternalMonth((prev) => (sameDate(prev, next) ? prev : next));
+  });
+
   const setMonth = (next: Date) => {
     const m = startOfMonth(next);
-    if (!isMonthControlled) setInternalMonth(m);
+    setInternalMonth(m);
     onMonthChange?.(m);
   };
 
@@ -277,6 +287,36 @@ export function Calendar(props: CalendarProps) {
       : multipleInternal
     : [];
 
+  useControlledSync(
+    isSingle ? (props as CalendarSingleProps).value : undefined,
+    (v) => {
+      const next = toDate(v);
+      setSingleInternal((prev) => (sameDate(prev, next) ? prev : next));
+    },
+  );
+  useControlledSync(
+    isRange ? (props as CalendarRangeProps).value : undefined,
+    (r) => {
+      const next = { from: toDate(r.from), to: toDate(r.to) };
+      setRangeInternal((prev) =>
+        sameDate(prev.from, next.from) && sameDate(prev.to, next.to)
+          ? prev
+          : next,
+      );
+    },
+  );
+  useControlledSync(
+    isMultiple ? (props as CalendarMultipleProps).value : undefined,
+    (list) => {
+      const next = list
+        .map((v) => toDate(v))
+        .filter((v): v is Date => v !== undefined);
+      setMultipleInternal((prev) =>
+        sameDateList(prev, next) ? prev : next,
+      );
+    },
+  );
+
   const [hoverDate, setHoverDate] = React.useState<Date | null>(null);
 
   const isDisabled = React.useCallback(
@@ -293,7 +333,7 @@ export function Calendar(props: CalendarProps) {
     if (isDisabled(d)) return;
     if (isSingle) {
       const next = singleValue && isSameDay(singleValue, d) ? undefined : d;
-      if (!isControlled) setSingleInternal(next);
+      setSingleInternal(next);
       (props as CalendarSingleProps).onValueChange?.(next);
     } else if (isRange) {
       const { from, to } = rangeValue;
@@ -305,7 +345,7 @@ export function Calendar(props: CalendarProps) {
       } else {
         nextRange = { from, to: d };
       }
-      if (!isControlled) setRangeInternal(nextRange);
+      setRangeInternal(nextRange);
       (props as CalendarRangeProps).onValueChange?.(nextRange);
     } else if (isMultiple) {
       const exists = multipleValue.some((x) => isSameDay(x, d));
@@ -317,7 +357,7 @@ export function Calendar(props: CalendarProps) {
         if (max !== undefined && multipleValue.length >= max) return;
         nextMultiple = [...multipleValue, d];
       }
-      if (!isControlled) setMultipleInternal(nextMultiple);
+      setMultipleInternal(nextMultiple);
       (props as CalendarMultipleProps).onValueChange?.(nextMultiple);
     }
   };

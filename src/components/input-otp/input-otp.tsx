@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { MinusIcon } from "../../lib/icons";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type InputOTPSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -64,9 +65,12 @@ export function InputOTP({
   children,
   ...rest
 }: InputOTPProps) {
-  const [internal, setInternal] = React.useState(defaultValue.slice(0, length));
+  const [internal, setInternal] = React.useState(
+    (controlled !== undefined ? controlled : defaultValue).slice(0, length),
+  );
   const isControlled = controlled !== undefined;
   const value = (isControlled ? controlled : internal).slice(0, length);
+  useControlledSync(controlled, (v) => setInternal(v.slice(0, length)));
   const slotsRef = React.useRef<Map<number, HTMLInputElement>>(new Map());
 
   const registerSlot = React.useCallback(
@@ -79,7 +83,7 @@ export function InputOTP({
 
   const setValue = (next: string) => {
     const clamped = next.slice(0, length);
-    if (!isControlled) setInternal(clamped);
+    setInternal(clamped);
     onChange?.(clamped);
     if (clamped.length === length) onComplete?.(clamped);
   };

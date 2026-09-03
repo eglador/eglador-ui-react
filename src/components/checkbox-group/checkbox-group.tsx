@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { Checkbox, type CheckboxSize } from "../checkbox";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type CheckboxGroupOrientation = "horizontal" | "vertical";
 
@@ -53,15 +54,20 @@ export const CheckboxGroup = React.forwardRef<
   ref,
 ) {
   const isControlled = controlled !== undefined;
-  const [internal, setInternal] = React.useState<string[]>(defaultValue);
+  const [internal, setInternal] = React.useState<string[]>(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, (v) =>
+    setInternal((prev) => (sameList(prev, v) ? prev : v)),
+  );
 
   const toggle = React.useCallback(
     (v: string) => {
       const next = value.includes(v)
         ? value.filter((x) => x !== v)
         : [...value, v];
-      if (!isControlled) setInternal(next);
+      setInternal(next);
       onValueChange?.(next);
     },
     [value, isControlled, onValueChange],

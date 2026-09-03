@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { PlusIcon, XIcon } from "../../lib/icons";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type SpeedDialDirection = "up" | "down" | "left" | "right";
 export type SpeedDialSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -121,13 +122,16 @@ export const SpeedDial = React.forwardRef<HTMLDivElement, SpeedDialProps>(
     },
     ref,
   ) {
-    const [internal, setInternal] = React.useState(defaultOpen);
+    const [internal, setInternal] = React.useState(
+      controlled !== undefined ? controlled : defaultOpen,
+    );
     const isControlled = controlled !== undefined;
     const open = isControlled ? controlled : internal;
+    useControlledSync(controlled, setInternal);
     const setOpen = React.useCallback(
       (v: boolean) => {
         if (disabled && v) return;
-        if (!isControlled) setInternal(v);
+        setInternal(v);
         onOpenChange?.(v);
       },
       [disabled, isControlled, onOpenChange],

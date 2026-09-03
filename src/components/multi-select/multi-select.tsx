@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { ChevronDownIcon, XIcon, CheckIcon } from "../../lib/icons";
 import { useFloating } from "../../lib/use-floating";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type MultiSelectSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type MultiSelectVariant = "outline" | "soft" | "ghost";
@@ -101,15 +102,20 @@ export function MultiSelect({
   maxDisplay = 3,
   className,
 }: MultiSelectProps) {
-  const [internal, setInternal] = React.useState<string[]>(defaultValue);
+  const [internal, setInternal] = React.useState<string[]>(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const values = isControlled ? controlled : internal;
+  useControlledSync(controlled, (v) =>
+    setInternal((prev) => (sameList(prev, v) ? prev : v)),
+  );
   const [open, setOpen] = React.useState(false);
   const [filter, setFilter] = React.useState("");
   const baseId = React.useId();
 
   const setValues = (next: string[]) => {
-    if (!isControlled) setInternal(next);
+    setInternal(next);
     onValueChange?.(next);
   };
 

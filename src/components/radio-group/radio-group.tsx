@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { Radio, type RadioSize } from "../radio";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type RadioGroupOrientation = "horizontal" | "vertical";
 
@@ -57,13 +58,14 @@ export const RadioGroup = React.forwardRef<
   const name = nameProp ?? autoName;
   const isControlled = controlled !== undefined;
   const [internal, setInternal] = React.useState<string | null>(
-    defaultValue ?? null,
+    controlled !== undefined ? controlled : (defaultValue ?? null),
   );
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
 
   const setValue = React.useCallback(
     (v: string) => {
-      if (!isControlled) setInternal(v);
+      setInternal(v);
       onValueChange?.(v);
     },
     [isControlled, onValueChange],

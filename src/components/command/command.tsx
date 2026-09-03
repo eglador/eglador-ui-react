@@ -11,6 +11,7 @@ import {
   type DialogShape,
   type DialogShadow,
 } from "../dialog";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface CommandContextValue {
   filter: string;
@@ -64,11 +65,14 @@ export const Command = React.forwardRef<HTMLDivElement, CommandProps>(
     },
     ref,
   ) {
-    const [internal, setInternal] = React.useState(defaultFilter);
+    const [internal, setInternal] = React.useState(
+      controlled !== undefined ? controlled : defaultFilter,
+    );
     const isControlled = controlled !== undefined;
     const filter = isControlled ? controlled : internal;
+    useControlledSync(controlled, setInternal);
     const setFilter = (v: string) => {
-      if (!isControlled) setInternal(v);
+      setInternal(v);
       onFilterChange?.(v);
     };
 

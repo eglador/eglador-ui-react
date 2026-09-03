@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type SliderSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type SliderOrientation = "horizontal" | "vertical";
@@ -89,8 +90,13 @@ export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     ref,
   ) {
     const isControlled = controlled !== undefined;
-    const [internal, setInternal] = React.useState<number[]>(defaultValue);
+    const [internal, setInternal] = React.useState<number[]>(
+      controlled !== undefined ? controlled : defaultValue,
+    );
     const value = isControlled ? controlled! : internal;
+    useControlledSync(controlled, (v) =>
+      setInternal((prev) => (sameList(prev, v) ? prev : v)),
+    );
 
     const containerRef = React.useRef<HTMLDivElement>(null);
     const dragIndexRef = React.useRef<number | null>(null);
@@ -113,7 +119,7 @@ export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
 
     const commitValue = React.useCallback(
       (next: number[]) => {
-        if (!isControlled) setInternal(next);
+        setInternal(next);
         onValueChange?.(next);
       },
       [isControlled, onValueChange],

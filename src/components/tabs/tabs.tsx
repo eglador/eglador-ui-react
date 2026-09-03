@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type TabsVariant = "underline" | "pills" | "segmented";
 export type TabsSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -160,15 +161,18 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(function Tabs(
   ref,
 ) {
   const baseId = React.useId();
-  const [internal, setInternal] = React.useState(defaultValue);
+  const [internal, setInternal] = React.useState(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
 
   const triggersRef = React.useRef<Map<string, HTMLButtonElement>>(new Map());
 
   const setValue = React.useCallback(
     (next: string) => {
-      if (!isControlled) setInternal(next);
+      setInternal(next);
       onValueChange?.(next);
     },
     [isControlled, onValueChange],

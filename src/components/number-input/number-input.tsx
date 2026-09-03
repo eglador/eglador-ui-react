@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type NumberInputSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type NumberInputVariant = "outline" | "soft" | "ghost";
@@ -128,8 +129,11 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     ref,
   ) {
     const isControlled = controlled !== undefined;
-    const [internal, setInternal] = React.useState<number | null>(defaultValue);
+    const [internal, setInternal] = React.useState<number | null>(
+      controlled !== undefined ? controlled : defaultValue,
+    );
     const value = isControlled ? controlled : internal;
+    useControlledSync(controlled, setInternal);
     const [draft, setDraft] = React.useState<string | null>(null);
     const [focused, setFocused] = React.useState(false);
 
@@ -146,7 +150,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     }, [draft, value, focused, formatter]);
 
     const commit = (next: number | null) => {
-      if (!isControlled) setInternal(next);
+      setInternal(next);
       onValueChange?.(next);
     };
 

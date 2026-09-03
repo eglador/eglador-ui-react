@@ -8,6 +8,7 @@ import {
   type ToggleSize,
   type ToggleVariant,
 } from "../toggle";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type ToggleGroupOrientation = "horizontal" | "vertical";
 
@@ -89,6 +90,15 @@ export const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
       props.type === "multiple" ? (props.defaultValue ?? []) : [],
     );
 
+    useControlledSync(
+      props.type === "single" ? props.value : undefined,
+      setInternalSingle,
+    );
+    useControlledSync(
+      props.type === "multiple" ? props.value : undefined,
+      (v) => setInternalMulti((prev) => (sameList(prev, v) ? prev : v)),
+    );
+
     const ctxValue = React.useMemo<ToggleGroupContextValue>(() => {
       if (props.type === "single") {
         const isControlled = props.value !== undefined;
@@ -102,7 +112,7 @@ export const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
           disabled,
           onItemSelect: (v: string) => {
             const next = currentValue === v ? undefined : v;
-            if (!isControlled) setInternalSingle(next);
+            setInternalSingle(next);
             props.onValueChange?.(next ?? "");
           },
         };
@@ -121,7 +131,7 @@ export const ToggleGroup = React.forwardRef<HTMLDivElement, ToggleGroupProps>(
           const next = currentValue.includes(v)
             ? currentValue.filter((x) => x !== v)
             : [...currentValue, v];
-          if (!isControlled) setInternalMulti(next);
+          setInternalMulti(next);
           props.onValueChange?.(next);
         },
       };

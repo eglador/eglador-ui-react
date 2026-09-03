@@ -12,6 +12,7 @@ import {
   ChevronDownIcon,
   SearchIcon,
 } from "../../lib/icons";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type TransferListSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type TransferListVariant = "outline" | "soft" | "ghost";
@@ -205,8 +206,13 @@ export function TransferList({
 }: TransferListProps) {
   const baseId = React.useId();
   const isControlled = controlled !== undefined;
-  const [internal, setInternal] = React.useState<string[]>(defaultValue);
+  const [internal, setInternal] = React.useState<string[]>(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const targetIds = isControlled ? controlled : internal;
+  useControlledSync(controlled, (v) =>
+    setInternal((prev) => (sameList(prev, v) ? prev : v)),
+  );
   const targetSet = React.useMemo(() => new Set(targetIds), [targetIds]);
 
   const optionsById = React.useMemo(
@@ -262,7 +268,7 @@ export function TransferList({
 
   const setValues = React.useCallback(
     (next: string[]) => {
-      if (!isControlled) setInternal(next);
+      setInternal(next);
       onValueChange?.(next);
     },
     [isControlled, onValueChange],
