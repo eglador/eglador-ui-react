@@ -9,6 +9,7 @@ import {
   type FloatingSide,
   type FloatingAlign,
 } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type TooltipSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type TooltipVariant = "solid" | "soft" | "outline";
@@ -134,9 +135,12 @@ export function Tooltip({
   disabled = false,
   children,
 }: TooltipProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(
+    controlled !== undefined ? controlled : defaultOpen,
+  );
   const isControlled = controlled !== undefined;
   const open = (isControlled ? controlled : internalOpen) && !disabled;
+  useControlledSync(controlled, setInternalOpen);
   const baseId = React.useId();
 
   const openTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -153,7 +157,7 @@ export function Tooltip({
     (v: boolean) => {
       cancelTimers();
       if (disabled && v) return;
-      if (!isControlled) setInternalOpen(v);
+      setInternalOpen(v);
       onOpenChange?.(v);
     },
     [cancelTimers, disabled, isControlled, onOpenChange],

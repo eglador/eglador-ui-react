@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type ToggleVariant = "ghost" | "outline" | "soft";
 export type ToggleSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -82,8 +83,11 @@ export const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
     ref,
   ) {
     const isControlled = controlled !== undefined;
-    const [internal, setInternal] = React.useState(defaultPressed);
+    const [internal, setInternal] = React.useState(
+      controlled !== undefined ? controlled : defaultPressed,
+    );
     const pressed = isControlled ? controlled : internal;
+    useControlledSync(controlled, setInternal);
 
     const s = SIZES[size];
     const v = VARIANTS[variant];
@@ -93,7 +97,7 @@ export const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
       onClick?.(e);
       if (e.defaultPrevented) return;
       const next = !pressed;
-      if (!isControlled) setInternal(next);
+      setInternal(next);
       onPressedChange?.(next);
     };
 

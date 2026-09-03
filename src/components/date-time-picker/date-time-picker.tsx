@@ -10,6 +10,7 @@ import {
   type CalendarCaptionLayout,
   type CalendarWeekdayFormat,
 } from "../calendar";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 function pad(n: number): string {
   return n.toString().padStart(2, "0");
@@ -89,13 +90,16 @@ export function DateTimePicker({
   fixedWeeks,
   dir,
 }: DateTimePickerProps) {
-  const [internal, setInternal] = React.useState<Date | undefined>(defaultValue);
+  const [internal, setInternal] = React.useState<Date | undefined>(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
   const [open, setOpen] = React.useState(false);
 
   const setValue = (next: Date | undefined) => {
-    if (!isControlled) setInternal(next);
+    setInternal(next);
     onValueChange?.(next);
   };
 

@@ -4,6 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { CheckIcon, DotIcon, ChevronRightIcon } from "../../lib/icons";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface ContextMenuContextValue {
   open: boolean;
@@ -60,9 +61,12 @@ export function ContextMenu({
   onOpenChange,
   children,
 }: ContextMenuProps) {
-  const [internalOpen, setInternalOpen] = React.useState(false);
+  const [internalOpen, setInternalOpen] = React.useState(
+    controlled !== undefined ? controlled : false,
+  );
   const isControlled = controlled !== undefined;
   const open = isControlled ? controlled : internalOpen;
+  useControlledSync(controlled, setInternalOpen);
   const [position, setPosition] = React.useState<
     { top: number; left: number } | null
   >(null);
@@ -71,7 +75,7 @@ export function ContextMenu({
 
   const setOpen = React.useCallback(
     (v: boolean) => {
-      if (!isControlled) setInternalOpen(v);
+      setInternalOpen(v);
       onOpenChange?.(v);
       if (!v) setPosition(null);
     },
@@ -439,11 +443,14 @@ export function ContextMenuRadioGroup({
   onValueChange,
   children,
 }: ContextMenuRadioGroupProps) {
-  const [internal, setInternal] = React.useState(defaultValue);
+  const [internal, setInternal] = React.useState(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
   const setValue = (v: string) => {
-    if (!isControlled) setInternal(v);
+    setInternal(v);
     onValueChange?.(v);
   };
   return (

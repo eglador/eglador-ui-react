@@ -9,6 +9,7 @@ import {
   type FloatingSide,
   type FloatingAlign,
 } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface PopoverContextValue {
   open: boolean;
@@ -53,14 +54,17 @@ export function Popover({
   modal = false,
   children,
 }: PopoverProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(
+    controlled !== undefined ? controlled : defaultOpen,
+  );
   const isControlled = controlled !== undefined;
   const open = isControlled ? controlled : internalOpen;
+  useControlledSync(controlled, setInternalOpen);
   const baseId = React.useId();
 
   const setOpen = React.useCallback(
     (v: boolean) => {
-      if (!isControlled) setInternalOpen(v);
+      setInternalOpen(v);
       onOpenChange?.(v);
     },
     [isControlled, onOpenChange],

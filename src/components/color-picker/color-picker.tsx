@@ -228,7 +228,7 @@ export function ColorPicker({
   );
 
   const updateHsv = (next: HSV) => {
-    if (!isControlled) setHsvState(next);
+    setHsvState(next);
     onValueChange?.(hsvToHex(next, alpha));
   };
 

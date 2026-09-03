@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { PanelLeftIcon } from "../../lib/icons";
 import { Tooltip, TooltipTrigger, TooltipContent } from "../tooltip";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type SidebarSide = "left" | "right";
 export type SidebarVariant = "sidebar" | "floating" | "inset";
@@ -93,16 +94,19 @@ export const SidebarProvider = React.forwardRef<
 ) {
   const isMobile = useIsMobile();
 
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(
+    controlled !== undefined ? controlled : defaultOpen,
+  );
   const [openMobile, setOpenMobile] = React.useState(false);
 
   const isOpenControlled = controlled !== undefined;
   const open = isOpenControlled ? controlled : internalOpen;
+  useControlledSync(controlled, setInternalOpen);
 
   const setOpen = React.useCallback(
     (next: boolean | ((prev: boolean) => boolean)) => {
       const value = typeof next === "function" ? next(open) : next;
-      if (!isOpenControlled) setInternalOpen(value);
+      setInternalOpen(value);
       onOpenChange?.(value);
     },
     [open, isOpenControlled, onOpenChange],
@@ -110,12 +114,15 @@ export const SidebarProvider = React.forwardRef<
 
   const [internalActiveId, setInternalActiveId] = React.useState<
     string | undefined
-  >(defaultActiveId);
+  >(
+    controlledActiveId !== undefined ? controlledActiveId : defaultActiveId,
+  );
   const isActiveIdControlled = controlledActiveId !== undefined;
   const activeId = isActiveIdControlled ? controlledActiveId : internalActiveId;
+  useControlledSync(controlledActiveId, setInternalActiveId);
   const setActiveId = React.useCallback(
     (id: string | undefined) => {
-      if (!isActiveIdControlled) setInternalActiveId(id);
+      setInternalActiveId(id);
       onActiveIdChange?.(id);
     },
     [isActiveIdControlled, onActiveIdChange],

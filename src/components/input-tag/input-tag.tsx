@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { XIcon } from "../../lib/icons";
+import { sameList, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type InputTagSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type InputTagVariant = "outline" | "soft" | "ghost";
@@ -157,9 +158,14 @@ export const InputTag = React.forwardRef<HTMLInputElement, InputTagProps>(
     },
     forwardedRef,
   ) {
-    const [internal, setInternal] = React.useState<string[]>(defaultValue);
+    const [internal, setInternal] = React.useState<string[]>(
+      controlled !== undefined ? controlled : defaultValue,
+    );
     const isControlled = controlled !== undefined;
     const tags = isControlled ? controlled : internal;
+    useControlledSync(controlled, (v) =>
+      setInternal((prev) => (sameList(prev, v) ? prev : v)),
+    );
 
     const [draft, setDraft] = React.useState("");
     const [focusedChip, setFocusedChip] = React.useState<number | null>(null);
@@ -179,7 +185,7 @@ export const InputTag = React.forwardRef<HTMLInputElement, InputTagProps>(
 
     const setTags = React.useCallback(
       (next: string[]) => {
-        if (!isControlled) setInternal(next);
+        setInternal(next);
         onValueChange?.(next);
       },
       [isControlled, onValueChange],

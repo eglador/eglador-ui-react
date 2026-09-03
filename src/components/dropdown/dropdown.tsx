@@ -10,6 +10,7 @@ import {
   type FloatingSide,
   type FloatingAlign,
 } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface DropdownContextValue {
   open: boolean;
@@ -54,15 +55,18 @@ export function Dropdown({
   alignOffset = 0,
   children,
 }: DropdownProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(
+    controlled !== undefined ? controlled : defaultOpen,
+  );
   const isControlled = controlled !== undefined;
   const open = isControlled ? controlled : internalOpen;
+  useControlledSync(controlled, setInternalOpen);
   const baseId = React.useId();
   const [activeItem, setActiveItem] = React.useState<string | null>(null);
 
   const setOpen = React.useCallback(
     (v: boolean) => {
-      if (!isControlled) setInternalOpen(v);
+      setInternalOpen(v);
       onOpenChange?.(v);
       if (!v) setActiveItem(null);
     },
@@ -427,11 +431,14 @@ export function DropdownRadioGroup({
   onValueChange,
   children,
 }: DropdownRadioGroupProps) {
-  const [internal, setInternal] = React.useState(defaultValue);
+  const [internal, setInternal] = React.useState(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
   const setValue = (v: string) => {
-    if (!isControlled) setInternal(v);
+    setInternal(v);
     onValueChange?.(v);
   };
   return (

@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { ChevronDownIcon, CheckIcon } from "../../lib/icons";
 import { useFloating, composeRefs } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type SelectVariant = "outline" | "soft" | "ghost";
 export type SelectSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -87,26 +88,32 @@ export function Select({
   disabled = false,
   children,
 }: SelectProps) {
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
+  const [internalValue, setInternalValue] = React.useState(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const value = isControlled ? controlled : internalValue;
+  useControlledSync(controlled, setInternalValue);
 
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(
+    openControlled !== undefined ? openControlled : defaultOpen,
+  );
   const isOpenControlled = openControlled !== undefined;
   const open = isOpenControlled ? openControlled : internalOpen;
+  useControlledSync(openControlled, setInternalOpen);
 
   const baseId = React.useId();
   const labelsRef = React.useRef<Map<string, string>>(new Map());
   const itemsRef = React.useRef<Map<string, HTMLElement>>(new Map());
 
   const setValue = (v: string) => {
-    if (!isControlled) setInternalValue(v);
+    setInternalValue(v);
     onValueChange?.(v);
   };
 
   const setOpen = (v: boolean) => {
     if (disabled && v) return;
-    if (!isOpenControlled) setInternalOpen(v);
+    setInternalOpen(v);
     onOpenChange?.(v);
   };
 

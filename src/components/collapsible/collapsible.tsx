@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface CollapsibleContextValue {
   isOpen: boolean;
@@ -45,9 +46,12 @@ export const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>(
     },
     ref,
   ) {
-    const [internal, setInternal] = React.useState(defaultOpen);
+    const [internal, setInternal] = React.useState(
+      controlled !== undefined ? controlled : defaultOpen,
+    );
     const isControlled = controlled !== undefined;
     const isOpen = isControlled ? controlled : internal;
+    useControlledSync(controlled, setInternal);
 
     const baseId = React.useId();
     const triggerId = `${baseId}-trigger`;
@@ -56,7 +60,7 @@ export const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>(
     const toggle = React.useCallback(() => {
       if (disabled) return;
       const next = !isOpen;
-      if (!isControlled) setInternal(next);
+      setInternal(next);
       onOpenChange?.(next);
     }, [disabled, isOpen, isControlled, onOpenChange]);
 

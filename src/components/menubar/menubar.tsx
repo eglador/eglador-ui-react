@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { CheckIcon, DotIcon } from "../../lib/icons";
 import { useFloating } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface MenubarContextValue {
   openMenu: string | null;
@@ -296,11 +297,14 @@ export function MenubarRadioGroup({
   onValueChange,
   children,
 }: MenubarRadioGroupProps) {
-  const [internal, setInternal] = React.useState(defaultValue);
+  const [internal, setInternal] = React.useState(
+    controlled !== undefined ? controlled : defaultValue,
+  );
   const isControlled = controlled !== undefined;
   const value = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
   const setValue = (v: string) => {
-    if (!isControlled) setInternal(v);
+    setInternal(v);
     onValueChange?.(v);
   };
   return (

@@ -4,6 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { cn } from "../../lib/utils";
 import { XIcon } from "../../lib/icons";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type DrawerSide = "top" | "right" | "bottom" | "left";
 export type DrawerSize = "xs" | "sm" | "md" | "lg" | "xl" | "full";
@@ -122,13 +123,16 @@ export function Drawer({
   shadow = "lg",
   children,
 }: DrawerProps) {
-  const [internal, setInternal] = React.useState(defaultOpen);
+  const [internal, setInternal] = React.useState(
+    controlled !== undefined ? controlled : defaultOpen,
+  );
   const isControlled = controlled !== undefined;
   const open = isControlled ? controlled : internal;
+  useControlledSync(controlled, setInternal);
   const baseId = React.useId();
   const setOpen = React.useCallback(
     (v: boolean) => {
-      if (!isControlled) setInternal(v);
+      setInternal(v);
       onOpenChange?.(v);
     },
     [isControlled, onOpenChange],

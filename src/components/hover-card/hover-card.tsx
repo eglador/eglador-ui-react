@@ -9,6 +9,7 @@ import {
   type FloatingSide,
   type FloatingAlign,
 } from "../../lib/use-floating";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 interface HoverCardContextValue {
   open: boolean;
@@ -56,9 +57,12 @@ export function HoverCard({
   closeDelay = 200,
   children,
 }: HoverCardProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(
+    controlled !== undefined ? controlled : defaultOpen,
+  );
   const isControlled = controlled !== undefined;
   const open = isControlled ? controlled : internalOpen;
+  useControlledSync(controlled, setInternalOpen);
   const baseId = React.useId();
 
   const openTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -74,7 +78,7 @@ export function HoverCard({
   const setOpen = React.useCallback(
     (v: boolean) => {
       cancelTimers();
-      if (!isControlled) setInternalOpen(v);
+      setInternalOpen(v);
       onOpenChange?.(v);
     },
     [cancelTimers, isControlled, onOpenChange],

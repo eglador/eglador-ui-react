@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { CheckIcon, MinusIcon } from "../../lib/icons";
+import { useControlledSync } from "../../lib/use-controlled-sync";
 
 export type CheckboxSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -49,8 +50,11 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const autoId = React.useId();
     const id = idProp ?? autoId;
     const isControlled = controlled !== undefined;
-    const [internal, setInternal] = React.useState(defaultChecked);
+    const [internal, setInternal] = React.useState(
+      controlled !== undefined ? controlled : defaultChecked,
+    );
     const checked = isControlled ? controlled : internal;
+    useControlledSync(controlled, setInternal);
     const s = SIZES[size];
 
     const internalRef = React.useRef<HTMLInputElement | null>(null);
@@ -72,7 +76,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!isControlled) setInternal(e.target.checked);
+      setInternal(e.target.checked);
       onChange?.(e);
       onCheckedChange?.(e.target.checked);
     };

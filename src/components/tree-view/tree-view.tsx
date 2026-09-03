@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { ChevronRightIcon } from "../../lib/icons";
+import { sameSet, useControlledSync } from "../../lib/use-controlled-sync";
 
 export type TreeViewSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -82,15 +83,17 @@ export const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
     const isControlled = controlled !== undefined;
     const expanded = isControlled ? new Set(controlled) : internalExpanded;
 
+    useControlledSync(controlled, (v) =>
+      setInternalExpanded((prev) => (sameSet(prev, v) ? prev : new Set(v))),
+    );
+
     const registerExpandable = React.useCallback((id: string) => {
       expandableIdsRef.current.add(id);
       if (defaultExpandAll && !hasInitializedExpandAllRef.current) {
         Promise.resolve().then(() => {
           if (hasInitializedExpandAllRef.current) return;
           hasInitializedExpandAllRef.current = true;
-          if (!isControlled) {
-            setInternalExpanded(new Set(expandableIdsRef.current));
-          }
+          setInternalExpanded(new Set(expandableIdsRef.current));
           onExpandedChange?.(Array.from(expandableIdsRef.current));
         });
       }
@@ -104,12 +107,16 @@ export const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       ? new Set(controlledSelected)
       : internalSelected;
 
+    useControlledSync(controlledSelected, (v) =>
+      setInternalSelected((prev) => (sameSet(prev, v) ? prev : new Set(v))),
+    );
+
     const toggle = React.useCallback(
       (id: string) => {
         const next = new Set(isControlled ? controlled : internalExpanded);
         if (next.has(id)) next.delete(id);
         else next.add(id);
-        if (!isControlled) setInternalExpanded(next);
+        setInternalExpanded(next);
         onExpandedChange?.(Array.from(next));
       },
       [isControlled, controlled, internalExpanded, onExpandedChange],
@@ -135,7 +142,7 @@ export const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
           next = new Set([id]);
         }
 
-        if (!isSelectedControlled) setInternalSelected(next);
+        setInternalSelected(next);
         onSelectedChange?.(Array.from(next));
       },
       [
