@@ -13,19 +13,19 @@ import {
 } from "../calendar";
 import { sameDate, useControlledSync } from "../../lib/use-controlled-sync";
 
-function formatDate(d: Date | undefined): string {
+function formatDate(d: Date | undefined, locale?: string): string {
   if (!d) return "";
-  return d.toLocaleDateString(undefined, {
+  return d.toLocaleDateString(locale, {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
 }
 
-function formatRange(r: CalendarRange | undefined): string {
+function formatRange(r: CalendarRange | undefined, locale?: string): string {
   if (!r?.from) return "";
-  if (!r.to) return formatDate(r.from);
-  return `${formatDate(r.from)} – ${formatDate(r.to)}`;
+  if (!r.to) return formatDate(r.from, locale);
+  return `${formatDate(r.from, locale)} – ${formatDate(r.to, locale)}`;
 }
 
 type DatePickerSingleProps = {
@@ -145,8 +145,10 @@ export function DatePicker(props: DatePickerProps) {
   const hasValue = isRange ? Boolean(rangeValue.from) : Boolean(singleValue);
 
   const display = isRange
-    ? ((props as DatePickerRangeProps).format ?? formatRange)(rangeValue)
-    : ((props as DatePickerSingleProps).format ?? formatDate)(singleValue);
+    ? ((props as DatePickerRangeProps).format ??
+        ((r) => formatRange(r, locale)))(rangeValue)
+    : ((props as DatePickerSingleProps).format ??
+        ((d) => formatDate(d, locale)))(singleValue);
 
   const resolvedPlaceholder =
     placeholder ?? (isRange ? "Pick a date range" : "Pick a date");
