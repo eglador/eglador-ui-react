@@ -19,9 +19,13 @@ function pad(n: number): string {
 const TIME_INPUT_CLASS =
   "h-7 w-12 rounded-sm border border-zinc-200 bg-white px-1 text-center text-sm tabular-nums text-zinc-900 outline-none focus:border-zinc-400 focus:ring-[3px] focus:ring-zinc-900/[0.06] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
 
-function formatDT(d: Date | undefined, hour12: boolean): string {
+function formatDT(
+  d: Date | undefined,
+  hour12: boolean,
+  locale?: string,
+): string {
   if (!d) return "";
-  const date = d.toLocaleDateString(undefined, {
+  const date = d.toLocaleDateString(locale, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -174,7 +178,7 @@ export function DateTimePicker({
     setValue(undefined);
   };
 
-  const display = (format ?? ((d) => formatDT(d, hour12)))(value);
+  const display = (format ?? ((d) => formatDT(d, hour12, locale)))(value);
   const hours24 = value ? value.getHours() : 0;
   const period: "AM" | "PM" = hours24 >= 12 ? "PM" : "AM";
   const hours12 = ((hours24 + 11) % 12) + 1;
